@@ -36,8 +36,8 @@ https://www.wunderground.com/history/monthly/us/ny/central-park/KNYC/date/2017-1
 (display month at a time)
 
 ## Breakdown of roles
-Cleaning data before analysis - 
-Parsing data in Java -
-Analyzer (methods) - 
-GIS visualization - 
+- Cleaning data before analysis:
+- Parsing data in Java:
+- Analyzer (methods):
+- GIS visualization:
 
