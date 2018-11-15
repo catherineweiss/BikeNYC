@@ -22,17 +22,17 @@ Possible questions:
 
 ## Possible data sets
 MTA ridership data (Ins/outs per station)
-http://web.mta.info/developers/turnstile.html
+- http://web.mta.info/developers/turnstile.html
 
 Citi bike ridership data (Ins/outs per station)
-https://www.citibikenyc.com/system-data
+- https://www.citibikenyc.com/system-data
 
 Citi bike stations:
- https://groups.google.com/forum/#!topic/citibike-hackers/ZkoqjkTIOuw
-http://citibike-stations.herokuapp.com/
+- https://groups.google.com/forum/#!topic/citibike-hackers/ZkoqjkTIOuw
+- http://citibike-stations.herokuapp.com/
 
 Weather data - historical weather for NYC over certain time period
-https://www.wunderground.com/history/monthly/us/ny/central-park/KNYC/date/2017-11
+- https://www.wunderground.com/history/monthly/us/ny/central-park/KNYC/date/2017-11
 (display month at a time)
 
 ## Breakdown of roles
