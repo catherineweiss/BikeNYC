@@ -4,7 +4,7 @@ Our repo is at: https://github.com/princessruthie/591-geo-data-viz
 ## For Part One Submission
 Team Name: Team Phoenix (from the ashes of our first idea, we rise!)
 
-Team Members: Fred Chang, Ruthie Fields, Catherine Weiss
+Team Members: Fred Chang, Ruthie Fields(PM), Catherine Weiss
 
 Project Idea: A geo-location based recommendation application
 
