@@ -36,3 +36,6 @@ Open weather api for checking current conditions
 - Analyzer (methods): 1 per developer
 - Visualization: part of 2.0
 
+## What makes this 'advanced java'
+- Using three REST apis
+- Parsing JSON
