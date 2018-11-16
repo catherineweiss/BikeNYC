@@ -17,6 +17,7 @@ Project Idea: A geo-location based recommendation application
 
 ## 2.0 (aka dreams/reaches/hopes!)
 - Use weather to intelligently not suggest biking in the rain
+- Plan a route between points of interest
 - Perhaps suggest an entire itinerary of points of interest and bike kiosks, like design a whole day.
 
 
