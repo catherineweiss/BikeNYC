@@ -1,6 +1,5 @@
 # 591-geo-data-viz
-
-Hey, Fred and Catherine, feel free to update this doc and push your changes!
+Our repo is at: https://github.com/princessruthie/591-geo-data-viz
 
 ## For Part One Submission
 Team Name: Team Phoenix (from the ashes of our first idea, we rise!)
