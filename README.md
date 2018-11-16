@@ -9,6 +9,8 @@ Team Members: Fred Chang, Ruthie Fields, Catherine Weiss
 
 Project Idea: A geo-location based recommendation application
 
+Project Description: When the user enters an address, the program will find the Citi Bike station closest to the user and display the estimated walk time to the station, as well as number of bikes available. The program will also display recommendations for places of interest reachable from the station given a certain distance (e.g. the user can say I only wish to bike 1 mile).
+
 ## Goals and keywords
 - Use the google api to turn addresses into coordinates.
 - Use those coordinates and a landmark api to determine nearby locations
