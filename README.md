@@ -21,11 +21,18 @@ Project Idea: A geo-location based recommendation application
 
 
 ## Data sources
-
+Google api for address to geocode: 
+https://developers.google.com/maps/documentation/geocoding/start
+Citi bike stations:	
+- https://groups.google.com/forum/#!topic/citibike-hackers/ZkoqjkTIOuw	
+- http://citibike-stations.herokuapp.com/
+Foursquare api for turning locations into points of interest
+- https://developer.foursquare.com/places-api
+Open weather api for checking current conditions
+- https://openweathermap.org/api
 
 ## Breakdown of roles
-- Cleaning data before analysis:
-- Parsing data in Java:
-- Analyzer (methods):
-- GIS visualization:
+- Parsing data in Java:1 api per developer
+- Analyzer (methods): 1 per developer
+- Visualization: part of 2.0
 
