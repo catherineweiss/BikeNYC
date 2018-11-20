@@ -17,11 +17,18 @@ Look at me editings for no reason!
 - Use those coordinates and a landmark api to determine nearby locations
 - Use those same coordinates to also determine nearby bike share kiosks
 - Suggest nearby points of interest and nearby bikes to take to further points of interest
+- UI Basic components:
+  - Input: Ask for user address through text field
+  - Return: "Closest CitiBike Station: XXXX, Distance from you: 0.25mi."
+  - Return: "Destinations within 0.5mi radius of Station: ......"
 
 ## 2.0 (aka dreams/reaches/hopes!)
 - Use weather to intelligently not suggest biking in the rain
 - Plan a route between points of interest
 - Perhaps suggest an entire itinerary of points of interest and bike kiosks, like design a whole day.
+- Additional UI components:
+  - Google Maps image showing CitiBike station, potentially with other info overlays
+  - Slider allowing user to dynamically adjust bike radius
 
 
 ## Data sources
