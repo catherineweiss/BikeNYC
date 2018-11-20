@@ -41,3 +41,10 @@ Open weather api for checking current conditions
 ## What makes this 'advanced java'
 - Using three REST apis
 - Parsing JSON
+
+## Meeting with Yuming Qin:
+- weather would be easier
+- confirmed: there will be a user interface. doesn't have to be super complex. 
+- with a ui, the project would be enough
+- she will be making sure everyone has programming contributions on github
+- try and do it full stack independent to reduce merge conflicts and reduce interdependence
