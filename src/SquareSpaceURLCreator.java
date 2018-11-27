@@ -24,10 +24,7 @@ public class SquareSpaceURLCreator {
 		url += "&ll=" + lat + "," + lon;
 		url += "&query=" +  query;
 		url += "limit=" + "1";
-		System.out.println(url);
-		APICaller caller = new APICaller();
-		String response = caller.callAPI(url);
-		System.out.println(response);
+
 		return url;
 	}
 }
