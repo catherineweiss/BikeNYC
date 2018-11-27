@@ -42,4 +42,7 @@ public class SquareSpaceLocationParser {
 
 		System.out.println("parsed");
 	}
+	public ArrayList<Location> getLocations(){
+		return this.locations;
+	}
 }
