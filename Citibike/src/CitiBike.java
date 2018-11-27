@@ -1,5 +1,9 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import org.json.JSONArray;
@@ -7,8 +11,39 @@ import org.json.JSONObject;
 
 class CitiBike{
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException, FileNotFoundException{
 
+		
+		//Enter GPS Coordinates
+		double userLat = 40.782486;
+		double userLong = -73.946949;
+		
+		
+		//Reads in stations csv file
+		StationReader stationReader = new StationReader("data/station_gps.csv");
+		ArrayList<Station> stations = new ArrayList<>();
+		try {
+			stations = stationReader.readStationFile();		
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		//System.out.println(stations.get(1).getStationName());
+		
+		Analyzer analyzer = new Analyzer(stations);
+		
+		int closestStationId = analyzer.analyzeCloseProximity(userLat, userLong);
+		
+		System.out.println("User Location: " + userLat + "," + userLong);
+		System.out.println("Closest Station ID: " + closestStationId);
+		System.out.println("Closest Station: " + analyzer.stationIdtoName(closestStationId));
+		System.out.println("");
+		
+		
+		
+		//CitiBike API
+		
+		
 		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
 		Scanner scan = new Scanner(url.openStream());
 		String str = new String();
@@ -18,22 +53,16 @@ class CitiBike{
 		scan.close();
 		JSONObject obj = new JSONObject(str);
 		
-		
-		
-		
-		
-		
-		
 		JSONObject station = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(2);
-		System.out.println("Station ID: " + station.getInt("station_id"));
-		System.out.println("Bikes Available: " + station.getInt("num_bikes_available"));
-		
+//		System.out.println("Correct Answers:");
+//		System.out.println("Station ID: " + station.getInt("station_id"));
+//		System.out.println("Bikes Available: " + station.getInt("num_bikes_available"));		
 		//System.out.println(obj.getJSONObject("data").getJSONArray("stations").length()); //Total Number of Stations
 		
 		
 		
 		//User can request which station to retrieve info from
-		int stationID = 82;
+		int stationID = closestStationId;
 		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
 		System.out.println("");
 		System.out.println("Searching for Station: " + stationID + "...");
@@ -43,6 +72,7 @@ class CitiBike{
 			if (stationSearch.getInt("station_id") == stationID) {
 				System.out.println("Station ID: " + stationSearch.getInt("station_id"));
 				System.out.println("Bikes Available: " + stationSearch.getInt("num_bikes_available"));
+				System.out.println("Docks Available: " + stationSearch.getInt("num_docks_available"));
 			}
 		}
 		
