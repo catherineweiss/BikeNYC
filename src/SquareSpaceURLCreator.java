@@ -23,7 +23,7 @@ public class SquareSpaceURLCreator {
 		url += "&v=" + FOUR_SQUARE_VERSION;
 		url += "&ll=" + lat + "," + lon;
 		url += "&query=" +  query;
-		url += "limit=" + "1";
+		url += "limit=" + limit;
 
 		return url;
 	}
