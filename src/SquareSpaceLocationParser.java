@@ -1,4 +1,3 @@
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,7 +11,6 @@ public class SquareSpaceLocationParser {
 	public SquareSpaceLocationParser(String apiResponse) {
 
 		locations = new ArrayList<Location>();
-		Gson gson = new Gson();
 		JsonObject jObject = (JsonObject) new JsonParser().parse(apiResponse);
 
 		//get the groups array
