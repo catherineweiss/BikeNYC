@@ -22,6 +22,7 @@ public class GoogleURLCreator {
 		String components = "&country:US";
 		String apiKey = "&key="+ GoogleAPIKey.key;
 		String geocodeURL = path + outputFormat + queryParams + regionBias + components + apiKey;
+		System.out.println(geocodeURL);		
 
 		return geocodeURL;
 	}
