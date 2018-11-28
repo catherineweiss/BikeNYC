@@ -15,5 +15,5 @@ public class SquareSpaceLocation {
 		this.lon = lon;
 		this.address = address;		
 	}
-
+	
 }
