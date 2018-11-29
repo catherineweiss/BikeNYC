@@ -18,8 +18,7 @@ public class LocationTest {
 	@Test
 	public void setNameTest1() {
 		String newName = "Grand Central Station";
-		loc.setName(newName);
-		
+		loc.setName(newName);		
 		assertEquals("Grand Central Station",loc.getName());
 	}
 	
