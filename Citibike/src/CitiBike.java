@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import org.json.JSONArray;
@@ -65,7 +64,7 @@ class CitiBike{
 		int stationID = closestStationId;
 		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
 		System.out.println("");
-		System.out.println("Searching for Station: " + stationID + "...");
+		System.out.println("Searching for station info using CitiBike API...");
 		
 		for (int i=0; i<totalnumStations; i++) {
 			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
