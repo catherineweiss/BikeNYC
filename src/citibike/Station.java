@@ -1,3 +1,4 @@
+package citibike;
 
 public class Station {
 

@@ -56,5 +56,5 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
-src/PrivateVariables.java
+PrivateVariables.java
 /usr/
