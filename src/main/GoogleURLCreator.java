@@ -1,3 +1,4 @@
+package main;
 /**
  * Creates URL for Google geocoding API
  * 
@@ -20,8 +21,9 @@ public class GoogleURLCreator {
 		String queryParams = "?address=" + searchAddress;
 		String regionBias = "&region=new+york";
 		String components = "&country:US";
-		String apiKey = "&key=AIzaSyBnRxzuKkywqfmRLHEaJ5qA7hBmh3sJlJc";
+		String apiKey = "&key="+ GoogleAPIKey.key;
 		String geocodeURL = path + outputFormat + queryParams + regionBias + components + apiKey;
+		System.out.println(geocodeURL);		
 
 		return geocodeURL;
 	}
