@@ -9,6 +9,11 @@ import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * This is the temporary main method that takes a pair of GPS coordinates, returns closest Citibike Station and pulls down real-time station info using Citibike API
+ * @author fredchang
+ *
+ */
 class CitiBike{
 
 	public static void main(String[] args) throws IOException, ParseException, FileNotFoundException{
