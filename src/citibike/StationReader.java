@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class represents a Station object, with a station ID, station name, latitude, and longitude.
+ * @author Catherine Weiss
+ *
+ */
 public class StationReader {
 
 	File stationFile;
