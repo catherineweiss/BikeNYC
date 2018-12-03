@@ -1,3 +1,6 @@
+.DS_Store
+GoogleGeoCoderPractice.java
+GoogleAPIKey.*
 .metadata
 bin/
 tmp/
@@ -54,4 +57,3 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
-Citibike/.DS_Store
