@@ -59,11 +59,6 @@ class CitiBike{
 		JSONObject obj = new JSONObject(str);
 		
 		JSONObject station = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(2);
-//		System.out.println("Correct Answers:");
-//		System.out.println("Station ID: " + station.getInt("station_id"));
-//		System.out.println("Bikes Available: " + station.getInt("num_bikes_available"));		
-		//System.out.println(obj.getJSONObject("data").getJSONArray("stations").length()); //Total Number of Stations
-		
 		
 		
 		//User can request which station to retrieve info from
