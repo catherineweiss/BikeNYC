@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 /**
  * This class represents a Station object, with a station ID, station name, latitude, and longitude.
- * @author Catherine Weiss
+ * @author Fred Chang
  *
  */
 public class StationReader {
