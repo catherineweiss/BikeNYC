@@ -1,13 +1,17 @@
 package citibike;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.Scanner;
+
+import org.json.JSONObject;
 
 /**
  * This class contains all methods used in CitiBike main method
- * @author fredchang
+ * @author Fred Chang
  *
  */
 public class Analyzer {
@@ -16,6 +20,20 @@ public class Analyzer {
 
 	Analyzer(ArrayList<Station> stations) {
 		this.stations = stations;
+	}
+	
+	/**
+	 * 
+	 * Method reads the station CSV file and uses station reader to put each into an arraylist object with GPS coordinates
+	 */
+	public void loadStations() {
+		System.out.println("Loading stations into database...");
+		StationReader stationReader = new StationReader("data/station_gps.csv");	
+		try {
+			stations = stationReader.readStationFile();		
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}		
 	}
 
 	/**
@@ -69,6 +87,42 @@ public class Analyzer {
 		}
 
 		return closestStation;
+	}
+	
+	/**
+	 * 
+	 * Method takes in stationId and returns real-time information about the station using CitiBike API
+	 * @param stationId
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws FileNotFoundException
+	 */
+	public void getStationRealTime(int stationId) throws IOException, ParseException, FileNotFoundException {
+		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
+		Scanner scan = new Scanner(url.openStream());
+		String str = new String();
+
+		while (scan.hasNext())
+			str += scan.nextLine();
+		scan.close();
+		JSONObject obj = new JSONObject(str);
+		
+		JSONObject station = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(2);
+		
+		
+		//User can request which station to retrieve info from
+		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
+		System.out.println("");
+		System.out.println("Searching for station info using CitiBike API...");
+		
+		for (int i=0; i<totalnumStations; i++) {
+			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
+			if (stationSearch.getInt("station_id") == stationId) {
+				System.out.println("Station ID: " + stationSearch.getInt("station_id"));
+				System.out.println("Bikes Available: " + stationSearch.getInt("num_bikes_available"));
+				System.out.println("Docks Available: " + stationSearch.getInt("num_docks_available"));
+			}
+		}		
 	}
 
 }
