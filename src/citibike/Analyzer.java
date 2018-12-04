@@ -18,7 +18,7 @@ public class Analyzer {
 
 	ArrayList<Station> stations;
 
-	Analyzer(ArrayList<Station> stations) {
+	public Analyzer(ArrayList<Station> stations) {
 		this.stations = stations;
 	}
 	
@@ -27,7 +27,7 @@ public class Analyzer {
 	 * Method reads the station CSV file and uses station reader to put each into an arraylist object with GPS coordinates
 	 */
 	public void loadStations() {
-		System.out.println("Loading stations into database...");
+		//System.out.println("Loading stations into database...");
 		StationReader stationReader = new StationReader("data/station_gps.csv");	
 		try {
 			stations = stationReader.readStationFile();		
@@ -52,6 +52,24 @@ public class Analyzer {
 		}
 
 		return stationName;
+	}
+	
+	/**
+	 * 
+	 * Method takes in station name and returns station ID
+	 * @param stationName
+	 * @return
+	 */
+	public int stationNametoId(String stationName) {
+		int stationId = 0;
+
+		for (Station s : stations) {
+			if (s.getStationName().equals(stationName)) {
+				stationId = s.getStationId();
+			}
+		}
+
+		return stationId;
 	}
 
 	/**
@@ -107,7 +125,7 @@ public class Analyzer {
 		scan.close();
 		JSONObject obj = new JSONObject(str);
 		
-		JSONObject station = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(2);
+		//JSONObject station = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(2);
 		
 		
 		//User can request which station to retrieve info from
