@@ -30,6 +30,7 @@ class CitiBike{
 		System.out.println("User Location: " + userLat + "," + userLong);
 		System.out.println("Closest Station ID: " + closestStationId);
 		System.out.println("Closest Station: " + analyzer.stationIdtoName(closestStationId));
+		System.out.println("Distance from user: " + analyzer.analyzeCloseProximityDistance(userLat, userLong) + " mi");
 		System.out.println("");
 
 		

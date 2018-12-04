@@ -25,6 +25,7 @@ public class Analyzer {
 	/**
 	 * 
 	 * Method reads the station CSV file and uses station reader to put each into an arraylist object with GPS coordinates
+	 * Note: Because there is no JSON feed for real time station with coordinates. Parsing of stations and linking with appropriate GPS coordinates are needed on our end to match station IDs with coordinate location
 	 */
 	public void loadStations() {
 		//System.out.println("Loading stations into database...");
@@ -101,10 +102,85 @@ public class Analyzer {
 				closestDistance = difference;
 				closestStation = s.getStationId();
 			}
+			
+			if (closestDistance == 99999 || closestStation == 99999) {
+				System.out.println("Error executing analyzeCloseProximityDistance() ");
+				return -1;
+			}
 
+		}
+		
+		if (closestDistance == 99999 || closestStation == 99999) {
+			System.out.println("Error executing analyzeCloseProximity() ");
+			return -1;
 		}
 
 		return closestStation;
+	}
+	
+	/**
+	 * 
+	 * Method takes in two pairs of coordinates and returns distance in miles
+	 * Note: Distance calculation formula using Haversine, src: https://rosettacode.org/wiki/Haversine_formula#Java
+	 * @param lat1
+	 * @param lon1
+	 * @param lat2
+	 * @param lon2
+	 * @return
+	 */
+	public static double getDistanceHaversine(double lat1, double lon1, double lat2, double lon2) {
+		double R = 6372.8; // In kilometers
+		double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+ 
+        double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double distanceKM =  R * c;
+//        double distanceMiles = distanceKM * 0.62137; //return distance in miles as double
+        double distanceMiles = Math.round(distanceKM * 0.62137*100.0)/100.0; //return distance in miles with 2 decimal places precision
+        return distanceMiles;
+    }
+	
+	/**
+	 * 
+	 * Method takes in coordinates and returns distance to closest Citibike Station
+	 * @param userLat
+	 * @param userLong
+	 * @return
+	 */
+	public double analyzeCloseProximityDistance(double userLat, double userLong) {
+		int closestStation = 9999;
+		double closestDistance = 99999;
+
+		// For all trips
+		for (Station s : stations) {
+			int station = s.getStationId();
+
+			double stationLat = s.getStationLat();
+			double stationLong = s.getStationLong();
+
+			double difference = getDistanceHaversine(stationLat, stationLong, userLat, userLong);
+			
+//			double diffStartLat = Math.abs(userLat - stationLat);
+//
+//			double diffStartLong = Math.abs(userLong - stationLong);
+//
+//			double two = 2;
+//			double difference = (diffStartLat + diffStartLong) / two;
+
+			if (difference < closestDistance) {
+				closestDistance = difference;
+			}
+		}
+		
+		if (closestDistance == 99999 || closestStation == 99999) {
+			System.out.println("Error executing analyzeCloseProximityDistance() ");
+			return -1;
+		}
+
+		return closestDistance;
 	}
 	
 	/**
