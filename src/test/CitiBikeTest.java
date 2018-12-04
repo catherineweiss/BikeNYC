@@ -92,6 +92,26 @@ public class CitiBikeTest {
 		
 	}
 	
+	//Test Purpose: Check to see if returned "closest CitiBike Station" is correct (this tests a valet station https://www.citibikenyc.com/valet)
+	@Test
+	public void proximityTest4Midtown() {
+		
+		//Test GPS Coordinates
+		double userLat = 40.759939;
+		double userLong = -73.980560;
+		
+		//Expected
+		String expectedName = "W 52 St & 6 Ave";	
+		int expectedStationId = analyzer.stationNametoId(expectedName);
+		
+		//Test Output
+		int stationId = analyzer.analyzeCloseProximity(userLat, userLong);
+		String outputName = analyzer.stationIdtoName(stationId);		
+		assertEquals(expectedStationId, expectedStationId);
+		assertEquals(expectedName, outputName);
+		
+	}
+	
 	
 	
 	
