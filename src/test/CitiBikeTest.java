@@ -81,7 +81,7 @@ public class CitiBikeTest {
 		double userLong = -73.946949;
 		
 		//Expected
-		String expectedName = "2 Ave & E 96 St";	
+		String expectedName = "1 Ave & E 94 St"; //or 2 Ave & E 96 St	
 		int expectedStationId = analyzer.stationNametoId(expectedName);
 		
 		//Test Output

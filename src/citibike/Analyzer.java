@@ -91,12 +91,7 @@ public class Analyzer {
 			double stationLat = s.getStationLat();
 			double stationLong = s.getStationLong();
 
-			double diffStartLat = Math.abs(userLat - stationLat);
-
-			double diffStartLong = Math.abs(userLong - stationLong);
-
-			double two = 2;
-			double difference = (diffStartLat + diffStartLong) / two;
+			double difference = getDistanceHaversine(stationLat, stationLong, userLat, userLong);
 
 			if (difference < closestDistance) {
 				closestDistance = difference;
@@ -162,13 +157,6 @@ public class Analyzer {
 			double stationLong = s.getStationLong();
 
 			double difference = getDistanceHaversine(stationLat, stationLong, userLat, userLong);
-			
-//			double diffStartLat = Math.abs(userLat - stationLat);
-//
-//			double diffStartLong = Math.abs(userLong - stationLong);
-//
-//			double two = 2;
-//			double difference = (diffStartLat + diffStartLong) / two;
 
 			if (difference < closestDistance) {
 				closestDistance = difference;
