@@ -16,7 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 	/**
-	 * GUI for TourNY, an interactive app 
+	 * GUI for TourNY, a geo-location based recommendation application
+	 * for Manhattan 
 	 * @author Catherine Weiss
 	 *
 	 */
@@ -33,7 +34,7 @@ import javax.swing.SwingUtilities;
 	private JPanel topPanel; //border layout
 	private JPanel middlePanel; //border layout
 	private JPanel bottomPanel; //border layout
-	private JPanel mainPanel; //This holds top, middle, and bottom panels. Border layout
+	private JPanel mainPanel; //holds top, middle, bottom panels. Border layout
 	
 	//for inputPanel (flow layout); position North on topPanel.
 	private JLabel inputRequestLabel;
@@ -53,38 +54,42 @@ import javax.swing.SwingUtilities;
 	private JPanel startLocPanel;
 	
 	//for BikeLocPanel (flow layout); North on middlePanel
-	private JLabel closestStationLable; //TO DO
+	private JLabel closestStationLabel; 
 	private JLabel stationNameFromAPILabel;
 	private JPanel bikeLocPanel;
 	
+
+/* We opted not to display a second map. 
+ * TO DO: remove these instance vars when we clean up code.
 	//for map with bike location; Center on middlePanel
 	private URL urlBikeLocation;
 	private BufferedImage imgBikeLocation;
 	private JLabel mapBikeLocationLabel;
+*/	
 		
-	//for NumBikesPanel (flow layout); South on middlePanel
+	//for NumBikesPanel (flow layout); Center on middlePanel
 	private JLabel bikesAvailLabel;
 	private JLabel numBikesAvailLabel;
 	private JPanel numBikesPanel;
 
 	
-	//for NumSpacesPanel (flow layout); North on bottomPanel
+	//for NumSpacesPanel (flow layout); South on middlePanel
 	private JLabel spacesAvailLabel;
 	private JLabel numSpacesAvailLabel;
 	private JPanel numSpacesPanel;
 
 
-	//Center on bottomPanel
+	//North on bottomPanel
 	private JLabel placesInterestLabel;
 
-	//South on bottomPanel
+	//Center on bottomPanel
 	private JTextArea placesInterestTextArea;
 	
 	
 	//constructor with helper methods
 	TourNY(){		
 		createGoButton();
-		createComponents();
+		createPrimaryComponents();		
 	}
 
 	
@@ -103,7 +108,7 @@ import javax.swing.SwingUtilities;
 			url = new URL(mapsURL);					
 			img = ImageIO.read(url);
 			icon = new ImageIcon(img);
-			mapLabelName.setIcon(icon); //puts the map into the specified JLabel
+			mapLabelName.setIcon(icon); 
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
@@ -116,48 +121,58 @@ import javax.swing.SwingUtilities;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				//Create remaining components:
+				createSecondaryComponents();
+
+				//Retrieve user input
 				String startLocation = startAddressTextField.getText();
 					
-				//Start Geocoding API
+				//Access Geocoding API
 				GoogleURLCreator gc = new GoogleURLCreator();
-				String googleURL = gc.createURL(startLocation);
-						
+				String googleURL = gc.createURL(startLocation);						
 				APICaller ac = new APICaller();
-				String gResponse = ac.callAPI(googleURL);
-				
+				String gResponse = ac.callAPI(googleURL);				
 				GeocodingParser gp = new GeocodingParser();
 				gp.parseGeocodingAPIResponse(gResponse);
 				
 				Double latStartLocation = gp.getOriginLocation().getLatitude();
 				Double lngStartLocation = gp.getOriginLocation().getLongitude();
 				String startLocationLatLng = latStartLocation.toString() + "," + lngStartLocation.toString();
-				
-				getMap(startLocationLatLng, mapStartLocLabel, 15);
-				
+								
+				//fills Starting Address
 				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
 				
 				
-				//Start Citibank API
+				
+				//Access Citibike API
 				 
-				//Get name of closest Citibike location
-				//Change second map to closest Citibike station
-				//Get num bikes avail
-				//Get num spaces available
+				//Get name of closest Citibike location. Set text for JLabel stationNameFromAPILabel
+				//   ex: stationNameFromAPILabel.setText( insert String here);
+				
+				//Get num bikes avail. Set text for JLabel numBikesAvailLabel
+				//Get num spaces available. Set text for JLabel numSpacesAvailLabel
+				
 				
 				
 				//Start SquareSpace API
 				
+				//Get places of interest. Store in JTextArea placesInterestTextArea.
 				
-				 			
-				//Get places of interest
+				
+				
+				//Update map with starting location, bike station location,
+				//and places of interest
+				getMap(startLocationLatLng, mapStartLocLabel, 15);
 					
+				//TO DO: Add markers for starting location, bike station,
+				//and places of interest to the map
 			
 			}
 		});
 		
 	}
 	
-	private void createComponents() {
+	private void createPrimaryComponents() {
 		
 		//Create topPanel: inputPanel; map(defaultLocation); startLocPanel
 		
@@ -174,35 +189,17 @@ import javax.swing.SwingUtilities;
         mapStartLocLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		getMap(locationDefault, mapStartLocLabel, 12);
 
-		//startLocPanel:
-		startAddressLabel = new JLabel("Starting Address:  ");
-		formatAddressfromGoogleLabel = new JLabel("");
-		startLocPanel = new JPanel();
-		startLocPanel.add(startAddressLabel);
-		startLocPanel.add(formatAddressfromGoogleLabel);
-
 		//assemble topPanel
 		topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
 		topPanel.add(inputPanel, BorderLayout.NORTH);
 		topPanel.add(mapStartLocLabel, BorderLayout.CENTER);
-		topPanel.add(startLocPanel, BorderLayout.SOUTH);
-		
-		
-		
-		//Create Middle Panel: BikeLocPanel; Map; NumBikesPanel
 		
 				
-		//Create Bottom Panel: NumSpacesPanel; PlacesOfInterestLabel; PlacesOfInterestTextArea
-		
-				
-		//add Top, Middle and Bottom Panels to Main Panel
+		//add Top Panel to Main Panel
 		mainPanel = new JPanel();
 		mainPanel.add(topPanel);
-//		mainPanel.add(middlePanel);
-//		mainPanel.add(bottomPanel);
-		
-		
+				
 		//add Main Panel to Frame
 		add(mainPanel);
 		
@@ -214,6 +211,69 @@ import javax.swing.SwingUtilities;
 		
 	}
 	
+	public void createSecondaryComponents() {
+		
+		//update startLocPanel and add it to topPanel:
+		startAddressLabel = new JLabel("Starting Address:  ");
+		formatAddressfromGoogleLabel = new JLabel("");
+		startLocPanel = new JPanel();
+		startLocPanel.add(startAddressLabel);
+		startLocPanel.add(formatAddressfromGoogleLabel);
+		topPanel.add(startLocPanel, BorderLayout.SOUTH);
+		
+		//Create Middle Panel: BikeLocPanel; NumBikesPanel; NumSpacesPanel
+		
+		//BikeLocPanel
+		closestStationLabel = new JLabel("Closest Citibike Station:  ");  
+		stationNameFromAPILabel = new JLabel();//TO DO: Insert Station Name as String
+		bikeLocPanel = new JPanel();
+		bikeLocPanel.add(closestStationLabel);
+		bikeLocPanel.add(stationNameFromAPILabel);
+		
+		//NumBikesPanel
+		bikesAvailLabel = new JLabel("Number of Bikes Available:  ");
+		numBikesAvailLabel = new JLabel(); //TO DO: Insert # bikes available
+		numBikesPanel = new JPanel();
+		numBikesPanel.add(bikesAvailLabel);
+		
+		//NumSpacesPanel
+		spacesAvailLabel = new JLabel("Number of Spaces Available:  ");
+		numSpacesAvailLabel = new JLabel();
+		numSpacesPanel = new JPanel();
+		numSpacesPanel.add(spacesAvailLabel);
+		numSpacesPanel.add(numSpacesAvailLabel);
+				
+		//assemble middlePanel
+		middlePanel = new JPanel();
+		middlePanel.setLayout(new BorderLayout());
+		middlePanel.add(bikeLocPanel,BorderLayout.NORTH);
+		middlePanel.add(numBikesPanel,BorderLayout.CENTER);
+		middlePanel.add(numSpacesPanel,BorderLayout.SOUTH);
+		
+		
+		//Create Bottom Panel: PlacesOfInterestLabel; PlacesOfInterestTextArea
+		
+				
+		
+		
+		
+		
+		
+		//add Top, Middle and Bottom Panels to Main Panel		
+		mainPanel.add(topPanel);
+		mainPanel.add(middlePanel);
+		mainPanel.add(bottomPanel);
+		
+		
+		add(mainPanel);
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		setVisible(true);
+		pack();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		
+		
+	}
 	
 	public static void main(String[] args) {
 		
