@@ -173,13 +173,14 @@ public class Analyzer {
 	
 	/**
 	 * 
+	 * NOTE: METHOD USED FOR TESTING PRINTING OF ALL RESULTS // CAN DELETE LATER
 	 * Method takes in stationId and returns real-time information about the station using CitiBike API
 	 * @param stationId
 	 * @throws IOException
 	 * @throws ParseException
 	 * @throws FileNotFoundException
 	 */
-	public void getStationRealTime(int stationId) throws IOException, ParseException, FileNotFoundException {
+	public void getCitiAPIAll(int stationId) throws IOException, ParseException, FileNotFoundException {
 		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
 		Scanner scan = new Scanner(url.openStream());
 		String str = new String();
@@ -205,6 +206,69 @@ public class Analyzer {
 				System.out.println("Docks Available: " + stationSearch.getInt("num_docks_available"));
 			}
 		}		
+	}
+	
+
+	/**
+	 * 
+	 * Method takes in stationId and returns real-time information on number of bikes available at station using CitiBike API
+	 * @param stationId
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws FileNotFoundException
+	 */
+	public int getCitiAPINumBikes(int stationId) throws IOException, ParseException, FileNotFoundException {
+		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
+		Scanner scan = new Scanner(url.openStream());
+		String str = new String();
+
+		while (scan.hasNext())
+			str += scan.nextLine();
+		scan.close();
+		JSONObject obj = new JSONObject(str);
+		
+		//User can request which station to retrieve info from
+		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
+
+		
+		for (int i=0; i<totalnumStations; i++) {
+			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
+			if (stationSearch.getInt("station_id") == stationId) {
+				return stationSearch.getInt("num_bikes_available");
+			}
+		}
+		return -1;
+	}
+	
+	/**
+	 * 
+	 * Method takes in stationId and returns real-time information on number of empty spaces available at station using CitiBike API
+	 * @param stationId
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws FileNotFoundException
+	 */
+	public int getCitiAPINumSpaces(int stationId) throws IOException, ParseException, FileNotFoundException {
+		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
+		Scanner scan = new Scanner(url.openStream());
+		String str = new String();
+
+		while (scan.hasNext())
+			str += scan.nextLine();
+		scan.close();
+		JSONObject obj = new JSONObject(str);
+		
+		//User can request which station to retrieve info from
+		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
+
+		
+		for (int i=0; i<totalnumStations; i++) {
+			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
+			if (stationSearch.getInt("station_id") == stationId) {
+				return stationSearch.getInt("num_docks_available");
+			}
+		}
+		return -1;
 	}
 
 }

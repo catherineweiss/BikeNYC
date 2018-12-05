@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import main.TourNY;
+
 /**
  * This is the temporary main method that takes a pair of GPS coordinates, returns closest Citibike Station and pulls down real-time station info using Citibike API
  * @author Fred Chang
@@ -16,6 +18,7 @@ class CitiBike{
 		//Constructors
 		ArrayList<Station> stations = new ArrayList<>();	
 		Analyzer analyzer = new Analyzer(stations);
+		//TourNY tourNY = new TourNY();
 		
 		//Enter GPS Coordinates
 		double userLat = 40.782486;
@@ -35,7 +38,21 @@ class CitiBike{
 
 		
 		//Gets real-time data from CitiBike API
-		analyzer.getStationRealTime(closestStationId);	
+		analyzer.getCitiAPIAll(closestStationId);
+		System.out.println("");
+		
+		//Test individual components
+		String stationName = analyzer.stationIdtoName(closestStationId);
+		System.out.println("API Station Name: " + stationName);
+		
+		double distanceFromUser = analyzer.analyzeCloseProximityDistance(userLat, userLong);
+		System.out.println("Distance from user: " + distanceFromUser);
+		
+		int citiAPINumBikes = analyzer.getCitiAPINumBikes(closestStationId);
+		System.out.println("API Number of Bikes Available: " + citiAPINumBikes);
+		
+		int citiAPINumSpaces = analyzer.getCitiAPINumSpaces(closestStationId);
+		System.out.println("API Number of Spaces Available: " + citiAPINumSpaces);
 
 	}
 }
