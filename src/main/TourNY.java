@@ -15,8 +15,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-
-public class TourNY extends JFrame {
+	/**
+	 * GUI for TourNY, an interactive app 
+	 * @author Catherine Weiss
+	 *
+	 */
+	public class TourNY extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 800;
@@ -49,7 +53,7 @@ public class TourNY extends JFrame {
 	private JPanel startLocPanel;
 	
 	//for BikeLocPanel (flow layout); North on middlePanel
-	private JLabel closestStationLable;
+	private JLabel closestStationLable; //TO DO
 	private JLabel stationNameFromAPILabel;
 	private JPanel bikeLocPanel;
 	
@@ -142,6 +146,8 @@ public class TourNY extends JFrame {
 				
 				
 				//Start SquareSpace API
+				
+				
 				 			
 				//Get places of interest
 					
