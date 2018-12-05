@@ -99,7 +99,7 @@ import javax.swing.SwingUtilities;
 			String center = "center=";
 			String zoom = "&zoom=";
 			int zoomNum = mapZoomNum;
-			String size = "&size=300x300&key=";
+			String size = "&size=800x600&key=";
 			String key = GoogleAPIKey.key;
 			
 			String queryParams = center + location + zoom + zoomNum + size + key;
@@ -122,11 +122,15 @@ import javax.swing.SwingUtilities;
 			public void actionPerformed(ActionEvent e) {
 				
 				//Create remaining components:
-				createSecondaryComponents();
+//				createSecondaryComponents();
 
 				//Retrieve user input
 				String startLocation = startAddressTextField.getText();
-					
+
+				
+				
+				
+				
 				//Access Geocoding API
 				GoogleURLCreator gc = new GoogleURLCreator();
 				String googleURL = gc.createURL(startLocation);						
@@ -162,6 +166,7 @@ import javax.swing.SwingUtilities;
 				
 				//Update map with starting location, bike station location,
 				//and places of interest
+				
 				getMap(startLocationLatLng, mapStartLocLabel, 15);
 					
 				//TO DO: Add markers for starting location, bike station,
@@ -195,24 +200,7 @@ import javax.swing.SwingUtilities;
 		topPanel.add(inputPanel, BorderLayout.NORTH);
 		topPanel.add(mapStartLocLabel, BorderLayout.CENTER);
 		
-				
-		//add Top Panel to Main Panel
-		mainPanel = new JPanel();
-		mainPanel.add(topPanel);
-				
-		//add Main Panel to Frame
-		add(mainPanel);
-		
-		setTitle("Customize Your Active Tour of Manhattan");
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setVisible(true);
-		pack();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-	}
-	
-	public void createSecondaryComponents() {
-		
+//copy and paste from SecondComp method
 		//update startLocPanel and add it to topPanel:
 		startAddressLabel = new JLabel("Starting Address:  ");
 		formatAddressfromGoogleLabel = new JLabel("");
@@ -252,12 +240,86 @@ import javax.swing.SwingUtilities;
 		
 		
 		//Create Bottom Panel: PlacesOfInterestLabel; PlacesOfInterestTextArea
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BorderLayout());
+		
+		
 		
 				
+		//add Top Panel to Main Panel
+		mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(topPanel,BorderLayout.NORTH);
+
+		
+//copy and paste from SecondComp method
+		
+		//add Top, Middle and Bottom Panels to Main Panel		
+//		mainPanel.add(topPanel);
+		mainPanel.add(middlePanel,BorderLayout.CENTER);
+		mainPanel.add(bottomPanel,BorderLayout.SOUTH);
+				
+		//add Main Panel to Frame
+		add(mainPanel);
+		
+		setTitle("Customize Your Active Tour of Manhattan");
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		setVisible(true);
+		pack();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	}
+	
+	public void createSecondaryComponents() {
+		
+//		//update startLocPanel and add it to topPanel:
+//		startAddressLabel = new JLabel("Starting Address:  ");
+//		formatAddressfromGoogleLabel = new JLabel("");
+//		startLocPanel = new JPanel();
+//		startLocPanel.add(startAddressLabel);
+//		startLocPanel.add(formatAddressfromGoogleLabel);
 		
 		
 		
+//		topPanel.add(startLocPanel, BorderLayout.SOUTH);
 		
+//		//Create Middle Panel: BikeLocPanel; NumBikesPanel; NumSpacesPanel
+//		
+//		//BikeLocPanel
+//		closestStationLabel = new JLabel("Closest Citibike Station:  ");  
+//		stationNameFromAPILabel = new JLabel();//TO DO: Insert Station Name as String
+//		bikeLocPanel = new JPanel();
+//		bikeLocPanel.add(closestStationLabel);
+//		bikeLocPanel.add(stationNameFromAPILabel);
+//		
+//		//NumBikesPanel
+//		bikesAvailLabel = new JLabel("Number of Bikes Available:  ");
+//		numBikesAvailLabel = new JLabel(); //TO DO: Insert # bikes available
+//		numBikesPanel = new JPanel();
+//		numBikesPanel.add(bikesAvailLabel);
+//		
+//		//NumSpacesPanel
+//		spacesAvailLabel = new JLabel("Number of Spaces Available:  ");
+//		numSpacesAvailLabel = new JLabel();
+//		numSpacesPanel = new JPanel();
+//		numSpacesPanel.add(spacesAvailLabel);
+//		numSpacesPanel.add(numSpacesAvailLabel);
+//				
+//		//assemble middlePanel
+//		middlePanel = new JPanel();
+//		middlePanel.setLayout(new BorderLayout());
+//		middlePanel.add(bikeLocPanel,BorderLayout.NORTH);
+//		middlePanel.add(numBikesPanel,BorderLayout.CENTER);
+//		middlePanel.add(numSpacesPanel,BorderLayout.SOUTH);
+//		
+//		
+//		//Create Bottom Panel: PlacesOfInterestLabel; PlacesOfInterestTextArea
+//		
+//				
+//		
+//		
+//		
+//		
 		
 		//add Top, Middle and Bottom Panels to Main Panel		
 		mainPanel.add(topPanel);
