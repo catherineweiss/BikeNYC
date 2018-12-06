@@ -45,6 +45,10 @@ class CitiBike{
 		String stationName = analyzer.stationIdtoName(closestStationId);
 		System.out.println("API Station Name: " + stationName);
 		
+		double stationLat = analyzer.getClosestStationLat(closestStationId);
+		double stationLong = analyzer.getClosestStationLong(closestStationId);
+		System.out.println("Coordinates (Lat, Long): " + stationLat + ", " + stationLong);
+		
 		double distanceFromUser = analyzer.analyzeCloseProximityDistance(userLat, userLong);
 		System.out.println("Distance from user: " + distanceFromUser);
 		
@@ -53,6 +57,8 @@ class CitiBike{
 		
 		int citiAPINumSpaces = analyzer.getCitiAPINumSpaces(closestStationId);
 		System.out.println("API Number of Spaces Available: " + citiAPINumSpaces);
+		
+		
 
 	}
 }
