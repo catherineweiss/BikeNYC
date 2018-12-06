@@ -115,6 +115,40 @@ public class Analyzer {
 	
 	/**
 	 * 
+	 * Method takes in station ID of closest CitiBike station and returns its latitude coordinates
+	 * @param closestStationId
+	 * @return
+	 */
+	public double getClosestStationLat(int closestStationId) {
+		double stationLat = 0;
+		for (Station s: stations) {
+			if (s.getStationId() == closestStationId) {
+				stationLat = s.getStationLat();
+			}
+		}			
+		
+		return stationLat;
+	}
+	
+	/**
+	 * 
+	 * Method takes in station ID of closest CitiBike station and returns its latitude coordinates
+	 * @param closestStationId
+	 * @return
+	 */
+	public double getClosestStationLong(int closestStationId) {
+		double stationLong = 0;
+		for (Station s: stations) {
+			if (s.getStationId() == closestStationId) {
+				stationLong = s.getStationLong();
+			}
+		}			
+		
+		return stationLong;
+	}
+	
+	/**
+	 * 
 	 * Method takes in two pairs of coordinates and returns distance in miles
 	 * Note: Distance calculation formula using Haversine, src: https://rosettacode.org/wiki/Haversine_formula#Java
 	 * @param lat1
