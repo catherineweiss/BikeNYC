@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +32,9 @@ import javax.swing.SwingUtilities;
 	private static final String locationDefault = "New+York,NY";
 	
 	//Instance Variables:
+	
+	private double latStartLocation;
+	private double lngStartLocation;
 	
 	//panels:
 	private JPanel topPanel; //border layout
@@ -93,7 +99,7 @@ import javax.swing.SwingUtilities;
 	}
 
 	
-	private void getMap (String location, JLabel mapLabelName, int mapZoomNum) {
+	private void getDefaultMap (String location, JLabel mapLabelName, int mapZoomNum) {
 		
 		try {		
 			String center = "center=";
@@ -113,6 +119,40 @@ import javax.swing.SwingUtilities;
 			ex.printStackTrace();
 		}
 	}
+
+/*	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
+						String startLocLatLng, String bikeStationLatLng, String placesOfInterestLatLng) {
+		
+		try {		
+			String center = "center=";
+			String zoom = "&zoom";
+			int zoomNum = 12;
+			String size = "&size=800x600&key=";
+			
+			String markerStart = "&markers=size:mid|color:gray|startLocLatLng"; //TODO add |icon:person.png
+			String markerBikeStation = "&markers=size:mid|color:blue|bikeStationLatLng"; //TODO add |icon.bike.png
+			String markerPlacesOfInterest = "&markers=size:mid|color:green|placesOfInterestLatLng";
+			
+			String markers = "";
+			
+			
+			String key = GoogleAPIKey.key;
+			
+			String queryParams = center + location + zoom + zoomNum + size + markers + key;
+			String mapsURL = "https://maps.googleapis.com/maps/api/staticmap?" + queryParams;		
+			mapsURL=URLEncoder.encode(mapsURL, "UTF-8");
+			System.out.println(mapsURL);
+			url = new URL(mapsURL);					
+			img = ImageIO.read(url);
+			icon = new ImageIcon(img);
+			mapLabelName.setIcon(icon); //I believe this will replace first map in JLabel
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
+	}
+*/	
+		
 	
 	private void createGoButton() {
 		goButton = new JButton("Go");
@@ -126,10 +166,6 @@ import javax.swing.SwingUtilities;
 
 				//Retrieve user input
 				String startLocation = startAddressTextField.getText();
-
-				
-				
-				
 				
 				//Access Geocoding API
 				GoogleURLCreator gc = new GoogleURLCreator();
@@ -139,9 +175,9 @@ import javax.swing.SwingUtilities;
 				GeocodingParser gp = new GeocodingParser();
 				gp.parseGeocodingAPIResponse(gResponse);
 				
-				Double latStartLocation = gp.getOriginLocation().getLatitude();
-				Double lngStartLocation = gp.getOriginLocation().getLongitude();
-				String startLocationLatLng = latStartLocation.toString() + "," + lngStartLocation.toString();
+				latStartLocation = gp.getOriginLocation().getLatitude();
+				lngStartLocation = gp.getOriginLocation().getLongitude();
+				String startLocationLatLng = "" + latStartLocation + "," + lngStartLocation;
 								
 				//fills Starting Address
 				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
@@ -167,7 +203,7 @@ import javax.swing.SwingUtilities;
 				//Update map with starting location, bike station location,
 				//and places of interest
 				
-				getMap(startLocationLatLng, mapStartLocLabel, 15);
+				getDefaultMap(startLocationLatLng, mapStartLocLabel, 15);
 					
 				//TO DO: Add markers for starting location, bike station,
 				//and places of interest to the map
@@ -192,7 +228,7 @@ import javax.swing.SwingUtilities;
 		//map
 		mapStartLocLabel = new JLabel();
         mapStartLocLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		getMap(locationDefault, mapStartLocLabel, 12);
+		getDefaultMap(locationDefault, mapStartLocLabel, 12);
 
 		//assemble topPanel
 		topPanel = new JPanel();
