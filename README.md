@@ -57,3 +57,19 @@ Open weather api for checking current conditions
 - with a ui, the project would be enough
 - she will be making sure everyone has programming contributions on github
 - try and do it full stack independent to reduce merge conflicts and reduce interdependence
+
+## To Do
+- divide into packages
+- exceptions: 
+- user manual
+- one-page writeup
+- check that the number of junit tests matches the rubric
+- break the program
+- (can we wire up the return key to be go?)
+- put empire state as default address
+- scan down the rubric again
+- actually submit
+- lint for javadoc comments, indenting
+- have tourny call citibike
+- have tourny call foursquare
+- ruthie maybe write query string builder
