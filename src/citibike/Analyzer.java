@@ -158,17 +158,17 @@ public class Analyzer {
 	 * @return
 	 */
 	public static double getDistanceHaversine(double lat1, double lon1, double lat2, double lon2) {
-		double R = 6372.8; // In kilometers
-		double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
+		double radius = 6372.8; // earth radius in kilometers
+		double latDiff = Math.toRadians(lat2 - lat1);
+        double lonDiff = Math.toRadians(lon2 - lon1);
         lat1 = Math.toRadians(lat1);
         lat2 = Math.toRadians(lat2);
  
-        double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
+        double a = Math.pow(Math.sin(latDiff / 2),2) + Math.pow(Math.sin(lonDiff / 2),2) * Math.cos(lat1) * Math.cos(lat2);
         double c = 2 * Math.asin(Math.sqrt(a));
-        double distanceKM =  R * c;
-//        double distanceMiles = distanceKM * 0.62137; //return distance in miles as double
+        double distanceKM =  radius * c;
         double distanceMiles = Math.round(distanceKM * 0.62137*100.0)/100.0; //return distance in miles with 2 decimal places precision
+        
         return distanceMiles;
     }
 	
