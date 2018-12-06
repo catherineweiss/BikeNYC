@@ -59,28 +59,28 @@ Open weather api for checking current conditions
 - try and do it full stack independent to reduce merge conflicts and reduce interdependence
 
 ## To Do
-First Priority:
-- divide into packages
+First Priority (DUE end of day Friday) (By end of day Friday, our program should be running!)
+- Ruthie: divide into packages
 - Fred: have tourNY.java call citibike
-- R: have tourNY.java call foursquare
+- Ruthie: have tourNY.java call foursquare
 - Fred: return closest bike station as a Location object
 - Fred: fill in JPanels
-- C: finish getMap method
+- Catherine: finish getMap method
 
-Second Priority:
+Second Priority (DUE end of day Saturday):
 - put empire state as default address
 - break the program
 - (can we wire up the return key to be go?)
 --> if user enters an address outside of NY, it currently makes map go there. Check Starting Address for zip codes in Manhattan and then make the user enter a new address.
-- can we make a BACK button, to enter a new address?
-
 - exceptions: 
+- ruthie maybe write query string builder
+
+Third Priority (DUE end of day SUNDAY):
+- lint for javadoc comments, indenting
 - user manual
 - one-page writeup
 - check that the number of junit tests matches the rubric
-
 - scan down the rubric again
 - actually submit
-- lint for javadoc comments, indenting
 
-- ruthie maybe write query string builder
+
