@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -64,32 +65,29 @@ import javax.swing.SwingUtilities;
 	private JLabel stationNameFromAPILabel;
 	private JPanel bikeLocPanel;
 	
-
-/* We opted not to display a second map. 
- * TO DO: remove these instance vars when we clean up code.
-	//for map with bike location; Center on middlePanel
-	private URL urlBikeLocation;
-	private BufferedImage imgBikeLocation;
-	private JLabel mapBikeLocationLabel;
-*/	
-		
-	//for NumBikesPanel (flow layout); Center on middlePanel
+	//for DistFromUserPanel (flow layout); Center on middlePanle
+	private JLabel distFromUserLabel;
+	private JLabel actualDistFromUserFromAPILabel;
+	private JLabel milesFromUserLabel;
+	private JPanel distFromUserPanel;	
+	
+	//for NumBikesPanel (flow layout); South on middlePanel
 	private JLabel bikesAvailLabel;
 	private JLabel numBikesAvailLabel;
 	private JPanel numBikesPanel;
-
 	
-	//for NumSpacesPanel (flow layout); South on middlePanel
+	//for NumSpacesPanel (flow layout); North on bottomPanel
 	private JLabel spacesAvailLabel;
 	private JLabel numSpacesAvailLabel;
 	private JPanel numSpacesPanel;
 
 
-	//North on bottomPanel
+	//Center on bottomPanel
 	private JLabel placesInterestLabel;
 
-	//Center on bottomPanel
+	//for placesInterestPanel (flow layout); South on bottomPanel
 	private JTextArea placesInterestTextArea;
+	private JPanel placesInterestPanel;
 	
 	
 	//constructor with helper methods
@@ -102,7 +100,7 @@ import javax.swing.SwingUtilities;
 	private void getDefaultMap (String location, JLabel mapLabelName, int mapZoomNum) {
 		
 		try {		
-			String center = "center=";
+			String center = "center="; //TO DO: Change center of map to bike station location
 			String zoom = "&zoom=";
 			int zoomNum = mapZoomNum;
 			String size = "&size=800x600&key=";
@@ -120,7 +118,7 @@ import javax.swing.SwingUtilities;
 		}
 	}
 
-/*	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
+	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
 						String startLocLatLng, String bikeStationLatLng, String placesOfInterestLatLng) {
 		
 		try {		
@@ -133,7 +131,7 @@ import javax.swing.SwingUtilities;
 			String markerBikeStation = "&markers=size:mid|color:blue|bikeStationLatLng"; //TODO add |icon.bike.png
 			String markerPlacesOfInterest = "&markers=size:mid|color:green|placesOfInterestLatLng";
 			
-			String markers = "";
+			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
 			
 			
 			String key = GoogleAPIKey.key;
@@ -145,13 +143,13 @@ import javax.swing.SwingUtilities;
 			url = new URL(mapsURL);					
 			img = ImageIO.read(url);
 			icon = new ImageIcon(img);
-			mapLabelName.setIcon(icon); //I believe this will replace first map in JLabel
+			mapLabelName.setIcon(icon); 
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
 		
 	}
-*/	
+	
 		
 	
 	private void createGoButton() {
@@ -161,9 +159,6 @@ import javax.swing.SwingUtilities;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//Create remaining components:
-//				createSecondaryComponents();
-
 				//Retrieve user input
 				String startLocation = startAddressTextField.getText();
 				
@@ -236,7 +231,6 @@ import javax.swing.SwingUtilities;
 		topPanel.add(inputPanel, BorderLayout.NORTH);
 		topPanel.add(mapStartLocLabel, BorderLayout.CENTER);
 		
-//copy and paste from SecondComp method
 		//update startLocPanel and add it to topPanel:
 		startAddressLabel = new JLabel("Starting Address:  ");
 		formatAddressfromGoogleLabel = new JLabel("");
@@ -253,7 +247,15 @@ import javax.swing.SwingUtilities;
 		bikeLocPanel = new JPanel();
 		bikeLocPanel.add(closestStationLabel);
 		bikeLocPanel.add(stationNameFromAPILabel);
-		
+
+		distFromUserLabel = new JLabel("You are  ");
+		actualDistFromUserFromAPILabel = new JLabel(); //TO DO: Insert distance as a String		
+		milesFromUserLabel = new JLabel(" miles from the closest station");
+		distFromUserPanel = new JPanel();
+		distFromUserPanel.add(distFromUserLabel);
+		distFromUserPanel.add(actualDistFromUserFromAPILabel);
+		distFromUserPanel.add(milesFromUserLabel);
+				
 		//NumBikesPanel
 		bikesAvailLabel = new JLabel("Number of Bikes Available:  ");
 		numBikesAvailLabel = new JLabel(); //TO DO: Insert # bikes available
@@ -271,27 +273,32 @@ import javax.swing.SwingUtilities;
 		middlePanel = new JPanel();
 		middlePanel.setLayout(new BorderLayout());
 		middlePanel.add(bikeLocPanel,BorderLayout.NORTH);
-		middlePanel.add(numBikesPanel,BorderLayout.CENTER);
-		middlePanel.add(numSpacesPanel,BorderLayout.SOUTH);
+		middlePanel.add(distFromUserPanel,BorderLayout.CENTER);		
+		middlePanel.add(numBikesPanel,BorderLayout.SOUTH);
 		
 		
 		//Create Bottom Panel: PlacesOfInterestLabel; PlacesOfInterestTextArea
+
+		placesInterestLabel = new JLabel("Places of Interest within 1/4 mile: "); //TO DO: check that this is desired text
+        placesInterestLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		//South on bottomPanel
+		placesInterestTextArea = new JTextArea(); //TO DO: insert string/data into Text Area
+		placesInterestPanel = new JPanel();
+		placesInterestPanel.add(placesInterestTextArea);
+		
+		//assemble bottomPanel
 		bottomPanel = new JPanel();
 		bottomPanel.setLayout(new BorderLayout());
-		
-		
+		bottomPanel.add(numSpacesPanel,BorderLayout.NORTH);
+		bottomPanel.add(placesInterestLabel,BorderLayout.CENTER);
+		bottomPanel.add(placesInterestTextArea,BorderLayout.SOUTH);
 		
 				
-		//add Top Panel to Main Panel
+		//add Top, Middle, Bottom Panels to Main Panel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(topPanel,BorderLayout.NORTH);
-
-		
-//copy and paste from SecondComp method
-		
-		//add Top, Middle and Bottom Panels to Main Panel		
-//		mainPanel.add(topPanel);
 		mainPanel.add(middlePanel,BorderLayout.CENTER);
 		mainPanel.add(bottomPanel,BorderLayout.SOUTH);
 				
@@ -306,7 +313,7 @@ import javax.swing.SwingUtilities;
 		
 	}
 	
-	public void createSecondaryComponents() {
+/*	public void createSecondaryComponents() {
 		
 //		//update startLocPanel and add it to topPanel:
 //		startAddressLabel = new JLabel("Starting Address:  ");
@@ -371,7 +378,7 @@ import javax.swing.SwingUtilities;
 
 		
 		
-	}
+	}*/
 	
 	public static void main(String[] args) {
 		
