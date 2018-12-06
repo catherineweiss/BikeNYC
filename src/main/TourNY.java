@@ -34,8 +34,10 @@ import javax.swing.SwingUtilities;
 	
 	//Instance Variables:
 	
-	private double latStartLocation;
-	private double lngStartLocation;
+	private double userLat; //user start location (latitude)
+	private double userLong; //user start location (longitude)
+	private double stationLat; //closest station location (latitude)
+	private double stationLong; //closest station location (longitude)
 	
 	//panels:
 	private JPanel topPanel; //border layout
@@ -170,9 +172,9 @@ import javax.swing.SwingUtilities;
 				GeocodingParser gp = new GeocodingParser();
 				gp.parseGeocodingAPIResponse(gResponse);
 				
-				latStartLocation = gp.getOriginLocation().getLatitude();
-				lngStartLocation = gp.getOriginLocation().getLongitude();
-				String startLocationLatLng = "" + latStartLocation + "," + lngStartLocation;
+				userLat = gp.getOriginLocation().getLatitude();
+				userLong = gp.getOriginLocation().getLongitude();
+				String startLocationLatLng = "" + userLat + "," + userLong;
 								
 				//fills Starting Address
 				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
