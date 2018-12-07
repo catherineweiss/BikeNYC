@@ -41,7 +41,10 @@ import javax.swing.SwingUtilities;
 	private double userLong; //user start location (longitude)
 	private double stationLat; //closest station location (latitude)
 	private double stationLong; //closest station location (longitude)
-  private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
+    private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
+    private String startLocationAsString;	
+    private String closestBikeLocationAsString;
+    private String placesOfInterestAsString;
 
 	//panels:
 	private JPanel topPanel; //border layout
@@ -103,14 +106,14 @@ import javax.swing.SwingUtilities;
 	}
 
 	
-	private void getDefaultMap (String location, JLabel mapLabelName, int mapZoomNum) {
+	private void getMap (String location, JLabel mapLabelName, int mapZoomNum) {
 		
 		try {		
 			String center = "center="; //TO DO: Change center of map to bike station location
 			String zoom = "&zoom=";
 			int zoomNum = mapZoomNum;
-			String size = "&size=800x600&key=";
-			String key = GoogleAPIKey.key;
+			String size = "&size=800x600";
+			String key = "&key=" + GoogleAPIKey.key;
 			
 			String queryParams = center + location + zoom + zoomNum + size + key;
 			String mapsURL = "https://maps.googleapis.com/maps/api/staticmap?" + queryParams;		
@@ -124,30 +127,37 @@ import javax.swing.SwingUtilities;
 		}
 	}
 
-/*	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
+	private String placesOfInterestAsStringBuilder(ArrayList<Location> pointsOfInterest) {
+		
+		String placesOfInterestAsString = "";
+		for (Location l : pointsOfInterest) {
+			placesOfInterestAsString = placesOfInterestAsString + l.getLatLongString() + "|";
+		}
+		String substring = placesOfInterestAsString.substring(0, placesOfInterestAsString.length()-1); //removes final |		
+		return substring;
+	}
+	
+	
+	private void getMap (String location, JLabel mapLabelName, int mapZoomNum,
 						String startLocLatLng, String bikeStationLatLng, String placesOfInterestLatLng) {
 		
-		try {		// to do: center on bike station location
-				// make bike station and places of interest as instance variables
-				//create method "string builder" to take lats and longs into strings
+		try {	
 			
 			String center = "center=";
 			String zoom = "&zoom";
 			int zoomNum = 12;
-			String size = "&size=800x600&key=";
+			String size = "&size=800x600";
 			
-			String markerStart = "&markers=size:mid|color:gray|startLocLatLng"; //TODO add |icon:person.png
-			String markerBikeStation = "&markers=size:mid|color:blue|bikeStationLatLng"; //TODO add |icon.bike.png
-			String markerPlacesOfInterest = "&markers=size:mid|color:green|placesOfInterestLatLng";
-			
+			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString; 
+			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString; 
+			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;			
 			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
-			
-			
-			String key = GoogleAPIKey.key;
+						
+			String key = "&key=" + GoogleAPIKey.key;
 			
 			String queryParams = center + location + zoom + zoomNum + size + markers + key;
 			String mapsURL = "https://maps.googleapis.com/maps/api/staticmap?" + queryParams;		
-			mapsURL=URLEncoder.encode(mapsURL, "UTF-8");
+//			mapsURL=URLEncoder.encode(mapsURL, "UTF-8");
 			System.out.println(mapsURL);
 			url = new URL(mapsURL);					
 			img = ImageIO.read(url);
@@ -158,7 +168,7 @@ import javax.swing.SwingUtilities;
 		}
 		
 	}
-*/	
+	
 		
 	
 	private void createGoButton(){
@@ -178,10 +188,9 @@ import javax.swing.SwingUtilities;
 				String gResponse = ac.callAPI(googleURL);				
 				GeocodingParser gp = new GeocodingParser();
 				gp.parseGeocodingAPIResponse(gResponse);
-			  userLat = gp.getOriginLocation().getLatitude();
+			    userLat = gp.getOriginLocation().getLatitude();
 				userLong = gp.getOriginLocation().getLongitude();
-				String startLocationLatLng = gp.getOriginLocation().getLatLongString();
-
+				startLocationAsString = gp.getOriginLocation().getLatLongString();
 								
 				//fills Starting Address
 				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
@@ -230,26 +239,40 @@ import javax.swing.SwingUtilities;
 				stationLat = analyzer.getClosestStationLat(closestStationId);
 				stationLong = analyzer.getClosestStationLong(closestStationId);
 				Location closestBikeLocation = new Location(stationName, stationLat, stationLong, stationName);
+				closestBikeLocationAsString = closestBikeLocation.getLatLongString();
 				
-				
-				
-				
-//				Location stationLoc = new Location (String name, Double lat, Double lng, String address);
-				
-				
-				//Start SquareSpace API
+
+				//*** 	SQUARE SPACE FUNCTIONALITY BEGINS HERE ***
 				
 				//Get places of interest. Store in JTextArea placesInterestTextArea.
 				
 				
 				
-				//Update map with starting location, bike station location,
-				//and places of interest
 				
-				getDefaultMap(startLocationLatLng, mapStartLocLabel, 15);
-					
-				//TO DO: Add markers for starting location, bike station,
-				//and places of interest to the map
+//			    pointsOfInterest =  //TODO Set this variable equal to arrayList of Location objects
+
+				
+				
+				
+				
+				
+
+
+//				placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest); 
+				
+				//Use String of fake locations until SquareSpace functionality is added:				
+				placesOfInterestAsString = "40.73,-73.99|40.74,-74.00|40.75,-74.01|40.73,-74.01|"
+						+ "40.72,-73.98|40.74,-74.001|40.73,-74.002|40.72,-73.995|40.7105,-73.9955|"
+						+ "40.725,-73.99356";
+						
+				
+				
+				
+				//Update map with markers for start location, bike station, and places of interest
+				getMap(closestBikeLocationAsString, mapStartLocLabel, 15,
+						startLocationAsString, closestBikeLocationAsString, placesOfInterestAsString);
+				
+
 			
 			}
 		});
@@ -271,7 +294,7 @@ import javax.swing.SwingUtilities;
 		//map
 		mapStartLocLabel = new JLabel();
         mapStartLocLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		getDefaultMap(locationDefault, mapStartLocLabel, 12);
+		getMap(locationDefault, mapStartLocLabel, 12);
 
 		//assemble topPanel
 		topPanel = new JPanel();
@@ -360,73 +383,7 @@ import javax.swing.SwingUtilities;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
-	
-/*	public void createSecondaryComponents() {
-		
-//		//update startLocPanel and add it to topPanel:
-//		startAddressLabel = new JLabel("Starting Address:  ");
-//		formatAddressfromGoogleLabel = new JLabel("");
-//		startLocPanel = new JPanel();
-//		startLocPanel.add(startAddressLabel);
-//		startLocPanel.add(formatAddressfromGoogleLabel);
-		
-		
-		
-//		topPanel.add(startLocPanel, BorderLayout.SOUTH);
-		
-//		//Create Middle Panel: BikeLocPanel; NumBikesPanel; NumSpacesPanel
-//		
-//		//BikeLocPanel
-//		closestStationLabel = new JLabel("Closest Citibike Station:  ");  
-//		stationNameFromAPILabel = new JLabel();//TO DO: Insert Station Name as String
-//		bikeLocPanel = new JPanel();
-//		bikeLocPanel.add(closestStationLabel);
-//		bikeLocPanel.add(stationNameFromAPILabel);
-//		
-//		//NumBikesPanel
-//		bikesAvailLabel = new JLabel("Number of Bikes Available:  ");
-//		numBikesAvailLabel = new JLabel(); //TO DO: Insert # bikes available
-//		numBikesPanel = new JPanel();
-//		numBikesPanel.add(bikesAvailLabel);
-//		
-//		//NumSpacesPanel
-//		spacesAvailLabel = new JLabel("Number of Spaces Available:  ");
-//		numSpacesAvailLabel = new JLabel();
-//		numSpacesPanel = new JPanel();
-//		numSpacesPanel.add(spacesAvailLabel);
-//		numSpacesPanel.add(numSpacesAvailLabel);
-//				
-//		//assemble middlePanel
-//		middlePanel = new JPanel();
-//		middlePanel.setLayout(new BorderLayout());
-//		middlePanel.add(bikeLocPanel,BorderLayout.NORTH);
-//		middlePanel.add(numBikesPanel,BorderLayout.CENTER);
-//		middlePanel.add(numSpacesPanel,BorderLayout.SOUTH);
-//		
-//		
-//		//Create Bottom Panel: PlacesOfInterestLabel; PlacesOfInterestTextArea
-//		
-//				
-//		
-//		
-//		
-//		
-		
-		//add Top, Middle and Bottom Panels to Main Panel		
-		mainPanel.add(topPanel);
-		mainPanel.add(middlePanel);
-		mainPanel.add(bottomPanel);
-		
-		
-		add(mainPanel);
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setVisible(true);
-		pack();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		
-		
-	}*/
 	
 	public static void main(String[] args) {
 		
