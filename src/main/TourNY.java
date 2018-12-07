@@ -41,7 +41,7 @@ import javax.swing.SwingUtilities;
 	private double userLong; //user start location (longitude)
 	private double stationLat; //closest station location (latitude)
 	private double stationLong; //closest station location (longitude)
-  private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
+    private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
 
 	//panels:
 	private JPanel topPanel; //border layout
@@ -103,7 +103,7 @@ import javax.swing.SwingUtilities;
 	}
 
 	
-	private void getDefaultMap (String location, JLabel mapLabelName, int mapZoomNum) {
+	private void getMap (String location, JLabel mapLabelName, int mapZoomNum) {
 		
 		try {		
 			String center = "center="; //TO DO: Change center of map to bike station location
@@ -124,7 +124,7 @@ import javax.swing.SwingUtilities;
 		}
 	}
 
-/*	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
+	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
 						String startLocLatLng, String bikeStationLatLng, String placesOfInterestLatLng) {
 		
 		try {		// to do: center on bike station location
@@ -158,7 +158,7 @@ import javax.swing.SwingUtilities;
 		}
 		
 	}
-*/	
+	
 		
 	
 	private void createGoButton(){
@@ -178,10 +178,9 @@ import javax.swing.SwingUtilities;
 				String gResponse = ac.callAPI(googleURL);				
 				GeocodingParser gp = new GeocodingParser();
 				gp.parseGeocodingAPIResponse(gResponse);
-			  userLat = gp.getOriginLocation().getLatitude();
+			    userLat = gp.getOriginLocation().getLatitude();
 				userLong = gp.getOriginLocation().getLongitude();
 				String startLocationLatLng = gp.getOriginLocation().getLatLongString();
-
 								
 				//fills Starting Address
 				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
@@ -230,11 +229,8 @@ import javax.swing.SwingUtilities;
 				stationLat = analyzer.getClosestStationLat(closestStationId);
 				stationLong = analyzer.getClosestStationLong(closestStationId);
 				Location closestBikeLocation = new Location(stationName, stationLat, stationLong, stationName);
+				String closestBikeLocationAsString = closestBikeLocation.getLatLongString();
 				
-				
-				
-				
-//				Location stationLoc = new Location (String name, Double lat, Double lng, String address);
 				
 				
 				//Start SquareSpace API
@@ -246,7 +242,7 @@ import javax.swing.SwingUtilities;
 				//Update map with starting location, bike station location,
 				//and places of interest
 				
-				getDefaultMap(startLocationLatLng, mapStartLocLabel, 15);
+				getMap(closestBikeLocationAsString, mapStartLocLabel, 15);
 					
 				//TO DO: Add markers for starting location, bike station,
 				//and places of interest to the map
@@ -271,7 +267,7 @@ import javax.swing.SwingUtilities;
 		//map
 		mapStartLocLabel = new JLabel();
         mapStartLocLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		getDefaultMap(locationDefault, mapStartLocLabel, 12);
+		getMap(locationDefault, mapStartLocLabel, 12);
 
 		//assemble topPanel
 		topPanel = new JPanel();
@@ -360,73 +356,7 @@ import javax.swing.SwingUtilities;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
-	
-/*	public void createSecondaryComponents() {
-		
-//		//update startLocPanel and add it to topPanel:
-//		startAddressLabel = new JLabel("Starting Address:  ");
-//		formatAddressfromGoogleLabel = new JLabel("");
-//		startLocPanel = new JPanel();
-//		startLocPanel.add(startAddressLabel);
-//		startLocPanel.add(formatAddressfromGoogleLabel);
-		
-		
-		
-//		topPanel.add(startLocPanel, BorderLayout.SOUTH);
-		
-//		//Create Middle Panel: BikeLocPanel; NumBikesPanel; NumSpacesPanel
-//		
-//		//BikeLocPanel
-//		closestStationLabel = new JLabel("Closest Citibike Station:  ");  
-//		stationNameFromAPILabel = new JLabel();//TO DO: Insert Station Name as String
-//		bikeLocPanel = new JPanel();
-//		bikeLocPanel.add(closestStationLabel);
-//		bikeLocPanel.add(stationNameFromAPILabel);
-//		
-//		//NumBikesPanel
-//		bikesAvailLabel = new JLabel("Number of Bikes Available:  ");
-//		numBikesAvailLabel = new JLabel(); //TO DO: Insert # bikes available
-//		numBikesPanel = new JPanel();
-//		numBikesPanel.add(bikesAvailLabel);
-//		
-//		//NumSpacesPanel
-//		spacesAvailLabel = new JLabel("Number of Spaces Available:  ");
-//		numSpacesAvailLabel = new JLabel();
-//		numSpacesPanel = new JPanel();
-//		numSpacesPanel.add(spacesAvailLabel);
-//		numSpacesPanel.add(numSpacesAvailLabel);
-//				
-//		//assemble middlePanel
-//		middlePanel = new JPanel();
-//		middlePanel.setLayout(new BorderLayout());
-//		middlePanel.add(bikeLocPanel,BorderLayout.NORTH);
-//		middlePanel.add(numBikesPanel,BorderLayout.CENTER);
-//		middlePanel.add(numSpacesPanel,BorderLayout.SOUTH);
-//		
-//		
-//		//Create Bottom Panel: PlacesOfInterestLabel; PlacesOfInterestTextArea
-//		
-//				
-//		
-//		
-//		
-//		
-		
-		//add Top, Middle and Bottom Panels to Main Panel		
-		mainPanel.add(topPanel);
-		mainPanel.add(middlePanel);
-		mainPanel.add(bottomPanel);
-		
-		
-		add(mainPanel);
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setVisible(true);
-		pack();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		
-		
-	}*/
 	
 	public static void main(String[] args) {
 		
