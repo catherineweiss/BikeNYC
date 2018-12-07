@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -34,12 +37,12 @@ import javax.swing.SwingUtilities;
 	
 	//Instance Variables:
 	
-	private double latStartLocation;
-	private double lngStartLocation;
-	private double stationLat;
-	private double stationLong;
-	private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
-	
+	private double userLat; //user start location (latitude)
+	private double userLong; //user start location (longitude)
+	private double stationLat; //closest station location (latitude)
+	private double stationLong; //closest station location (longitude)
+  private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
+
 	//panels:
 	private JPanel topPanel; //border layout
 	private JPanel middlePanel; //border layout
@@ -158,7 +161,7 @@ import javax.swing.SwingUtilities;
 */	
 		
 	
-	private void createGoButton() {
+	private void createGoButton(){
 		goButton = new JButton("Go");
 		goButton.addActionListener(new ActionListener() {
 			
@@ -175,23 +178,61 @@ import javax.swing.SwingUtilities;
 				String gResponse = ac.callAPI(googleURL);				
 				GeocodingParser gp = new GeocodingParser();
 				gp.parseGeocodingAPIResponse(gResponse);
-				
-				latStartLocation = gp.getOriginLocation().getLatitude();
-				lngStartLocation = gp.getOriginLocation().getLongitude();
+			  userLat = gp.getOriginLocation().getLatitude();
+				userLong = gp.getOriginLocation().getLongitude();
 				String startLocationLatLng = gp.getOriginLocation().getLatLongString();
+
 								
 				//fills Starting Address
 				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
 				
 				
 				
-				//Access Citibike API
-				 
-				//Get name of closest Citibike location. Set text for JLabel stationNameFromAPILabel
-				//   ex: stationNameFromAPILabel.setText( insert String here);
+				//*** CITIBIKE FUNCTIONALITY BEGINS HERE ***
 				
-				//Get num bikes avail. Set text for JLabel numBikesAvailLabel
-				//Get num spaces available. Set text for JLabel numSpacesAvailLabel
+				//Constructors
+				ArrayList<Station>stations = new ArrayList<>();
+				Analyzer analyzer = new Analyzer(stations);
+				
+				//Reads in stations csv file
+				analyzer.loadStations();
+				
+				//Gets closest stationID
+				int closestStationId = analyzer.analyzeCloseProximity(userLat, userLong);
+				
+				//Gets closest stationName Set text for JLabel stationNameFromAPILabel
+				String stationName = analyzer.stationIdtoName(closestStationId);
+				stationNameFromAPILabel.setText(stationName);
+				
+				//Gets distance from closest station to user
+				double distanceFromUser = analyzer.analyzeCloseProximityDistance(userLat, userLong);
+				actualDistFromUserFromAPILabel.setText(Double.toString(distanceFromUser));
+				
+				//Gets number bikes avail. Set text for JLabel numBikesAvailLabel
+				try {
+					int citiAPINumBikes = analyzer.getCitiAPINumBikes(closestStationId);
+					numBikesAvailLabel.setText(Integer.toString(citiAPINumBikes));
+				} catch (IOException | ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				//Gets number spaces available. Set text for JLabel numSpacesAvailLabel
+				try {
+					int citiAPINumSpaces = analyzer.getCitiAPINumSpaces(closestStationId);
+					numSpacesAvailLabel.setText(Integer.toString(citiAPINumSpaces));
+				} catch (IOException | ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				//Create closest bike location object
+				stationLat = analyzer.getClosestStationLat(closestStationId);
+				stationLong = analyzer.getClosestStationLong(closestStationId);
+				Location closestBikeLocation = new Location(stationName, stationLat, stationLong, stationName);
+				
+				
+				
 				
 //				Location stationLoc = new Location (String name, Double lat, Double lng, String address);
 				

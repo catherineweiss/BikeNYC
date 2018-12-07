@@ -1,4 +1,4 @@
-package citibike;
+package main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -115,6 +115,40 @@ public class Analyzer {
 	
 	/**
 	 * 
+	 * Method takes in station ID of closest CitiBike station and returns its latitude coordinates
+	 * @param closestStationId
+	 * @return
+	 */
+	public double getClosestStationLat(int closestStationId) {
+		double stationLat = 0;
+		for (Station s: stations) {
+			if (s.getStationId() == closestStationId) {
+				stationLat = s.getStationLat();
+			}
+		}			
+		
+		return stationLat;
+	}
+	
+	/**
+	 * 
+	 * Method takes in station ID of closest CitiBike station and returns its latitude coordinates
+	 * @param closestStationId
+	 * @return
+	 */
+	public double getClosestStationLong(int closestStationId) {
+		double stationLong = 0;
+		for (Station s: stations) {
+			if (s.getStationId() == closestStationId) {
+				stationLong = s.getStationLong();
+			}
+		}			
+		
+		return stationLong;
+	}
+	
+	/**
+	 * 
 	 * Method takes in two pairs of coordinates and returns distance in miles
 	 * Note: Distance calculation formula using Haversine, src: https://rosettacode.org/wiki/Haversine_formula#Java
 	 * @param lat1
@@ -124,17 +158,17 @@ public class Analyzer {
 	 * @return
 	 */
 	public static double getDistanceHaversine(double lat1, double lon1, double lat2, double lon2) {
-		double R = 6372.8; // In kilometers
-		double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
+		double radius = 6372.8; // earth radius in kilometers
+		double latDiff = Math.toRadians(lat2 - lat1);
+        double lonDiff = Math.toRadians(lon2 - lon1);
         lat1 = Math.toRadians(lat1);
         lat2 = Math.toRadians(lat2);
  
-        double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
+        double a = Math.pow(Math.sin(latDiff / 2),2) + Math.pow(Math.sin(lonDiff / 2),2) * Math.cos(lat1) * Math.cos(lat2);
         double c = 2 * Math.asin(Math.sqrt(a));
-        double distanceKM =  R * c;
-//        double distanceMiles = distanceKM * 0.62137; //return distance in miles as double
+        double distanceKM =  radius * c;
         double distanceMiles = Math.round(distanceKM * 0.62137*100.0)/100.0; //return distance in miles with 2 decimal places precision
+        
         return distanceMiles;
     }
 	
@@ -173,13 +207,14 @@ public class Analyzer {
 	
 	/**
 	 * 
+	 * NOTE: METHOD USED FOR TESTING PRINTING OF ALL RESULTS // CAN DELETE LATER
 	 * Method takes in stationId and returns real-time information about the station using CitiBike API
 	 * @param stationId
 	 * @throws IOException
 	 * @throws ParseException
 	 * @throws FileNotFoundException
 	 */
-	public void getStationRealTime(int stationId) throws IOException, ParseException, FileNotFoundException {
+	public void getCitiAPIAll(int stationId) throws IOException, ParseException, FileNotFoundException {
 		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
 		Scanner scan = new Scanner(url.openStream());
 		String str = new String();
@@ -205,6 +240,69 @@ public class Analyzer {
 				System.out.println("Docks Available: " + stationSearch.getInt("num_docks_available"));
 			}
 		}		
+	}
+	
+
+	/**
+	 * 
+	 * Method takes in stationId and returns real-time information on number of bikes available at station using CitiBike API
+	 * @param stationId
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws FileNotFoundException
+	 */
+	public int getCitiAPINumBikes(int stationId) throws IOException, ParseException, FileNotFoundException {
+		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
+		Scanner scan = new Scanner(url.openStream());
+		String str = new String();
+
+		while (scan.hasNext())
+			str += scan.nextLine();
+		scan.close();
+		JSONObject obj = new JSONObject(str);
+		
+		//User can request which station to retrieve info from
+		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
+
+		
+		for (int i=0; i<totalnumStations; i++) {
+			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
+			if (stationSearch.getInt("station_id") == stationId) {
+				return stationSearch.getInt("num_bikes_available");
+			}
+		}
+		return -1;
+	}
+	
+	/**
+	 * 
+	 * Method takes in stationId and returns real-time information on number of empty spaces available at station using CitiBike API
+	 * @param stationId
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws FileNotFoundException
+	 */
+	public int getCitiAPINumSpaces(int stationId) throws IOException, ParseException, FileNotFoundException {
+		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
+		Scanner scan = new Scanner(url.openStream());
+		String str = new String();
+
+		while (scan.hasNext())
+			str += scan.nextLine();
+		scan.close();
+		JSONObject obj = new JSONObject(str);
+		
+		//User can request which station to retrieve info from
+		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
+
+		
+		for (int i=0; i<totalnumStations; i++) {
+			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
+			if (stationSearch.getInt("station_id") == stationId) {
+				return stationSearch.getInt("num_docks_available");
+			}
+		}
+		return -1;
 	}
 
 }

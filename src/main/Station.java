@@ -1,4 +1,4 @@
-package citibike;
+package main;
 
 public class Station {
 

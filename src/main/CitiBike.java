@@ -1,4 +1,4 @@
-package citibike;
+package main;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -35,7 +35,27 @@ class CitiBike{
 
 		
 		//Gets real-time data from CitiBike API
-		analyzer.getStationRealTime(closestStationId);	
+		analyzer.getCitiAPIAll(closestStationId);
+		System.out.println("");
+		
+		//Test individual components
+		String stationName = analyzer.stationIdtoName(closestStationId);
+		System.out.println("API Station Name: " + stationName);
+		
+		double stationLat = analyzer.getClosestStationLat(closestStationId);
+		double stationLong = analyzer.getClosestStationLong(closestStationId);
+		System.out.println("Coordinates (Lat, Long): " + stationLat + ", " + stationLong);
+		
+		double distanceFromUser = analyzer.analyzeCloseProximityDistance(userLat, userLong);
+		System.out.println("Distance from user: " + distanceFromUser);
+		
+		int citiAPINumBikes = analyzer.getCitiAPINumBikes(closestStationId);
+		System.out.println("API Number of Bikes Available: " + citiAPINumBikes);
+		
+		int citiAPINumSpaces = analyzer.getCitiAPINumSpaces(closestStationId);
+		System.out.println("API Number of Spaces Available: " + citiAPINumSpaces);
+		
+		
 
 	}
 }

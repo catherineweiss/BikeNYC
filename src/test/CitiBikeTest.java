@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import citibike.Analyzer;
-import citibike.Station;
+import main.Analyzer;
+import main.Station;
 
 import java.util.ArrayList;
 

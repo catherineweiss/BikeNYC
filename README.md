@@ -57,3 +57,31 @@ Open weather api for checking current conditions
 - with a ui, the project would be enough
 - she will be making sure everyone has programming contributions on github
 - try and do it full stack independent to reduce merge conflicts and reduce interdependence
+
+## To Do
+First Priority (DUE end of day Friday) (By end of day Friday, our program should be running!)
+- (COMPLETE --> Fred merged all into main) Ruthie: divide into packages
+- (COMPLETE) Fred: have tourNY.java call citibike
+- Ruthie: have tourNY.java call foursquare
+- (COMPLETE) Fred: return closest bike station as a Location object
+- (COMPLETE) Fred: fill in JPanels
+- Catherine: finish getMap method
+- Catherine: (Suggested by Fred) take all GUI methods and create new class for them. I can help with this.
+
+Second Priority (DUE end of day Saturday):
+- put empire state as default address
+- break the program
+- (can we wire up the return key to be go?)
+--> if user enters an address outside of NY, it currently makes map go there. Check Starting Address for zip codes in Manhattan and then make the user enter a new address.
+- exceptions: 
+- ruthie maybe write query string builder
+
+Third Priority (DUE end of day SUNDAY):
+- lint for javadoc comments, indenting
+- user manual
+- one-page writeup
+- check that the number of junit tests matches the rubric
+- scan down the rubric again
+- actually submit
+
+
