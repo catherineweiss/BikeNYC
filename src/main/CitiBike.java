@@ -1,10 +1,8 @@
-package citibike;
+package main;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-
-import main.TourNY;
 
 /**
  * This is the temporary main method that takes a pair of GPS coordinates, returns closest Citibike Station and pulls down real-time station info using Citibike API
@@ -18,7 +16,6 @@ class CitiBike{
 		//Constructors
 		ArrayList<Station> stations = new ArrayList<>();	
 		Analyzer analyzer = new Analyzer(stations);
-		//TourNY tourNY = new TourNY();
 		
 		//Enter GPS Coordinates
 		double userLat = 40.782486;
