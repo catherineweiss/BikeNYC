@@ -41,7 +41,8 @@ import javax.swing.SwingUtilities;
 	private double userLong; //user start location (longitude)
 	private double stationLat; //closest station location (latitude)
 	private double stationLong; //closest station location (longitude)
-	
+  private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
+
 	//panels:
 	private JPanel topPanel; //border layout
 	private JPanel middlePanel; //border layout
@@ -123,10 +124,13 @@ import javax.swing.SwingUtilities;
 		}
 	}
 
-	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
+/*	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
 						String startLocLatLng, String bikeStationLatLng, String placesOfInterestLatLng) {
 		
-		try {		
+		try {		// to do: center on bike station location
+				// make bike station and places of interest as instance variables
+				//create method "string builder" to take lats and longs into strings
+			
 			String center = "center=";
 			String zoom = "&zoom";
 			int zoomNum = 12;
@@ -154,7 +158,7 @@ import javax.swing.SwingUtilities;
 		}
 		
 	}
-	
+*/	
 		
 	
 	private void createGoButton(){
@@ -174,10 +178,10 @@ import javax.swing.SwingUtilities;
 				String gResponse = ac.callAPI(googleURL);				
 				GeocodingParser gp = new GeocodingParser();
 				gp.parseGeocodingAPIResponse(gResponse);
-				
-				userLat = gp.getOriginLocation().getLatitude();
+			  userLat = gp.getOriginLocation().getLatitude();
 				userLong = gp.getOriginLocation().getLongitude();
-				String startLocationLatLng = "" + userLat + "," + userLong;
+				String startLocationLatLng = gp.getOriginLocation().getLatLongString();
+
 								
 				//fills Starting Address
 				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
@@ -230,6 +234,7 @@ import javax.swing.SwingUtilities;
 				
 				
 				
+//				Location stationLoc = new Location (String name, Double lat, Double lng, String address);
 				
 				
 				//Start SquareSpace API
