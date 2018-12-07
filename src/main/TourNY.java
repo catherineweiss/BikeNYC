@@ -332,6 +332,7 @@ import javax.swing.SwingUtilities;
 		numBikesAvailLabel = new JLabel(); //TO DO: Insert # bikes available
 		numBikesPanel = new JPanel();
 		numBikesPanel.add(bikesAvailLabel);
+		numBikesPanel.add(numBikesAvailLabel);
 		
 		//NumSpacesPanel
 		spacesAvailLabel = new JLabel("Number of Spaces Available:  ");
