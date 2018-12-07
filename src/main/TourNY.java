@@ -112,8 +112,8 @@ import javax.swing.SwingUtilities;
 			String center = "center="; //TO DO: Change center of map to bike station location
 			String zoom = "&zoom=";
 			int zoomNum = mapZoomNum;
-			String size = "&size=800x600&key=";
-			String key = GoogleAPIKey.key;
+			String size = "&size=800x600";
+			String key = "&key=" + GoogleAPIKey.key;
 			
 			String queryParams = center + location + zoom + zoomNum + size + key;
 			String mapsURL = "https://maps.googleapis.com/maps/api/staticmap?" + queryParams;		
@@ -146,18 +146,18 @@ import javax.swing.SwingUtilities;
 			String center = "center=";
 			String zoom = "&zoom";
 			int zoomNum = 12;
-			String size = "&size=800x600&key=";
+			String size = "&size=800x600";
 			
 			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString; 
 			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString; 
 			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;			
 			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
 						
-			String key = GoogleAPIKey.key;
+			String key = "&key=" + GoogleAPIKey.key;
 			
 			String queryParams = center + location + zoom + zoomNum + size + markers + key;
 			String mapsURL = "https://maps.googleapis.com/maps/api/staticmap?" + queryParams;		
-			mapsURL=URLEncoder.encode(mapsURL, "UTF-8");
+//			mapsURL=URLEncoder.encode(mapsURL, "UTF-8");
 			System.out.println(mapsURL);
 			url = new URL(mapsURL);					
 			img = ImageIO.read(url);
@@ -259,10 +259,11 @@ import javax.swing.SwingUtilities;
 
 
 //				placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest); 
-				//Use String of fake locations until SquareSpace functionality is added:
 				
-				placesOfInterestAsString = "40.73,-73.99|40.74,-74.00|40.75,-74.01|40.76,-74.02|"
-						+ "40.77,-74.03|40.78,-74.04|40.79,-74.05|40.80,-74.06|40.81,-74.07|40.82,-74.08";
+				//Use String of fake locations until SquareSpace functionality is added:				
+				placesOfInterestAsString = "40.73,-73.99|40.74,-74.00|40.75,-74.01|40.73,-74.01|"
+						+ "40.72,-73.98|40.74,-74.001|40.73,-74.002|40.72,-73.995|40.7105,-73.9955|"
+						+ "40.725,-73.99356";
 						
 				
 				
