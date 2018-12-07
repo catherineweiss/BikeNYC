@@ -22,9 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 	/**
-	 * GUI for TourNY, a geo-location based recommendation application
+	 * GUI Methods for TourNY, a geo-location based recommendation application
 	 * for Manhattan 
-	 * @author Catherine Weiss
+	 * @author Catherine Weiss, Fred Chang
 	 *
 	 */
 	public class TourNYGUI extends JFrame {
