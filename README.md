@@ -70,7 +70,7 @@ First Priority (DUE end of day Friday) (By end of day Friday, our program should
 - (COMPLETE) Fred: take all GUI methods and create new class for them
 
 Second Priority (DUE end of day Saturday):
-- Catherine: put empire state as default address
+- (COMPLETE) Catherine: put Times Square as default address
 - Catherine: add Javadocs for TourNYGUI
 - break the program
 - (COMPLETE) Catherine: can we wire up the return key to be go?
