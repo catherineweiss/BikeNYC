@@ -42,6 +42,9 @@ import javax.swing.SwingUtilities;
 	private double stationLat; //closest station location (latitude)
 	private double stationLong; //closest station location (longitude)
     private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
+    private String startLocationAsString;	
+    private String closestBikeLocationAsString;
+    private String placesOfInterestAsString;
 
 	//panels:
 	private JPanel topPanel; //border layout
@@ -124,25 +127,32 @@ import javax.swing.SwingUtilities;
 		}
 	}
 
-	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
+	private String placesOfInterestAsStringBuilder(ArrayList<Location> pointsOfInterest) {
+		
+		String placesOfInterestAsString = "";
+		for (Location l : pointsOfInterest) {
+			placesOfInterestAsString = placesOfInterestAsString + l.getLatLongString() + "|";
+		}
+		String substring = placesOfInterestAsString.substring(0, placesOfInterestAsString.length()-1); //removes final |		
+		return substring;
+	}
+	
+	
+	private void getMap (String location, JLabel mapLabelName, int mapZoomNum,
 						String startLocLatLng, String bikeStationLatLng, String placesOfInterestLatLng) {
 		
-		try {		// to do: center on bike station location
-				// make bike station and places of interest as instance variables
-				//create method "string builder" to take lats and longs into strings
+		try {	
 			
 			String center = "center=";
 			String zoom = "&zoom";
 			int zoomNum = 12;
 			String size = "&size=800x600&key=";
 			
-			String markerStart = "&markers=size:mid|color:gray|startLocLatLng"; //TODO add |icon:person.png
-			String markerBikeStation = "&markers=size:mid|color:blue|bikeStationLatLng"; //TODO add |icon.bike.png
-			String markerPlacesOfInterest = "&markers=size:mid|color:green|placesOfInterestLatLng";
-			
+			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString; 
+			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString; 
+			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;			
 			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
-			
-			
+						
 			String key = GoogleAPIKey.key;
 			
 			String queryParams = center + location + zoom + zoomNum + size + markers + key;
@@ -180,7 +190,7 @@ import javax.swing.SwingUtilities;
 				gp.parseGeocodingAPIResponse(gResponse);
 			    userLat = gp.getOriginLocation().getLatitude();
 				userLong = gp.getOriginLocation().getLongitude();
-				String startLocationLatLng = gp.getOriginLocation().getLatLongString();
+				startLocationAsString = gp.getOriginLocation().getLatLongString();
 								
 				//fills Starting Address
 				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
@@ -229,23 +239,39 @@ import javax.swing.SwingUtilities;
 				stationLat = analyzer.getClosestStationLat(closestStationId);
 				stationLong = analyzer.getClosestStationLong(closestStationId);
 				Location closestBikeLocation = new Location(stationName, stationLat, stationLong, stationName);
-				String closestBikeLocationAsString = closestBikeLocation.getLatLongString();
+				closestBikeLocationAsString = closestBikeLocation.getLatLongString();
 				
-				
-				
-				//Start SquareSpace API
+
+				//*** 	SQUARE SPACE FUNCTIONALITY BEGINS HERE ***
 				
 				//Get places of interest. Store in JTextArea placesInterestTextArea.
 				
 				
 				
-				//Update map with starting location, bike station location,
-				//and places of interest
 				
-				getMap(closestBikeLocationAsString, mapStartLocLabel, 15);
-					
-				//TO DO: Add markers for starting location, bike station,
-				//and places of interest to the map
+//			    pointsOfInterest =  //TODO Set this variable equal to arrayList of Location objects
+
+				
+				
+				
+				
+				
+
+
+//				placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest); 
+				//Use String of fake locations until SquareSpace functionality is added:
+				
+				placesOfInterestAsString = "40.73,-73.99|40.74,-74.00|40.75,-74.01|40.76,-74.02|"
+						+ "40.77,-74.03|40.78,-74.04|40.79,-74.05|40.80,-74.06|40.81,-74.07|40.82,-74.08";
+						
+				
+				
+				
+				//Update map with markers for start location, bike station, and places of interest
+				getMap(closestBikeLocationAsString, mapStartLocLabel, 15,
+						startLocationAsString, closestBikeLocationAsString, placesOfInterestAsString);
+				
+
 			
 			}
 		});
