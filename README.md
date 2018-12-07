@@ -60,12 +60,13 @@ Open weather api for checking current conditions
 
 ## To Do
 First Priority (DUE end of day Friday) (By end of day Friday, our program should be running!)
-- Ruthie: divide into packages
-- Fred: have tourNY.java call citibike
+- (COMPLETE --> Fred merged all into main) Ruthie: divide into packages
+- (COMPLETE) Fred: have tourNY.java call citibike
 - Ruthie: have tourNY.java call foursquare
-- Fred: return closest bike station as a Location object
-- Fred: fill in JPanels
+- (COMPLETE) Fred: return closest bike station as a Location object
+- (COMPLETE) Fred: fill in JPanels
 - Catherine: finish getMap method
+- Catherine: (Suggested by Fred) take all GUI methods and create new class for them. I can help with this.
 
 Second Priority (DUE end of day Saturday):
 - put empire state as default address
