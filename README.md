@@ -60,21 +60,24 @@ Open weather api for checking current conditions
 
 ## To Do
 First Priority (DUE end of day Friday) (By end of day Friday, our program should be running!)
-- (COMPLETE --> Fred merged all into main) Ruthie: divide into packages
+- (COMPLETE --> Fred merged all into main) 
+- Ruthie: divide into packages
 - (COMPLETE) Fred: have tourNY.java call citibike
 - Ruthie: have tourNY.java call foursquare
 - (COMPLETE) Fred: return closest bike station as a Location object
 - (COMPLETE) Fred: fill in JPanels
-- Catherine: finish getMap method
-- Catherine: (Suggested by Fred) take all GUI methods and create new class for them. I can help with this.
+- (COMPLETE) Catherine: finish getMap method
+- (COMPLETE) Fred: take all GUI methods and create new class for them
 
 Second Priority (DUE end of day Saturday):
-- put empire state as default address
+- Catherine: put empire state as default address
+- Catherine: add Javadocs for TourNYGUI
 - break the program
-- (can we wire up the return key to be go?)
---> if user enters an address outside of NY, it currently makes map go there. Check Starting Address for zip codes in Manhattan and then make the user enter a new address.
+- (COMPLETE) Catherine: can we wire up the return key to be go?
+- Catherine: if user enters an address outside of NY, it currently makes map go there. Check Starting Address for zip codes in Manhattan and then make the user enter a new address.
 - exceptions: 
 - ruthie maybe write query string builder
+- Catherine: Message thrown by GoogleAPI Code: "More than one location is associated with that address. Please verify that your starting location is correct." What to do about this?
 
 Third Priority (DUE end of day SUNDAY):
 - lint for javadoc comments, indenting
