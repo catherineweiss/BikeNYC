@@ -36,6 +36,9 @@ import javax.swing.SwingUtilities;
 	
 	private double latStartLocation;
 	private double lngStartLocation;
+	private double stationLat;
+	private double stationLong;
+	private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
 	
 	//panels:
 	private JPanel topPanel; //border layout
@@ -118,10 +121,13 @@ import javax.swing.SwingUtilities;
 		}
 	}
 
-	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
+/*	private void getMapWithTourData (String location, JLabel mapLabelName, int mapZoomNum,
 						String startLocLatLng, String bikeStationLatLng, String placesOfInterestLatLng) {
 		
-		try {		
+		try {		// to do: center on bike station location
+				// make bike station and places of interest as instance variables
+				//create method "string builder" to take lats and longs into strings
+			
 			String center = "center=";
 			String zoom = "&zoom";
 			int zoomNum = 12;
@@ -149,7 +155,7 @@ import javax.swing.SwingUtilities;
 		}
 		
 	}
-	
+*/	
 		
 	
 	private void createGoButton() {
@@ -172,7 +178,7 @@ import javax.swing.SwingUtilities;
 				
 				latStartLocation = gp.getOriginLocation().getLatitude();
 				lngStartLocation = gp.getOriginLocation().getLongitude();
-				String startLocationLatLng = "" + latStartLocation + "," + lngStartLocation;
+				String startLocationLatLng = gp.getOriginLocation().getLatLongString();
 								
 				//fills Starting Address
 				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
@@ -187,6 +193,7 @@ import javax.swing.SwingUtilities;
 				//Get num bikes avail. Set text for JLabel numBikesAvailLabel
 				//Get num spaces available. Set text for JLabel numSpacesAvailLabel
 				
+//				Location stationLoc = new Location (String name, Double lat, Double lng, String address);
 				
 				
 				//Start SquareSpace API

@@ -27,6 +27,13 @@ public class Location {
 	}
 	
 	/**
+	 * a method to get the lat and lon concatenated and separated by a comma
+	 * @return comma-separated coordinates
+	 */
+	public String getLatLongString() {
+		return latitude + "," + longitude;
+	}
+	/**
 	 * 
 	 * @return latitude
 	 */
