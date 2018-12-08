@@ -39,6 +39,8 @@ import util.APIKeys;
 	 */
 	public class TourNYGUI extends JFrame {
 	
+		
+	//Constants:	
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 800;
 	private static final int FRAME_HEIGHT = 1200;
@@ -46,11 +48,12 @@ import util.APIKeys;
 	
 	//Instance Variables:
 	
+	//locations:
 	private double userLat; //user start location (latitude)
 	private double userLong; //user start location (longitude)
 	private double stationLat; //closest station location (latitude)
 	private double stationLong; //closest station location (longitude)
-    private ArrayList<Location> pointsOfInterest; //this is what Ruthie returns
+    private ArrayList<Location> pointsOfInterest; //points of interest as Location objects
     private String startLocationAsString;	
     private String closestBikeLocationAsString;
     private String placesOfInterestAsString;
@@ -67,43 +70,42 @@ import util.APIKeys;
 	private JButton goButton;
 	private JPanel inputPanel;
 	
-	//for map with starting location; Center on topPanel
+	//for map with starting location; position Center on topPanel
 	private URL url;
 	private BufferedImage img;
 	private ImageIcon icon;
 	private JLabel mapStartLocLabel;
 	
-	//for StartLocPanel (flow layout); South on topPanel
+	//for StartLocPanel (flow layout); position South on topPanel
 	private JLabel startAddressLabel;
 	private JLabel formatAddressfromGoogleLabel;
 	private JPanel startLocPanel;
 	
-	//for BikeLocPanel (flow layout); North on middlePanel
+	//for BikeLocPanel (flow layout); position North on middlePanel
 	private JLabel closestStationLabel; 
 	private JLabel stationNameFromAPILabel;
 	private JPanel bikeLocPanel;
 	
-	//for DistFromUserPanel (flow layout); Center on middlePanle
+	//for DistFromUserPanel (flow layout); position Center on middlePanle
 	private JLabel distFromUserLabel;
 	private JLabel actualDistFromUserFromAPILabel;
 	private JLabel milesFromUserLabel;
 	private JPanel distFromUserPanel;	
 	
-	//for NumBikesPanel (flow layout); South on middlePanel
+	//for NumBikesPanel (flow layout); position South on middlePanel
 	private JLabel bikesAvailLabel;
 	private JLabel numBikesAvailLabel;
 	private JPanel numBikesPanel;
 	
-	//for NumSpacesPanel (flow layout); North on bottomPanel
+	//for NumSpacesPanel (flow layout); position North on bottomPanel
 	private JLabel spacesAvailLabel;
 	private JLabel numSpacesAvailLabel;
 	private JPanel numSpacesPanel;
 
-
-	//Center on bottomPanel
+	//position Center on bottomPanel
 	private JLabel placesInterestLabel;
 
-	//for placesInterestPanel (flow layout); South on bottomPanel
+	//for placesInterestPanel (flow layout); position South on bottomPanel
 	private JTextArea placesInterestTextArea;
 	private JPanel placesInterestPanel;
 	
@@ -111,14 +113,19 @@ import util.APIKeys;
 	//constructor with helper methods
 	TourNYGUI(){		
 		createGoButton();
-		createPrimaryComponents();		
+		createComponents();		
 	}
 
-	
+	/**
+	 * Creates static map with specified parameters
+	 * @param location is String address for center of map
+	 * @param mapLabelName is JLabel where map will be displayed
+	 * @param mapZoomNum is an integer zoom level from 1 (world view) to 20 (building view)
+	 */
 	private void getMap (String location, JLabel mapLabelName, int mapZoomNum) {
 		
 		try {		
-			String center = "center="; //TO DO: Change center of map to bike station location
+			String center = "center="; 
 			String zoom = "&zoom=";
 			int zoomNum = mapZoomNum;
 			String size = "&size=400x400";
@@ -136,6 +143,12 @@ import util.APIKeys;
 		}
 	}
 
+	/**
+	 * Takes an array of Location objects and returns a String of latitudes-longitude pairs 
+	 * (separated by a comma), with a pipe separating the pairs.
+	 * @param pointsOfInterest
+	 * @return String of latitudes-longitude pairs
+	 */
 	private String placesOfInterestAsStringBuilder(ArrayList<Location> pointsOfInterest) {
 		
 		String placesOfInterestAsString = "";
@@ -146,7 +159,15 @@ import util.APIKeys;
 		return substring;
 	}
 	
-	
+	/**
+	 * Creates static map with specified parameters
+	 * @param location is String address for center of map
+	 * @param mapLabelName is JLabel where map will be displayed
+	 * @param mapZoomNum is an integer zoom level from 1 (world view) to 20 (building view)
+	 * @param startLocLatLng is String of latitude and longitude of user specified location
+	 * @param bikeStationLatLng is String of latitude and longitude of closest bike station
+	 * @param placesOfInterestLatLng is String of latitude-longitude pairs of places of interest
+	 */
 	private void getMap (String location, JLabel mapLabelName, int mapZoomNum,
 						String startLocLatLng, String bikeStationLatLng, String placesOfInterestLatLng) {
 		
@@ -179,7 +200,12 @@ import util.APIKeys;
 	}
 	
 		
-	
+	/**
+	 * Creates GoButton and defines actions that happen as a result of user clicking the goButton:
+	 * -Google Geocoding API, Citibike API, and SquareSpace API are accessed. 
+	 * -New map is created.
+	 * -Data is displayed on interface.
+	 */
 	private void createGoButton(){
 		goButton = new JButton("Go");
 		goButton.addActionListener(new ActionListener() {
@@ -273,7 +299,12 @@ import util.APIKeys;
 		});
 	}
 	
-	private void createPrimaryComponents() {
+	/**
+	 * Components of user interface are created. Within JFrame, GUI consists of a 
+	 * Top Panel, Middle Panel and Bottom Panel. Each of these panels are made up of three 
+	 * sub-panels which are named based on the components that they hold.
+	 */
+	private void createComponents() {
 		
 		//Create topPanel: inputPanel; map(defaultLocation); startLocPanel
 		
@@ -344,7 +375,6 @@ import util.APIKeys;
 		
 		
 		//Create Bottom Panel: PlacesOfInterestLabel; PlacesOfInterestTextArea
-
 		placesInterestLabel = new JLabel("Places of Interest within 1/4 mile: "); //TO DO: check that this is desired text
         placesInterestLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
