@@ -374,7 +374,7 @@ import util.APIKeys;
 		setTitle("Customize Your Active Tour of Manhattan");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setVisible(true);
-//		pack();
+		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
