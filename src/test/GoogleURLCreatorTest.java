@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import google.GoogleURLCreator;
-import util.GoogleAPIKey;
+import util.APIKeys;
 
 public class GoogleURLCreatorTest {
 	
@@ -24,7 +24,7 @@ public class GoogleURLCreatorTest {
 		String testString = "20 W 34th St, New York";
 		String predictedString = "https://maps.googleapis.com/maps/api/geocode/"
 				+"json?address=20+W+34th+St,+New+York&region=new+york&country:US"
-				+"&key=" + GoogleAPIKey.key;
+				+"&key=" + APIKeys.GOOGLE_API_KEY;
 		assertEquals(predictedString, urlCreator.createURL(testString));
 	}
 	
@@ -35,7 +35,7 @@ public class GoogleURLCreatorTest {
 		String testString = "20W34St";
 		String predictedString = "https://maps.googleapis.com/maps/api/geocode/"
 				+"json?address=20W34St&region=new+york&country:US"
-				+"&key=" + GoogleAPIKey.key;
+				+"&key=" + APIKeys.GOOGLE_API_KEY;
 		assertEquals(predictedString, urlCreator.createURL(testString));
 	}
 	

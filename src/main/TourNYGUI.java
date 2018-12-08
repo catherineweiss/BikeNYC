@@ -28,7 +28,7 @@ import foursquare.APICaller;
 import google.GeocodingParser;
 import google.GoogleURLCreator;
 import shared.Location;
-import util.GoogleAPIKey;
+import util.APIKeys;
 	/**
 	 * GUI Methods for TourNY, a geo-location based recommendation application
 	 * for Manhattan 
@@ -120,7 +120,7 @@ import util.GoogleAPIKey;
 			String zoom = "&zoom=";
 			int zoomNum = mapZoomNum;
 			String size = "&size=800x600";
-			String key = "&key=" + GoogleAPIKey.key;
+			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
 			
 			String queryParams = center + location + zoom + zoomNum + size + key;
 			String mapsURL = "https://maps.googleapis.com/maps/api/staticmap?" + queryParams;		
@@ -160,7 +160,7 @@ import util.GoogleAPIKey;
 			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;			
 			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
 						
-			String key = "&key=" + GoogleAPIKey.key;
+			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
 			
 			String queryParams = center + location + zoom + zoomNum + size + markers + key;
 			String mapsURL = "https://maps.googleapis.com/maps/api/staticmap?" + queryParams;		

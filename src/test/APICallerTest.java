@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import foursquare.APICaller;
-import util.GoogleAPIKey;
+import util.APIKeys;
 
 public class APICallerTest {
 	
@@ -26,7 +26,7 @@ public class APICallerTest {
 		
 		String goodURL = "https://maps.googleapis.com/maps/api/geocode/"
 				+"json?address=20+W+34th+St,+New+York&region=new+york&country:US"
-				+"&key=" + GoogleAPIKey.key;
+				+"&key=" + APIKeys.GOOGLE_API_KEY;
 
 		String expectedResponseRaw ="{\n" + 
 				"   \"results\" : [\n" + 

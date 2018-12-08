@@ -1,6 +1,6 @@
 package foursquare;
 
-import util.PrivateVariables;
+import util.APIKeys;
 
 /**
  * 
@@ -22,8 +22,8 @@ public class SquareSpaceURLCreator {
 		String path = "https://api.foursquare.com/v2/venues/explore/";
 		
 		String url = path + "?";
-		url += "client_id=" + PrivateVariables.FOUR_SQUARE_CLIENT_ID;
-		url += "&client_secret=" + PrivateVariables.FOUR_SQUARE_CLIENT_SECRET;
+		url += "client_id=" + APIKeys.FOUR_SQUARE_CLIENT_ID;
+		url += "&client_secret=" + APIKeys.FOUR_SQUARE_CLIENT_SECRET;
 		url += "&v=" + FOUR_SQUARE_VERSION;
 		url += "&ll=" + lat + "," + lon;
 		url += "&query=" +  query;
