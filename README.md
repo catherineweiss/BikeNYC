@@ -77,9 +77,10 @@ Second Priority (DUE end of day Saturday):
 - Catherine: if user enters an address outside of NY, it currently makes map go there. Check Starting Address for zip codes in Manhattan and then make the user enter a new address.
 - Ruthie: exceptions: 
 - Ruthie: check casting with JSON parsing (all three API callers)
-- ruthie maybe write query string builder
+- done maybe write query string builder
 - Catherine: Message thrown by GoogleAPI Code: "More than one location is associated with that address. Please verify that your starting location is correct." What to do about this?
 
+hjkolkdfghj
 Third Priority (DUE end of day SUNDAY):
 - lint for javadoc comments, indenting
 - user manual
