@@ -32,14 +32,17 @@ public class FourSquareLocationParser {
 			System.out.println(name);
 
 			JsonObject jsonLocation = (JsonObject) jsonVenue.get("location");
-			JsonElement jsonAddress = jsonLocation.get("address");
-			JsonElement jsonLat = jsonLocation.get("lat");
-			JsonElement jsonLng = jsonLocation.get("lng");
-			String address = jsonAddress.getAsString();
-			double lat = jsonLat.getAsDouble();
-			double lng = jsonLng.getAsDouble();
+			if(jsonLocation != null && jsonLocation.get("address")!= null) {
+				JsonElement jsonAddress = jsonLocation.get("address");
+				JsonElement jsonLat = jsonLocation.get("lat");
+				JsonElement jsonLng = jsonLocation.get("lng");
+				String address = jsonAddress.getAsString();
+				double lat = jsonLat.getAsDouble();
+				double lng = jsonLng.getAsDouble();
 
-			locations.add(new Location(name, lat, lng, address));
+				locations.add(new Location(name, lat, lng, address));
+			}
+
 		}
 
 		System.out.println("parsed");

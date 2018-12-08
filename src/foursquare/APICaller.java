@@ -12,7 +12,7 @@ import java.net.URLConnection;
  */
 public class APICaller {
 
-	public String callAPI(String urlForAPI) {
+	public static String callAPI(String urlForAPI) {
 
 		String response = "";
 

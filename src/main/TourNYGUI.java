@@ -25,6 +25,8 @@ import javax.swing.SwingUtilities;
 import citibike.Analyzer;
 import citibike.Station;
 import foursquare.APICaller;
+import foursquare.FourSquareLocationParser;
+import foursquare.FourSquareURLCreator;
 import google.GeocodingParser;
 import google.GoogleURLCreator;
 import shared.Location;
@@ -251,39 +253,23 @@ import util.APIKeys;
 
 				//*** 	SQUARE SPACE FUNCTIONALITY BEGINS HERE ***
 				
-				//Get places of interest. Store in JTextArea placesInterestTextArea.
-				
-				
-				
-				
-//			    pointsOfInterest =  //TODO Set this variable equal to arrayList of Location objects
-
-				
-				
-				
-				
-				
-
-
-//				placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest); 
-				
-				//Use String of fake locations until SquareSpace functionality is added:				
-				placesOfInterestAsString = "40.73,-73.99|40.74,-74.00|40.75,-74.01|40.73,-74.01|"
-						+ "40.72,-73.98|40.74,-74.001|40.73,-74.002|40.72,-73.995|40.7105,-73.9955|"
-						+ "40.725,-73.99356";
-						
-				
+				String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "coffee");
+				FourSquareLocationParser parser = new FourSquareLocationParser(APICaller.callAPI(foursquareurl));
+				pointsOfInterest = parser.getLocations();
+				String poi = "";
+				for(Location l: pointsOfInterest) {
+					poi += l.getName() + "\n";
+				}
+				placesOfInterestAsString = poi; 
+				placesInterestTextArea.setLineWrap(true);
+				placesInterestTextArea.setText(placesOfInterestAsString);
 				
 				
 				//Update map with markers for start location, bike station, and places of interest
 				getMap(closestBikeLocationAsString, mapStartLocLabel, 15,
-						startLocationAsString, closestBikeLocationAsString, placesOfInterestAsString);
-				
-
-			
+						startLocationAsString, closestBikeLocationAsString, placesOfInterestAsString);		
 			}
 		});
-		
 	}
 	
 	private void createPrimaryComponents() {
@@ -387,20 +373,8 @@ import util.APIKeys;
 		setTitle("Customize Your Active Tour of Manhattan");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setVisible(true);
-		pack();
+//		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
-
-	//<<<<<<<<<<<<    DELETE BELOW    >>>>>>>>>>>> MOVED MAIN METHOD TO TourNY.java
-//	public static void main(String[] args) {
-//		
-//		 SwingUtilities.invokeLater(new Runnable() {
-//		      public void run() {
-//		    	  TourNY frame = new TourNY();
-//		      }
-//		    });
-//		    		
-//	}
-	
 }
