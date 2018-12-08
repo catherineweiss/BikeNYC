@@ -121,7 +121,7 @@ import util.APIKeys;
 			String center = "center="; //TO DO: Change center of map to bike station location
 			String zoom = "&zoom=";
 			int zoomNum = mapZoomNum;
-			String size = "&size=800x600";
+			String size = "&size=400x400";
 			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
 			
 			String queryParams = center + location + zoom + zoomNum + size + key;
@@ -155,7 +155,7 @@ import util.APIKeys;
 			String center = "center=";
 			String zoom = "&zoom";
 			int zoomNum = 12;
-			String size = "&size=800x600";
+			String size = "&size=400x400";
 			
 			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString; 
 			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString; 
@@ -253,16 +253,17 @@ import util.APIKeys;
 
 				//*** 	SQUARE SPACE FUNCTIONALITY BEGINS HERE ***
 				
-				String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "coffee");
+				String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "breakfast");
 				FourSquareLocationParser parser = new FourSquareLocationParser(APICaller.callAPI(foursquareurl));
 				pointsOfInterest = parser.getLocations();
 				String poi = "";
 				for(Location l: pointsOfInterest) {
 					poi += l.getName() + "\n";
 				}
-				placesOfInterestAsString = poi; 
+				placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest); 
+				
 				placesInterestTextArea.setLineWrap(true);
-				placesInterestTextArea.setText(placesOfInterestAsString);
+				placesInterestTextArea.setText(poi);
 				
 				
 				//Update map with markers for start location, bike station, and places of interest
