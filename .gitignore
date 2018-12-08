@@ -59,3 +59,4 @@ local.properties
 .worksheet
 /usr/
 src/main/GoogleAPIKey_copy.java
+src/util/PrivateVariables.java

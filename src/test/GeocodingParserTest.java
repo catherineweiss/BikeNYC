@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.APICaller;
-import main.GeocodingParser;
-import main.GoogleURLCreator;
-import main.Location;
+import foursquare.APICaller;
+import google.GeocodingParser;
+import google.GoogleURLCreator;
+import shared.Location;
 
 public class GeocodingParserTest {
 

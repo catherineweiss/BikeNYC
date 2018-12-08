@@ -21,6 +21,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+
+import citibike.Analyzer;
+import citibike.Station;
+import foursquare.APICaller;
+import google.GeocodingParser;
+import google.GoogleURLCreator;
+import shared.Location;
+import util.GoogleAPIKey;
 	/**
 	 * GUI Methods for TourNY, a geo-location based recommendation application
 	 * for Manhattan 

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.APICaller;
-import main.GoogleAPIKey;
+import foursquare.APICaller;
+import util.GoogleAPIKey;
 
 public class APICallerTest {
 	

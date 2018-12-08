@@ -1,4 +1,7 @@
-package main;
+package foursquare;
+
+import util.PrivateVariables;
+
 /**
  * 
  * @author fieldsruthie

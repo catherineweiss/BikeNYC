@@ -1,4 +1,4 @@
-package main;
+package shared;
 /**
  * This class represents a location, with a name, latitude, longitude, and street address.
  * @author Catherine Weiss

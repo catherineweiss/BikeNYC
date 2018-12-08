@@ -1,4 +1,7 @@
-package main;
+package google;
+
+import util.GoogleAPIKey;
+
 /**
  * Creates URL for Google geocoding API
  * 
