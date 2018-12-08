@@ -72,16 +72,16 @@ First Priority (DUE end of day Friday) (By end of day Friday, our program should
 Second Priority (DUE end of day Saturday):
 - (COMPLETE) Catherine: put Times Square as default address
 - Catherine: add Javadocs for TourNYGUI
-- Ruthie: break the program
+- done: break the program return isn't wired; empty searchbox cuases excepting in geocode parser
 - (COMPLETE) Catherine: can we wire up the return key to be go?
 - Catherine: if user enters an address outside of NY, it currently makes map go there. Check Starting Address for zip codes in Manhattan and then make the user enter a new address.
-- Ruthie: exceptions: 
-- Ruthie: check casting with JSON parsing (all three API callers)
 - done maybe write query string builder
 - Catherine: Message thrown by GoogleAPI Code: "More than one location is associated with that address. Please verify that your starting location is correct." What to do about this?
 
-hjkolkdfghj
 Third Priority (DUE end of day SUNDAY):
+- Ruthie: check casting with JSON parsing (all three API callers)
+- Ruthie: exceptions: ??
+
 - lint for javadoc comments, indenting
 - user manual
 - one-page writeup
