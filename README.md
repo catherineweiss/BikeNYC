@@ -71,7 +71,7 @@ First Priority (DUE end of day Friday) (By end of day Friday, our program should
 
 Second Priority (DUE end of day Saturday):
 - (COMPLETE) Catherine: put Times Square as default address
-- Catherine: add Javadocs for TourNYGUI
+- (COMPLETE) Catherine: add Javadocs for TourNYGUI
 - done: break the program return isn't wired; empty searchbox cuases excepting in geocode parser
 - (COMPLETE) Catherine: can we wire up the return key to be go?
 - Catherine: if user enters an address outside of NY, it currently makes map go there. Check Starting Address for zip codes in Manhattan and then make the user enter a new address.
