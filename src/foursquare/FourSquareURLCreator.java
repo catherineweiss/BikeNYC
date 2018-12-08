@@ -7,7 +7,7 @@ import util.APIKeys;
  * @author fieldsruthie
  *
  */
-public class SquareSpaceURLCreator {
+public class FourSquareURLCreator {
 
 	/**
 	 * 

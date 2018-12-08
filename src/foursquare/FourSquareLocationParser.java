@@ -8,11 +8,11 @@ import shared.Location;
 
 import java.util.ArrayList;
 
-public class SquareSpaceLocationParser {
+public class FourSquareLocationParser {
 	private ArrayList<Location> locations;
 	public static final int MAX_LOCATIONS = 10;
 
-	public SquareSpaceLocationParser(String apiResponse) {
+	public FourSquareLocationParser(String apiResponse) {
 
 		locations = new ArrayList<Location>();
 		JsonObject jObject = (JsonObject) new JsonParser().parse(apiResponse);
