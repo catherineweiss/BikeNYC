@@ -23,7 +23,7 @@ public class FourSquareLocationParser {
 		JsonObject itemsContainer =  (JsonObject) groups.get(0);
 		//items.get(0);
 		JsonArray items = (JsonArray) itemsContainer.get("items");
-		for(int i = 0; i < items.size() && i <= MAX_LOCATIONS; i++) {
+		for(int i = 0; i < items.size() && i < MAX_LOCATIONS; i++) {
 			JsonObject item0 = (JsonObject)items.get(i);	
 			JsonObject jsonVenue = (JsonObject)item0.get("venue");
 			JsonElement jsonName = jsonVenue.get("name");
