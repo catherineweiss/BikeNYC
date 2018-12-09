@@ -69,19 +69,17 @@ public class ManhattanZipCodes {
 			String a4 = "430 E 57th St, New York, NY 10022, USA";
 			
 			String[] parts = a1.split(",");
-			System.out.println(parts[parts.length-2]);
-			
 			String zip = parts[parts.length-2].trim();
 			zip = zip.replaceAll("[a-zA-Z]*", "").trim();
+			
+//			zip = "06840";
 			System.out.println(zip);
 			
-			zip = "06840";
-			
+			System.out.println(parts[parts.length-2]);
 			
 			
 			ManhattanZipCodes mzc = new ManhattanZipCodes();
-			ArrayList<String> zipcodes = new ArrayList<>();
-			zipcodes = mzc.getZipcodes();
+			ArrayList<String> zipcodes = mzc.getZipcodes();
 			
 			
 			if (!zipcodes.contains(zip)) {

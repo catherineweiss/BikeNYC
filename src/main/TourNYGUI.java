@@ -30,6 +30,7 @@ import foursquare.FourSquareLocationParser;
 import foursquare.FourSquareURLCreator;
 import google.GeocodingParser;
 import google.GoogleURLCreator;
+import google.ManhattanZipCodes;
 import shared.Location;
 import util.APIKeys;
 
@@ -228,109 +229,117 @@ public class TourNYGUI extends JFrame {
 				// If text field is empty, ask user to enter address again
 				if (startLocation.equals("")) {
 					inputRequestLabel.setForeground(Color.RED);
-					
-				}  else {
-				
-				
-					
-				inputRequestLabel.setForeground(Color.BLACK);	
-					
-				// Access Geocoding API
-				GoogleURLCreator gc = new GoogleURLCreator();
-				String googleURL = gc.createURL(startLocation);
-				APICaller ac = new APICaller();
-				String gResponse = ac.callAPI(googleURL);
-				GeocodingParser gp = new GeocodingParser();
-				gp.parseGeocodingAPIResponse(gResponse);
-				userLat = gp.getOriginLocation().getLatitude();
-				userLong = gp.getOriginLocation().getLongitude();
-				startLocationAsString = gp.getOriginLocation().getLatLongString();
 
-				// fills Starting Address
-				String formattedAddress = gp.getOriginLocation().getAddress();
-				formatAddressfromGoogleLabel.setText(formattedAddress);
-				
-				// If Starting Address is outside of Manhattan, ask user to enter address again
-				// Parse Starting Address to find zipcode. Does zipcode correspond to one from Manhattan?
-				
-				if (!formattedAddress.matches("USA")) {
-					inputRequestLabel.setForeground(Color.RED);
-					inputRequestLabel.setText("Enter an Address Within Manhattan");
+				} else {
+
+					inputRequestLabel.setText("Enter starting location");
+					inputRequestLabel.setForeground(Color.BLACK);
+
+					// Access Geocoding API
+					GoogleURLCreator gc = new GoogleURLCreator();
+					String googleURL = gc.createURL(startLocation);
+					APICaller ac = new APICaller();
+					String gResponse = ac.callAPI(googleURL);
+					GeocodingParser gp = new GeocodingParser();
+					gp.parseGeocodingAPIResponse(gResponse);
+					userLat = gp.getOriginLocation().getLatitude();
+					userLong = gp.getOriginLocation().getLongitude();
+					startLocationAsString = gp.getOriginLocation().getLatLongString();
+
+					// fills Starting Address
+					String formattedAddress = gp.getOriginLocation().getAddress();
+					formatAddressfromGoogleLabel.setText(formattedAddress);
+
+					// If Starting Address is outside of Manhattan, ask user to enter address again
+					// Parse Starting Address to find zipcode. Does zipcode correspond to one from
+					// Manhattan?
+
+					String[] parts = formattedAddress.split(",");
+					String zip = parts[parts.length - 2].trim();
+					zip = zip.replaceAll("[a-zA-Z]*", "").trim();
+
+					ManhattanZipCodes mzc = new ManhattanZipCodes();
+					ArrayList<String> zipcodes = mzc.getZipcodes();
+
+					if (!zipcodes.contains(zip)) {
+						inputRequestLabel.setText("Enter an address in Manhattan:");
+						inputRequestLabel.setForeground(Color.RED);
+						pack();
+						
+						
+						
+					} else {
+
+						// *** CITIBIKE FUNCTIONALITY BEGINS HERE ***
+
+						// Constructors
+						ArrayList<Station> stations = new ArrayList<>();
+						Analyzer analyzer = new Analyzer(stations);
+
+						// Reads in stations csv file
+						analyzer.loadStations();
+
+						// Gets closest stationID
+						int closestStationId = analyzer.analyzeCloseProximity(userLat, userLong);
+
+						// Gets closest stationName Set text for JLabel stationNameFromAPILabel
+						String stationName = analyzer.stationIdtoName(closestStationId);
+						stationNameFromAPILabel.setText(stationName);
+
+						// Gets distance from closest station to user
+						double distanceFromUser = analyzer.analyzeCloseProximityDistance(userLat, userLong);
+						actualDistFromUserFromAPILabel.setText(Double.toString(distanceFromUser));
+
+						// Gets number bikes avail. Set text for JLabel numBikesAvailLabel
+						try {
+							int citiAPINumBikes = analyzer.getCitiAPINumBikes(closestStationId);
+							numBikesAvailLabel.setText(Integer.toString(citiAPINumBikes));
+						} catch (IOException | ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						// Gets number spaces available. Set text for JLabel numSpacesAvailLabel
+						try {
+							int citiAPINumSpaces = analyzer.getCitiAPINumSpaces(closestStationId);
+							numSpacesAvailLabel.setText(Integer.toString(citiAPINumSpaces));
+						} catch (IOException | ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						// Create closest bike location object
+						stationLat = analyzer.getClosestStationLat(closestStationId);
+						stationLong = analyzer.getClosestStationLong(closestStationId);
+						Location closestBikeLocation = new Location(stationName, stationLat, stationLong, stationName);
+						closestBikeLocationAsString = closestBikeLocation.getLatLongString();
+
+						// *** SQUARE SPACE FUNCTIONALITY BEGINS HERE ***
+
+						String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "breakfast");
+						FourSquareLocationParser parser = new FourSquareLocationParser(
+								APICaller.callAPI(foursquareurl));
+						pointsOfInterest = parser.getLocations();
+						String poi = "";
+						for (Location l : pointsOfInterest) {
+							poi += l.getName() + "\n";
+						}
+						placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest);
+
+						placesInterestTextArea.setLineWrap(true);
+						placesInterestTextArea.setText(poi);
+
+						// Update map with markers for start location, bike station, and places of
+						// interest
+						getMap(closestBikeLocationAsString, mapStartLocLabel, 15, startLocationAsString,
+								closestBikeLocationAsString, placesOfInterestAsString);
+						
+						pack();
+					}
 				}
-				
-				
-				
 
-				// *** CITIBIKE FUNCTIONALITY BEGINS HERE ***
-
-				// Constructors
-				ArrayList<Station> stations = new ArrayList<>();
-				Analyzer analyzer = new Analyzer(stations);
-
-				// Reads in stations csv file
-				analyzer.loadStations();
-
-				// Gets closest stationID
-				int closestStationId = analyzer.analyzeCloseProximity(userLat, userLong);
-
-				// Gets closest stationName Set text for JLabel stationNameFromAPILabel
-				String stationName = analyzer.stationIdtoName(closestStationId);
-				stationNameFromAPILabel.setText(stationName);
-
-				// Gets distance from closest station to user
-				double distanceFromUser = analyzer.analyzeCloseProximityDistance(userLat, userLong);
-				actualDistFromUserFromAPILabel.setText(Double.toString(distanceFromUser));
-
-				// Gets number bikes avail. Set text for JLabel numBikesAvailLabel
-				try {
-					int citiAPINumBikes = analyzer.getCitiAPINumBikes(closestStationId);
-					numBikesAvailLabel.setText(Integer.toString(citiAPINumBikes));
-				} catch (IOException | ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-				// Gets number spaces available. Set text for JLabel numSpacesAvailLabel
-				try {
-					int citiAPINumSpaces = analyzer.getCitiAPINumSpaces(closestStationId);
-					numSpacesAvailLabel.setText(Integer.toString(citiAPINumSpaces));
-				} catch (IOException | ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-				// Create closest bike location object
-				stationLat = analyzer.getClosestStationLat(closestStationId);
-				stationLong = analyzer.getClosestStationLong(closestStationId);
-				Location closestBikeLocation = new Location(stationName, stationLat, stationLong, stationName);
-				closestBikeLocationAsString = closestBikeLocation.getLatLongString();
-
-				// *** SQUARE SPACE FUNCTIONALITY BEGINS HERE ***
-
-				String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "breakfast");
-				FourSquareLocationParser parser = new FourSquareLocationParser(APICaller.callAPI(foursquareurl));
-				pointsOfInterest = parser.getLocations();
-				String poi = "";
-				for (Location l : pointsOfInterest) {
-					poi += l.getName() + "\n";
-				}
-				placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest);
-
-				placesInterestTextArea.setLineWrap(true);
-				placesInterestTextArea.setText(poi);
-
-				// Update map with markers for start location, bike station, and places of
-				// interest
-				getMap(closestBikeLocationAsString, mapStartLocLabel, 15, startLocationAsString,
-						closestBikeLocationAsString, placesOfInterestAsString);
-			
-				}
-			
 			}
-			
-			
-			
-			
+
 		});
 	}
 
@@ -440,7 +449,7 @@ public class TourNYGUI extends JFrame {
 		setVisible(true);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getRootPane().setDefaultButton(goButton); //added this line to wire enter key
+		getRootPane().setDefaultButton(goButton); // added this line to wire enter key
 
 	}
 }
