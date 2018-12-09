@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -110,6 +111,7 @@ public class TourNYGUI extends JFrame {
 
 	// for placesInterestPanel (flow layout); position South on bottomPanel
 	private JTextArea placesInterestTextArea;
+	private JScrollPane scrollPane;
 	private JPanel placesInterestPanel;
 
 	// constructor with helper methods
@@ -365,31 +367,34 @@ public class TourNYGUI extends JFrame {
 		mapStartLocLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		getMap(locationDefault, mapStartLocLabel, 12);
 
-		// assemble topPanel
-		topPanel = new JPanel();
-		topPanel.setLayout(new BorderLayout());
-		topPanel.add(inputPanel, BorderLayout.NORTH);
-		topPanel.add(mapStartLocLabel, BorderLayout.CENTER);
 
-		// update startLocPanel and add it to topPanel:
+		// startLocPanel:
 		startAddressLabel = new JLabel("Starting Address:  ");
 		formatAddressfromGoogleLabel = new JLabel("");
 		startLocPanel = new JPanel();
 		startLocPanel.add(startAddressLabel);
 		startLocPanel.add(formatAddressfromGoogleLabel);
+		
+				
+		// assemble topPanel
+		topPanel = new JPanel();
+		topPanel.setLayout(new BorderLayout());
+		topPanel.add(inputPanel, BorderLayout.NORTH);
+		topPanel.add(mapStartLocLabel, BorderLayout.CENTER);		
 		topPanel.add(startLocPanel, BorderLayout.SOUTH);
 
-		// Create Middle Panel: BikeLocPanel; NumBikesPanel; NumSpacesPanel
+		// Create Middle Panel: BikeLocPanel; NumBikesPanel; DistFromUserPanel
 
 		// BikeLocPanel
 		closestStationLabel = new JLabel("Closest Citibike Station:  ");
-		stationNameFromAPILabel = new JLabel();// TO DO: Insert Station Name as String
+		stationNameFromAPILabel = new JLabel();// 
 		bikeLocPanel = new JPanel();
 		bikeLocPanel.add(closestStationLabel);
 		bikeLocPanel.add(stationNameFromAPILabel);
 
+		// DistanceFromUserPanel
 		distFromUserLabel = new JLabel("You are  ");
-		actualDistFromUserFromAPILabel = new JLabel(); // TO DO: Insert distance as a String
+		actualDistFromUserFromAPILabel = new JLabel(); 
 		milesFromUserLabel = new JLabel(" miles from the closest station");
 		distFromUserPanel = new JPanel();
 		distFromUserPanel.add(distFromUserLabel);
@@ -398,17 +403,10 @@ public class TourNYGUI extends JFrame {
 
 		// NumBikesPanel
 		bikesAvailLabel = new JLabel("Number of Bikes Available:  ");
-		numBikesAvailLabel = new JLabel(); // TO DO: Insert # bikes available
+		numBikesAvailLabel = new JLabel(); // 
 		numBikesPanel = new JPanel();
 		numBikesPanel.add(bikesAvailLabel);
 		numBikesPanel.add(numBikesAvailLabel);
-
-		// NumSpacesPanel
-		spacesAvailLabel = new JLabel("Number of Spaces Available:  ");
-		numSpacesAvailLabel = new JLabel();
-		numSpacesPanel = new JPanel();
-		numSpacesPanel.add(spacesAvailLabel);
-		numSpacesPanel.add(numSpacesAvailLabel);
 
 		// assemble middlePanel
 		middlePanel = new JPanel();
@@ -417,22 +415,32 @@ public class TourNYGUI extends JFrame {
 		middlePanel.add(distFromUserPanel, BorderLayout.CENTER);
 		middlePanel.add(numBikesPanel, BorderLayout.SOUTH);
 
-		// Create Bottom Panel: PlacesOfInterestLabel; PlacesOfInterestTextArea
-		placesInterestLabel = new JLabel("Places of Interest within 1/4 mile: "); // TO DO: check that this is desired
-																					// text
+		// Create Bottom Panel: NumSpacesPanel; PlacesOfInterestLabel; PlacesOfInterestTextArea
+
+		// NumSpacesPanel
+		spacesAvailLabel = new JLabel("Number of Spaces Available:  ");
+		numSpacesAvailLabel = new JLabel();
+		numSpacesPanel = new JPanel();
+		numSpacesPanel.add(spacesAvailLabel);
+		numSpacesPanel.add(numSpacesAvailLabel);
+
+		// Center on bottomPanel
+		placesInterestLabel = new JLabel("Places of Interest nearby: "); // TO DO: check that this is desired text
 		placesInterestLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// South on bottomPanel
-		placesInterestTextArea = new JTextArea(); // TO DO: insert string/data into Text Area
+		placesInterestTextArea = new JTextArea(10, 30);  //set rows=10 and cols=30
+		scrollPane = new JScrollPane(placesInterestTextArea);
 		placesInterestPanel = new JPanel();
 		placesInterestPanel.add(placesInterestTextArea);
+
 
 		// assemble bottomPanel
 		bottomPanel = new JPanel();
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(numSpacesPanel, BorderLayout.NORTH);
-		bottomPanel.add(placesInterestLabel, BorderLayout.CENTER);
-		bottomPanel.add(placesInterestTextArea, BorderLayout.SOUTH);
+		bottomPanel.add(placesInterestLabel, BorderLayout.CENTER); 
+		bottomPanel.add(placesInterestPanel, BorderLayout.SOUTH);
 
 		// add Top, Middle, Bottom Panels to Main Panel
 		mainPanel = new JPanel();
@@ -449,7 +457,7 @@ public class TourNYGUI extends JFrame {
 		setVisible(true);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getRootPane().setDefaultButton(goButton); // added this line to wire enter key
+		getRootPane().setDefaultButton(goButton); // wires ENTER key
 
 	}
 }

@@ -58,8 +58,10 @@ public class ManhattanZipCodes {
 		return zipcodes;
 		
 }	
+		//This can be deleted for final project. Print statement used to develop parsing method.
 		
-		public static void main(String[] args) {
+		
+/*		public static void main(String[] args) {
 			
 			
 			//practice parsing out zipcode
@@ -91,7 +93,7 @@ public class ManhattanZipCodes {
 			System.out.println();
 			
 		}
-		
+*/		
 		
 		
 		
