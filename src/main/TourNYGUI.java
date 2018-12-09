@@ -247,7 +247,16 @@ public class TourNYGUI extends JFrame {
 				startLocationAsString = gp.getOriginLocation().getLatLongString();
 
 				// fills Starting Address
-				formatAddressfromGoogleLabel.setText(gp.getOriginLocation().getAddress());
+				String formattedAddress = gp.getOriginLocation().getAddress();
+				formatAddressfromGoogleLabel.setText(formattedAddress);
+				
+				// If Starting Address is outside of Manhattan, ask user to enter address again
+				// Parse Starting Address to find zipcode. Does zipcode correspond to one from Manhattan?
+				
+				
+				
+				
+				
 
 				// *** CITIBIKE FUNCTIONALITY BEGINS HERE ***
 
