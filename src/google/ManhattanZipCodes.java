@@ -1,5 +1,6 @@
 package google;
 
+import java.awt.Color;
 import java.util.ArrayList;
 /**
  * An ArrayList of zipcodes in Manhattan
@@ -60,11 +61,28 @@ public class ManhattanZipCodes {
 		
 		public static void main(String[] args) {
 			
+			
+			//practice parsing out zipcode
+			String a1 = "Fifth Avenue, New York, NY 10001, USA";
+			String a2 = "411 N New York Ave, Atlantic City, NJ 08401, USA";
+			String a3 = "20 W 34th St, New York, NY 10001, USA";
+			String a4 = "430 E 57th St, New York, NY 10022, USA";
+			
+			String[] parts = a1.split(",");
+			System.out.println(parts[parts.length-2]);
+			
+			String zip = parts[parts.length-2].trim();
+			zip = zip.replaceAll("[a-zA-Z]*", "").trim();
+			System.out.println(zip);
+			
+			zip = "06840";
+			
+			
+			
 			ManhattanZipCodes mzc = new ManhattanZipCodes();
 			ArrayList<String> zipcodes = new ArrayList<>();
 			zipcodes = mzc.getZipcodes();
 			
-			String zip = "06840";
 			
 			if (!zipcodes.contains(zip)) {
 				System.out.println("Enter an address in Manhattan:");

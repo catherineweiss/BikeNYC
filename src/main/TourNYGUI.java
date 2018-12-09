@@ -253,7 +253,10 @@ public class TourNYGUI extends JFrame {
 				// If Starting Address is outside of Manhattan, ask user to enter address again
 				// Parse Starting Address to find zipcode. Does zipcode correspond to one from Manhattan?
 				
-				
+				if (!formattedAddress.matches("USA")) {
+					inputRequestLabel.setForeground(Color.RED);
+					inputRequestLabel.setText("Enter an Address Within Manhattan");
+				}
 				
 				
 				
