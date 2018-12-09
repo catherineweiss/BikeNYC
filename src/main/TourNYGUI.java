@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -224,6 +225,16 @@ public class TourNYGUI extends JFrame {
 				// Retrieve user input
 				String startLocation = startAddressTextField.getText();
 
+				// If text field is empty, ask user to enter address again
+				if (startLocation.equals("")) {
+					inputRequestLabel.setForeground(Color.RED);
+					
+				}  else {
+				
+				
+					
+				inputRequestLabel.setForeground(Color.BLACK);	
+					
 				// Access Geocoding API
 				GoogleURLCreator gc = new GoogleURLCreator();
 				String googleURL = gc.createURL(startLocation);
@@ -300,7 +311,14 @@ public class TourNYGUI extends JFrame {
 				// interest
 				getMap(closestBikeLocationAsString, mapStartLocLabel, 15, startLocationAsString,
 						closestBikeLocationAsString, placesOfInterestAsString);
+			
+				}
+			
 			}
+			
+			
+			
+			
 		});
 	}
 
