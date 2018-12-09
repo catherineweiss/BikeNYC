@@ -89,4 +89,7 @@ Third Priority (DUE end of day SUNDAY):
 - scan down the rubric again
 - actually submit
 
+## Running the app:
+- copy util/APIKeysSample.java to util/APIKeys.java and fill in the strings
+- from main package, run TourNY.java's main method
 
