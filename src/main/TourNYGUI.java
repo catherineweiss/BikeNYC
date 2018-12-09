@@ -432,7 +432,7 @@ public class TourNYGUI extends JFrame {
 		placesInterestTextArea = new JTextArea(10, 30);  //set rows=10 and cols=30
 		scrollPane = new JScrollPane(placesInterestTextArea);
 		placesInterestPanel = new JPanel();
-		placesInterestPanel.add(placesInterestTextArea);
+		placesInterestPanel.add(scrollPane);
 
 
 		// assemble bottomPanel
