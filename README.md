@@ -2,15 +2,13 @@
 Our repo is at: https://github.com/princessruthie/591-geo-data-viz
 
 ## For Part One Submission
-Team Name: Team Phoenix (from the ashes of our first idea, we rise!)
+Team Name: Team Phoenix
 
 Team Members: Fred Chang, Ruthie Fields(PM), Catherine Weiss
 
 Project Idea: A geo-location based recommendation application
 
 Project Description: When the user enters an address, the program will find the Citi Bike station closest to the user and display the estimated walk time to the station, as well as number of bikes available. The program will also display recommendations for places of interest reachable from the station given a certain distance (e.g. the user can say I only wish to bike 1 mile).
-
-Look at me editings for no reason!
 
 ## Goals and keywords
 - Use the google api to turn addresses into coordinates.
