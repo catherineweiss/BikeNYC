@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import main.TourNYGUI;
+import main.BikeNYCGUI;
 import shared.Location;
 
 /**
@@ -17,11 +17,11 @@ import shared.Location;
  */
 public class TourNYGUITest {
 
-	TourNYGUI tourNYGUI;
+	BikeNYCGUI tourNYGUI;
 
 	@BeforeEach
 	void setUp() {
-		tourNYGUI = new TourNYGUI();
+		tourNYGUI = new BikeNYCGUI();
 	}
 
 	// Test Purpose: test method that creates a string from latitude,longitude pairs

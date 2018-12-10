@@ -42,7 +42,7 @@ import util.APIKeys;
  * @author Catherine Weiss and Fred Chang
  *
  */
-public class TourNYGUI extends JFrame {
+public class BikeNYCGUI extends JFrame {
 
 	// Constants:
 	private static final long serialVersionUID = 1L;
@@ -115,7 +115,7 @@ public class TourNYGUI extends JFrame {
 	private JPanel placesInterestPanel;
 
 	// constructor with helper methods
-	public TourNYGUI() {
+	public BikeNYCGUI() {
 		createGoButton();
 		createComponents();
 	}
