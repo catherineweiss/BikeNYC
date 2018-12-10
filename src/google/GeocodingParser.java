@@ -1,6 +1,7 @@
 package google;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -16,8 +17,12 @@ public class GeocodingParser {
 		Gson gson = new Gson();
 
 		// get the outermost JSON object returned from API
-		JsonObject jObject = (JsonObject) new JsonParser().parse(apiResponse);
-
+		JsonObject jObject = new JsonObject();
+		JsonElement jElement = new JsonParser().parse(apiResponse);
+		if (jElement instanceof JsonObject) {
+			jObject = (JsonObject) jElement;
+		}
+				
 		// get the JSON object called "status"
 		String status = jObject.get("status").toString();
 		status = status.replaceAll("\"", "");
