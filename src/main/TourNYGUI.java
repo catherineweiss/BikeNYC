@@ -230,14 +230,24 @@ public class TourNYGUI extends JFrame {
 				// Retrieve user input
 				String startLocation = startAddressTextField.getText();
 
-				// If text field is empty, ask user to enter address again
+				// If text field is empty, ask user to enter address again and clears data fields
 				if (startLocation.equals("")) {
 					inputRequestLabel.setForeground(Color.RED);
+					
+					//added these lines:
+					formatAddressfromGoogleLabel.setText("");  
+					stationNameFromAPILabel.setText("");
+					actualDistFromUserFromAPILabel.setText("");
+					numBikesAvailLabel.setText("");
+					numSpacesAvailLabel.setText("");
+					placesInterestTextArea.setText("");
+										
 
 				} else {
 
 					inputRequestLabel.setText("Enter starting location");
 					inputRequestLabel.setForeground(Color.BLACK);
+					startAddressLabel.setText("Starting Address:  ");	//added		
 
 					// Access Geocoding API
 					GoogleURLCreator gc = new GoogleURLCreator();
@@ -268,6 +278,20 @@ public class TourNYGUI extends JFrame {
 					if (!zipcodes.contains(zip)) {
 						inputRequestLabel.setText("Enter an address in Manhattan:");
 						inputRequestLabel.setForeground(Color.RED);
+						//added these lines:
+						startAddressLabel.setText("Address Entered:  ");			
+//						formatAddressfromGoogleLabel.setText();  
+						stationNameFromAPILabel.setText("");
+						actualDistFromUserFromAPILabel.setText("");
+						numBikesAvailLabel.setText("");
+						numSpacesAvailLabel.setText("");
+						placesInterestTextArea.setText("");
+						
+						
+						
+						
+						
+						
 						pack();
 
 					} else {
@@ -427,11 +451,11 @@ public class TourNYGUI extends JFrame {
 		numSpacesPanel.add(numSpacesAvailLabel);
 
 		// Center on bottomPanel
-		placesInterestLabel = new JLabel("Places of Interest nearby: "); // TO DO: check that this is desired text
+		placesInterestLabel = new JLabel("Nearby Landmarks to Tour: "); 
 		placesInterestLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// South on bottomPanel
-		placesInterestTextArea = new JTextArea(10, 30); // set rows=10 and columns=30
+		placesInterestTextArea = new JTextArea(7, 30); // set rows=7 and columns=30
 		scrollPane = new JScrollPane(placesInterestTextArea);
 		placesInterestPanel = new JPanel();
 		placesInterestPanel.add(scrollPane);
