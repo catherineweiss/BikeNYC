@@ -9,13 +9,13 @@ import javax.swing.SwingUtilities;
  * @author Catherine Weiss and Fred Chang
  *
  */
-public class TourNY {
+public class BikeNYC {
 
 	public static void main(String[] args) {
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				TourNYGUI frame = new TourNYGUI();
+				BikeNYCGUI frame = new BikeNYCGUI();
 			}
 		});
 
