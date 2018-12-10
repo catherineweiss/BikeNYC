@@ -1,6 +1,9 @@
 package shared;
+
 /**
- * This class represents a location, with a name, latitude, longitude, and street address.
+ * This class represents a location, with a name, latitude, longitude, and
+ * street address.
+ * 
  * @author Catherine Weiss
  *
  */
@@ -10,12 +13,12 @@ public class Location {
 	private double latitude;
 	private double longitude;
 	private String address;
-	
-	public Location(String name, double latitude, double longitude, String address) {	
+
+	public Location(String name, double latitude, double longitude, String address) {
 		this.name = name;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.address = address;		
+		this.address = address;
 	}
 
 	/**
@@ -25,14 +28,17 @@ public class Location {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
-	 * a method to get the lat and lon concatenated and separated by a comma
+	 * a method to get the latitude and longitude concatenated and separated by a
+	 * comma
+	 * 
 	 * @return comma-separated coordinates
 	 */
 	public String getLatLongString() {
 		return latitude + "," + longitude;
 	}
+
 	/**
 	 * 
 	 * @return latitude
@@ -40,7 +46,7 @@ public class Location {
 	public double getLatitude() {
 		return latitude;
 	}
-	
+
 	/**
 	 * 
 	 * @return longitude
@@ -59,7 +65,7 @@ public class Location {
 
 	/**
 	 * 
-	 * @param name of location 
+	 * @param name of location
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -80,7 +86,7 @@ public class Location {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	
+
 	/**
 	 * 
 	 * @param address
@@ -89,6 +95,4 @@ public class Location {
 		this.address = address;
 	}
 
-	
-	
 }

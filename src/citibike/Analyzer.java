@@ -10,7 +10,9 @@ import java.util.Scanner;
 import org.json.JSONObject;
 
 /**
- * This class contains all methods used in CitiBike main method
+ * This is an actor class that takes a pair of GPS coordinates, returns closest
+ * Citibike Station and pulls down real-time station info using Citibike API
+ * 
  * @author Fred Chang
  *
  */
@@ -21,25 +23,29 @@ public class Analyzer {
 	public Analyzer(ArrayList<Station> stations) {
 		this.stations = stations;
 	}
-	
+
 	/**
 	 * 
-	 * Method reads the station CSV file and uses station reader to put each into an arraylist object with GPS coordinates
-	 * Note: Because there is no JSON feed for real time station with coordinates. Parsing of stations and linking with appropriate GPS coordinates are needed on our end to match station IDs with coordinate location
+	 * Method reads the station CSV file and uses station reader to put each into an
+	 * arraylist object with GPS coordinates Note: Because there is no JSON feed for
+	 * real time station with coordinates. Parsing of stations and linking with
+	 * appropriate GPS coordinates are needed on our end to match station IDs with
+	 * coordinate location
 	 */
 	public void loadStations() {
-		//System.out.println("Loading stations into database...");
-		StationReader stationReader = new StationReader("data/station_gps.csv");	
+		// System.out.println("Loading stations into database...");
+		StationReader stationReader = new StationReader("data/station_gps.csv");
 		try {
-			stations = stationReader.readStationFile();		
+			stations = stationReader.readStationFile();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 
 	/**
 	 * 
 	 * Method takes in station ID and returns station name
+	 * 
 	 * @param stationId
 	 * @return
 	 */
@@ -54,10 +60,11 @@ public class Analyzer {
 
 		return stationName;
 	}
-	
+
 	/**
 	 * 
 	 * Method takes in station name and returns station ID
+	 * 
 	 * @param stationName
 	 * @return
 	 */
@@ -76,6 +83,7 @@ public class Analyzer {
 	/**
 	 * 
 	 * Method takes in coordinates and returns closest Citibike Station
+	 * 
 	 * @param userLat
 	 * @param userLong
 	 * @return
@@ -97,14 +105,14 @@ public class Analyzer {
 				closestDistance = difference;
 				closestStation = s.getStationId();
 			}
-			
+
 			if (closestDistance == 99999 || closestStation == 99999) {
 				System.out.println("Error executing analyzeCloseProximityDistance() ");
 				return -1;
 			}
 
 		}
-		
+
 		if (closestDistance == 99999 || closestStation == 99999) {
 			System.out.println("Error executing analyzeCloseProximity() ");
 			return -1;
@@ -112,45 +120,51 @@ public class Analyzer {
 
 		return closestStation;
 	}
-	
+
 	/**
 	 * 
-	 * Method takes in station ID of closest CitiBike station and returns its latitude coordinates
+	 * Method takes in station ID of closest CitiBike station and returns its
+	 * latitude coordinates
+	 * 
 	 * @param closestStationId
 	 * @return
 	 */
 	public double getClosestStationLat(int closestStationId) {
 		double stationLat = 0;
-		for (Station s: stations) {
+		for (Station s : stations) {
 			if (s.getStationId() == closestStationId) {
 				stationLat = s.getStationLat();
 			}
-		}			
-		
+		}
+
 		return stationLat;
 	}
-	
+
 	/**
 	 * 
-	 * Method takes in station ID of closest CitiBike station and returns its latitude coordinates
+	 * Method takes in station ID of closest CitiBike station and returns its
+	 * latitude coordinates
+	 * 
 	 * @param closestStationId
 	 * @return
 	 */
 	public double getClosestStationLong(int closestStationId) {
 		double stationLong = 0;
-		for (Station s: stations) {
+		for (Station s : stations) {
 			if (s.getStationId() == closestStationId) {
 				stationLong = s.getStationLong();
 			}
-		}			
-		
+		}
+
 		return stationLong;
 	}
-	
+
 	/**
 	 * 
-	 * Method takes in two pairs of coordinates and returns distance in miles
-	 * Note: Distance calculation formula using Haversine, src: https://rosettacode.org/wiki/Haversine_formula#Java
+	 * Method takes in two pairs of coordinates and returns distance in miles Note:
+	 * Distance calculation formula using Haversine, src:
+	 * https://rosettacode.org/wiki/Haversine_formula#Java
+	 * 
 	 * @param lat1
 	 * @param lon1
 	 * @param lat2
@@ -160,21 +174,24 @@ public class Analyzer {
 	public static double getDistanceHaversine(double lat1, double lon1, double lat2, double lon2) {
 		double radius = 6372.8; // earth radius in kilometers
 		double latDiff = Math.toRadians(lat2 - lat1);
-        double lonDiff = Math.toRadians(lon2 - lon1);
-        lat1 = Math.toRadians(lat1);
-        lat2 = Math.toRadians(lat2);
- 
-        double a = Math.pow(Math.sin(latDiff / 2),2) + Math.pow(Math.sin(lonDiff / 2),2) * Math.cos(lat1) * Math.cos(lat2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double distanceKM =  radius * c;
-        double distanceMiles = Math.round(distanceKM * 0.62137*100.0)/100.0; //return distance in miles with 2 decimal places precision
-        
-        return distanceMiles;
-    }
-	
+		double lonDiff = Math.toRadians(lon2 - lon1);
+		lat1 = Math.toRadians(lat1);
+		lat2 = Math.toRadians(lat2);
+
+		double a = Math.pow(Math.sin(latDiff / 2), 2)
+				+ Math.pow(Math.sin(lonDiff / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
+		double c = 2 * Math.asin(Math.sqrt(a));
+		double distanceKM = radius * c;
+		double distanceMiles = Math.round(distanceKM * 0.62137 * 100.0) / 100.0; // return distance in miles with 2
+																					// decimal places precision
+
+		return distanceMiles;
+	}
+
 	/**
 	 * 
 	 * Method takes in coordinates and returns distance to closest Citibike Station
+	 * 
 	 * @param userLat
 	 * @param userLong
 	 * @return
@@ -196,7 +213,7 @@ public class Analyzer {
 				closestDistance = difference;
 			}
 		}
-		
+
 		if (closestDistance == 99999 || closestStation == 99999) {
 			System.out.println("Error executing analyzeCloseProximityDistance() ");
 			return -1;
@@ -204,11 +221,13 @@ public class Analyzer {
 
 		return closestDistance;
 	}
-	
+
 	/**
 	 * 
 	 * NOTE: METHOD USED FOR TESTING PRINTING OF ALL RESULTS // CAN DELETE LATER
-	 * Method takes in stationId and returns real-time information about the station using CitiBike API
+	 * Method takes in stationId and returns real-time information about the station
+	 * using CitiBike API
+	 * 
 	 * @param stationId
 	 * @throws IOException
 	 * @throws ParseException
@@ -223,29 +242,30 @@ public class Analyzer {
 			str += scan.nextLine();
 		scan.close();
 		JSONObject obj = new JSONObject(str);
-		
-		//JSONObject station = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(2);
-		
-		
-		//User can request which station to retrieve info from
+
+		// JSONObject station =
+		// obj.getJSONObject("data").getJSONArray("stations").getJSONObject(2);
+
+		// User can request which station to retrieve info from
 		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
 		System.out.println("");
 		System.out.println("Searching for station info using CitiBike API...");
-		
-		for (int i=0; i<totalnumStations; i++) {
+
+		for (int i = 0; i < totalnumStations; i++) {
 			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
 			if (stationSearch.getInt("station_id") == stationId) {
 				System.out.println("Station ID: " + stationSearch.getInt("station_id"));
 				System.out.println("Bikes Available: " + stationSearch.getInt("num_bikes_available"));
 				System.out.println("Docks Available: " + stationSearch.getInt("num_docks_available"));
 			}
-		}		
+		}
 	}
-	
 
 	/**
 	 * 
-	 * Method takes in stationId and returns real-time information on number of bikes available at station using CitiBike API
+	 * Method takes in stationId and returns real-time information on number of
+	 * bikes available at station using CitiBike API
+	 * 
 	 * @param stationId
 	 * @throws IOException
 	 * @throws ParseException
@@ -260,12 +280,11 @@ public class Analyzer {
 			str += scan.nextLine();
 		scan.close();
 		JSONObject obj = new JSONObject(str);
-		
-		//User can request which station to retrieve info from
+
+		// User can request which station to retrieve info from
 		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
 
-		
-		for (int i=0; i<totalnumStations; i++) {
+		for (int i = 0; i < totalnumStations; i++) {
 			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
 			if (stationSearch.getInt("station_id") == stationId) {
 				return stationSearch.getInt("num_bikes_available");
@@ -273,10 +292,12 @@ public class Analyzer {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * 
-	 * Method takes in stationId and returns real-time information on number of empty spaces available at station using CitiBike API
+	 * Method takes in stationId and returns real-time information on number of
+	 * empty spaces available at station using CitiBike API
+	 * 
 	 * @param stationId
 	 * @throws IOException
 	 * @throws ParseException
@@ -291,12 +312,11 @@ public class Analyzer {
 			str += scan.nextLine();
 		scan.close();
 		JSONObject obj = new JSONObject(str);
-		
-		//User can request which station to retrieve info from
+
+		// User can request which station to retrieve info from
 		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
 
-		
-		for (int i=0; i<totalnumStations; i++) {
+		for (int i = 0; i < totalnumStations; i++) {
 			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
 			if (stationSearch.getInt("station_id") == stationId) {
 				return stationSearch.getInt("num_docks_available");

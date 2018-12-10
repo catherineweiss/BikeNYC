@@ -5,6 +5,7 @@ import shared.QueryStringBuilder;
 import util.APIKeys;
 
 /**
+ * An actor class that constructs URL for the FourSquare API.
  * 
  * @author fieldsruthie
  *
@@ -12,7 +13,6 @@ import util.APIKeys;
 public class FourSquareURLCreator {
 
 	/**
-	 * 
 	 * 
 	 * @return URL for squarespace API
 	 */

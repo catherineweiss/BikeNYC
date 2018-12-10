@@ -39,7 +39,7 @@ import util.APIKeys;
  * GUI Methods for TourNY, a geo-location based recommendation application for
  * Manhattan
  * 
- * @author Catherine Weiss, Fred Chang
+ * @author Catherine Weiss and Fred Chang
  *
  */
 public class TourNYGUI extends JFrame {
@@ -149,6 +149,7 @@ public class TourNYGUI extends JFrame {
 		}
 	}
 
+	
 	/**
 	 * Takes an array of Location objects and returns a String of
 	 * latitudes-longitude pairs (separated by a comma), with a pipe separating the
@@ -163,11 +164,12 @@ public class TourNYGUI extends JFrame {
 		for (Location l : pointsOfInterest) {
 			placesOfInterestAsString = placesOfInterestAsString + l.getLatLongString() + "|";
 		}
-		String substring = placesOfInterestAsString.substring(0, placesOfInterestAsString.length() - 1); // removes
-																											// final |
+		//removes final "|"
+		String substring = placesOfInterestAsString.substring(0, placesOfInterestAsString.length() - 1); 																											
 		return substring;
 	}
 
+	
 	/**
 	 * Creates static map with specified parameters
 	 * 
@@ -267,9 +269,7 @@ public class TourNYGUI extends JFrame {
 						inputRequestLabel.setText("Enter an address in Manhattan:");
 						inputRequestLabel.setForeground(Color.RED);
 						pack();
-						
-						
-						
+
 					} else {
 
 						// *** CITIBIKE FUNCTIONALITY BEGINS HERE ***
@@ -318,7 +318,10 @@ public class TourNYGUI extends JFrame {
 
 						// *** FOURSQUARE SPACES API FUNCTIONALITY BEGINS HERE ***
 
-						String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "landmark"); //change breakfast to landmark
+						String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "landmark"); // change
+																													// breakfast
+																													// to
+																													// landmark
 						FourSquareLocationParser parser = new FourSquareLocationParser(
 								APICaller.callAPI(foursquareurl));
 						pointsOfInterest = parser.getLocations();
@@ -335,7 +338,7 @@ public class TourNYGUI extends JFrame {
 						// interest
 						getMap(closestBikeLocationAsString, mapStartLocLabel, 15, startLocationAsString,
 								closestBikeLocationAsString, placesOfInterestAsString);
-						
+
 						pack();
 					}
 				}
@@ -367,34 +370,32 @@ public class TourNYGUI extends JFrame {
 		mapStartLocLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		getMap(locationDefault, mapStartLocLabel, 12);
 
-
 		// startLocPanel:
 		startAddressLabel = new JLabel("Starting Address:  ");
 		formatAddressfromGoogleLabel = new JLabel("");
 		startLocPanel = new JPanel();
 		startLocPanel.add(startAddressLabel);
 		startLocPanel.add(formatAddressfromGoogleLabel);
-		
-				
+
 		// assemble topPanel
 		topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
 		topPanel.add(inputPanel, BorderLayout.NORTH);
-		topPanel.add(mapStartLocLabel, BorderLayout.CENTER);		
+		topPanel.add(mapStartLocLabel, BorderLayout.CENTER);
 		topPanel.add(startLocPanel, BorderLayout.SOUTH);
 
 		// Create Middle Panel: BikeLocPanel; NumBikesPanel; DistFromUserPanel
 
 		// BikeLocPanel
 		closestStationLabel = new JLabel("Closest Citibike Station:  ");
-		stationNameFromAPILabel = new JLabel();// 
+		stationNameFromAPILabel = new JLabel();//
 		bikeLocPanel = new JPanel();
 		bikeLocPanel.add(closestStationLabel);
 		bikeLocPanel.add(stationNameFromAPILabel);
 
 		// DistanceFromUserPanel
 		distFromUserLabel = new JLabel("You are  ");
-		actualDistFromUserFromAPILabel = new JLabel(); 
+		actualDistFromUserFromAPILabel = new JLabel();
 		milesFromUserLabel = new JLabel(" miles from the closest station");
 		distFromUserPanel = new JPanel();
 		distFromUserPanel.add(distFromUserLabel);
@@ -403,7 +404,7 @@ public class TourNYGUI extends JFrame {
 
 		// NumBikesPanel
 		bikesAvailLabel = new JLabel("Number of Bikes Available:  ");
-		numBikesAvailLabel = new JLabel(); // 
+		numBikesAvailLabel = new JLabel(); //
 		numBikesPanel = new JPanel();
 		numBikesPanel.add(bikesAvailLabel);
 		numBikesPanel.add(numBikesAvailLabel);
@@ -415,7 +416,8 @@ public class TourNYGUI extends JFrame {
 		middlePanel.add(distFromUserPanel, BorderLayout.CENTER);
 		middlePanel.add(numBikesPanel, BorderLayout.SOUTH);
 
-		// Create Bottom Panel: NumSpacesPanel; PlacesOfInterestLabel; PlacesOfInterestTextArea
+		// Create Bottom Panel: NumSpacesPanel; PlacesOfInterestLabel;
+		// PlacesOfInterestTextArea
 
 		// NumSpacesPanel
 		spacesAvailLabel = new JLabel("Number of Spaces Available:  ");
@@ -429,17 +431,16 @@ public class TourNYGUI extends JFrame {
 		placesInterestLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// South on bottomPanel
-		placesInterestTextArea = new JTextArea(10, 30);  //set rows=10 and columns=30
+		placesInterestTextArea = new JTextArea(10, 30); // set rows=10 and columns=30
 		scrollPane = new JScrollPane(placesInterestTextArea);
 		placesInterestPanel = new JPanel();
 		placesInterestPanel.add(scrollPane);
-
 
 		// assemble bottomPanel
 		bottomPanel = new JPanel();
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(numSpacesPanel, BorderLayout.NORTH);
-		bottomPanel.add(placesInterestLabel, BorderLayout.CENTER); 
+		bottomPanel.add(placesInterestLabel, BorderLayout.CENTER);
 		bottomPanel.add(placesInterestPanel, BorderLayout.SOUTH);
 
 		// add Top, Middle, Bottom Panels to Main Panel
@@ -448,15 +449,14 @@ public class TourNYGUI extends JFrame {
 		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(middlePanel, BorderLayout.CENTER);
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
-		JScrollPane scrollPane2 = new JScrollPane(mainPanel);  //try putting main panel on a scroll pane
+		JScrollPane scrollPane2 = new JScrollPane(mainPanel); // try putting main panel on a scroll pane
 
 		// add Main Panel to Frame
 //		add(mainPanel);
 
-		
-		//add scrollPane2 to Frame
+		// add scrollPane2 to Frame
 		add(scrollPane2);
-		
+
 		setTitle("Customize Your Active Tour of Manhattan");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setVisible(true);

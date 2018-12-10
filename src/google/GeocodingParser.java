@@ -1,4 +1,5 @@
 package google;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -7,10 +8,16 @@ import com.google.gson.JsonParser;
 
 import shared.Location;
 
+/**
+ * Actor class that parses JSON response from Google Geocoding API
+ * 
+ * @author Catherine Weiss
+ *
+ */
 public class GeocodingParser {
-	
+
 	private Location searchLocation;
-	
+	private String status;
 
 	public void parseGeocodingAPIResponse(String apiResponse) {
 
@@ -22,9 +29,9 @@ public class GeocodingParser {
 		if (jElement instanceof JsonObject) {
 			jObject = (JsonObject) jElement;
 		}
-				
+
 		// get the JSON object called "status"
-		String status = jObject.get("status").toString();
+		status = jObject.get("status").toString();
 		status = status.replaceAll("\"", "");
 
 		if (status.equals("ZERO_RESULTS")) {
@@ -32,7 +39,6 @@ public class GeocodingParser {
 		} else if (!status.equals("OK")) {
 			System.out.println("There was a problem accessing that location. Please try again.");
 		} else {
-//			System.out.println("status is: " + status);
 
 			// get the JSON array called "results" and access first result in array
 			JsonArray jArrayResults = jObject.getAsJsonArray("results");
@@ -66,8 +72,20 @@ public class GeocodingParser {
 
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @return Location object for user-specified starting location
+	 */
 	public Location getOriginLocation() {
 		return searchLocation;
+	}
+
+	/**
+	 * 
+	 * @return Status of search that is returned by Google Geocoding API
+	 */
+	public String getStatus() {
+		return status;
 	}
 }
