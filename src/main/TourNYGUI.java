@@ -115,7 +115,7 @@ public class TourNYGUI extends JFrame {
 	private JPanel placesInterestPanel;
 
 	// constructor with helper methods
-	TourNYGUI() {
+	public TourNYGUI() {
 		createGoButton();
 		createComponents();
 	}
@@ -158,7 +158,7 @@ public class TourNYGUI extends JFrame {
 	 * @param pointsOfInterest
 	 * @return String of latitudes-longitude pairs
 	 */
-	private String placesOfInterestAsStringBuilder(ArrayList<Location> pointsOfInterest) {
+	public String placesOfInterestAsStringBuilder(ArrayList<Location> pointsOfInterest) {
 
 		String placesOfInterestAsString = "";
 		for (Location l : pointsOfInterest) {
