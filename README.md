@@ -59,9 +59,9 @@ Open weather api for checking current conditions
 ## To Do
 First Priority (DUE end of day Friday) (By end of day Friday, our program should be running!)
 - (COMPLETE --> Fred merged all into main) 
-- Ruthie: divide into packages
+- (COMPLETE) Ruthie: divide into packages
 - (COMPLETE) Fred: have tourNY.java call citibike
-- Ruthie: have tourNY.java call foursquare
+- (COMPLETE) Ruthie: have tourNY.java call foursquare
 - (COMPLETE) Fred: return closest bike station as a Location object
 - (COMPLETE) Fred: fill in JPanels
 - (COMPLETE) Catherine: finish getMap method
@@ -70,16 +70,15 @@ First Priority (DUE end of day Friday) (By end of day Friday, our program should
 Second Priority (DUE end of day Saturday):
 - (COMPLETE) Catherine: put Times Square as default address
 - (COMPLETE) Catherine: add Javadocs for TourNYGUI
-- done: break the program return isn't wired; empty searchbox cuases excepting in geocode parser
+- (COMPLETE) break the program return isn't wired; empty searchbox cuases excepting in geocode parser
 - (COMPLETE) Catherine: can we wire up the return key to be go?
-- Catherine: if user enters an address outside of NY, it currently makes map go there. Check Starting Address for zip codes in Manhattan and then make the user enter a new address.
+- (COMPLETE) Catherine: if user enters an address outside of NY, it currently makes map go there. Check Starting Address for zip codes in Manhattan and then make the user enter a new address.
 - done maybe write query string builder
-- Catherine: Message thrown by GoogleAPI Code: "More than one location is associated with that address. Please verify that your starting location is correct." What to do about this?
+- (COMPLETE) Catherine: Message thrown by GoogleAPI Code: "More than one location is associated with that address. Please verify that your starting location is correct." What to do about this?
 
 Third Priority (DUE end of day SUNDAY):
-- Ruthie: check casting with JSON parsing (all three API callers)
-- Ruthie: exceptions: ??
-
+- check casting with JSON parsing (all three API callers)
+- exceptions: ??
 - lint for javadoc comments, indenting
 - user manual
 - one-page writeup
