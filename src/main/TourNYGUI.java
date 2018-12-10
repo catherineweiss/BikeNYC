@@ -316,9 +316,9 @@ public class TourNYGUI extends JFrame {
 						Location closestBikeLocation = new Location(stationName, stationLat, stationLong, stationName);
 						closestBikeLocationAsString = closestBikeLocation.getLatLongString();
 
-						// *** SQUARE SPACE FUNCTIONALITY BEGINS HERE ***
+						// *** FOURSQUARE SPACES API FUNCTIONALITY BEGINS HERE ***
 
-						String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "breakfast");
+						String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "landmark"); //change breakfast to landmark
 						FourSquareLocationParser parser = new FourSquareLocationParser(
 								APICaller.callAPI(foursquareurl));
 						pointsOfInterest = parser.getLocations();
@@ -429,7 +429,7 @@ public class TourNYGUI extends JFrame {
 		placesInterestLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// South on bottomPanel
-		placesInterestTextArea = new JTextArea(10, 30);  //set rows=10 and cols=30
+		placesInterestTextArea = new JTextArea(10, 30);  //set rows=10 and columns=30
 		scrollPane = new JScrollPane(placesInterestTextArea);
 		placesInterestPanel = new JPanel();
 		placesInterestPanel.add(scrollPane);
@@ -448,10 +448,15 @@ public class TourNYGUI extends JFrame {
 		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(middlePanel, BorderLayout.CENTER);
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+		JScrollPane scrollPane2 = new JScrollPane(mainPanel);  //try putting main panel on a scroll pane
 
 		// add Main Panel to Frame
-		add(mainPanel);
+//		add(mainPanel);
 
+		
+		//add scrollPane2 to Frame
+		add(scrollPane2);
+		
 		setTitle("Customize Your Active Tour of Manhattan");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setVisible(true);
