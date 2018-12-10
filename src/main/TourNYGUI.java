@@ -448,10 +448,15 @@ public class TourNYGUI extends JFrame {
 		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(middlePanel, BorderLayout.CENTER);
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+		JScrollPane scrollPane2 = new JScrollPane(mainPanel);  //try putting main panel on a scroll pane
 
 		// add Main Panel to Frame
-		add(mainPanel);
+//		add(mainPanel);
 
+		
+		//add scrollPane2 to Frame
+		add(scrollPane2);
+		
 		setTitle("Customize Your Active Tour of Manhattan");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setVisible(true);
