@@ -15,7 +15,7 @@ import shared.Location;
  * @author Catherine Weiss
  *
  */
-public class TourNYGUITest {
+public class BikeNYCGUITest {
 
 	BikeNYCGUI tourNYGUI;
 
