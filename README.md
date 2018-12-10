@@ -86,6 +86,9 @@ Third Priority (DUE end of day MONDAY):
 7. check all files for javadoc comments, indenting
 8. submit in a zip file: code, user manual, summary.txt
 
+Misc
+- Is it bad design that Manhattan zip codes are not stored as a csv file?
+
 ## Running the app:
 - copy util/APIKeysSample.java to util/APIKeys.java and fill in the strings
 - from main package, run TourNY.java's main method
