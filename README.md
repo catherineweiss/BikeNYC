@@ -76,15 +76,15 @@ Second Priority (DUE end of day Saturday):
 - done maybe write query string builder
 - (COMPLETE) Catherine: Message thrown by GoogleAPI Code: "More than one location is associated with that address. Please verify that your starting location is correct." What to do about this?
 
-Third Priority (DUE end of day SUNDAY):
-- check casting with JSON parsing (all three API callers)
-- exceptions: ??
-- lint for javadoc comments, indenting
-- user manual
-- one-page writeup
-- check that the number of junit tests matches the rubric
-- scan down the rubric again
-- actually submit
+Third Priority (DUE end of day MONDAY):
+1. user manual w/ screenshots
+2. summary.txt (name and description of project, work breakdown, link to github repo)
+3. JUnit testing (15 total tests over 3 different classes)
+4. Are errors handled well?
+5. Are exceptions handled well?
+6. check casting with JSON parsing (all three API callers)
+7. check all files for javadoc comments, indenting
+8. submit in a zip file: code, user manual, summary.txt
 
 ## Running the app:
 - copy util/APIKeysSample.java to util/APIKeys.java and fill in the strings
