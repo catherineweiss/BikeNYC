@@ -82,7 +82,7 @@ Third Priority (DUE end of day MONDAY):
 3. JUnit testing (15 total tests over 3 different classes)
 4. Are errors handled well?
 5. Are exceptions handled well?
-6. check casting with JSON parsing (all three API callers)
+6. DONE. check casting with JSON parsing (all three API callers)
 7. check all files for javadoc comments, indenting
 8. submit in a zip file: code, user manual, summary.txt
 
