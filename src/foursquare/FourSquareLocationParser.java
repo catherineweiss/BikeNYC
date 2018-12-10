@@ -15,7 +15,13 @@ public class FourSquareLocationParser {
 	public FourSquareLocationParser(String apiResponse) {
 
 		locations = new ArrayList<Location>();
-		JsonObject jObject = (JsonObject) new JsonParser().parse(apiResponse);
+		
+		JsonObject jObject = new JsonObject();
+		JsonElement jElement = new JsonParser().parse(apiResponse);
+		if (jElement instanceof JsonObject) {
+			jObject = (JsonObject) jElement;
+		}
+		
 
 		//get the groups array
 		JsonArray groups = (JsonArray) jObject.getAsJsonObject("response")
