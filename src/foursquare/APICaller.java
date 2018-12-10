@@ -1,4 +1,5 @@
 package foursquare;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,6 +8,7 @@ import java.net.URLConnection;
 
 /**
  * Calls the API using a specified URL and saves response.
+ * 
  * @author Ruthie Fields
  *
  */
@@ -23,14 +25,13 @@ public class APICaller {
 			String inputLine;
 			while ((inputLine = in.readLine()) != null) {
 				response += inputLine;
-//			System.out.println(inputLine);
 			}
-			in.close();	
+			in.close();
 
 		} catch (IOException e) {
 			System.out.println("The url wasn't able to open");
 		}
-		
+
 		return response;
 	}
 

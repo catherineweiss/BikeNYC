@@ -24,9 +24,9 @@ public class GoogleURLCreator {
 		String queryParams = "?address=" + searchAddress;
 		String regionBias = "&region=new+york";
 		String components = "&country:US";
-		String apiKey = "&key="+ APIKeys.GOOGLE_API_KEY;
+		String apiKey = "&key=" + APIKeys.GOOGLE_API_KEY;
 		String geocodeURL = path + outputFormat + queryParams + regionBias + components + apiKey;
-		System.out.println(geocodeURL);		
+		System.out.println(geocodeURL);
 
 		return geocodeURL;
 	}
