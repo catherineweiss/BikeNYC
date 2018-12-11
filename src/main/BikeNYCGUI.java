@@ -116,40 +116,38 @@ public class BikeNYCGUI extends JFrame {
 	private JScrollPane scrollPane;
 	private JPanel placesInterestPanel;
 
-	// Alternative Display for places of interest (border layout); position South on bottomPanel 
-	private JPanel placesWithMarkerAddressPanel; 
-	
-	// for landmarkPanel (grid layout); position Center on placesWithMarkerAddressPanel 
+	// Alternative Display for places of interest (border layout); position South on
+	// bottomPanel
+	private JPanel placesWithMarkerAddressPanel;
+
+	// for landmarkPanel (grid layout); position Center on
+	// placesWithMarkerAddressPanel
 	private JLabel landmark1;
 	private JLabel landmark2;
-	private JLabel landmark3;	
+	private JLabel landmark3;
 	private JLabel landmark4;
 	private JLabel landmark5;
 	private JPanel landmarkPanel;
 	private ArrayList<JLabel> landmarkLabels;
-	
+
 	// for markerPanel (grid layout); position West on placesWithMarkerAddressPanel
 	private JLabel marker1;
 	private JLabel marker2;
-	private JLabel marker3;	
+	private JLabel marker3;
 	private JLabel marker4;
 	private JLabel marker5;
-	private JLabel marker6; 
+	private JLabel marker6;
 	private JPanel markerPanel;
-	
+
 	// for addressPanel (grid layout); position East on placesWithMarkerAddressPanel
 	private JLabel address1;
 	private JLabel address2;
-	private JLabel address3;	
+	private JLabel address3;
 	private JLabel address4;
 	private JLabel address5;
 	private JPanel addressPanel;
 	ArrayList<JLabel> addressLabels;
-	
-	
-	
-	
-	
+
 	// constructor with helper methods
 	public BikeNYCGUI() {
 		createGoButton();
@@ -181,7 +179,7 @@ public class BikeNYCGUI extends JFrame {
 				img = ImageIO.read(url);
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
-			}			
+			}
 			icon = new ImageIcon(img);
 			mapLabelName.setIcon(icon);
 		} catch (Exception ex) {
@@ -231,40 +229,41 @@ public class BikeNYCGUI extends JFrame {
 			String zoom = "&zoom";
 			int zoomNum = 12;
 			String size = "&size=500x600";
-			String markerStart = "&markers=size:mid|color:green|" + startLocationAsString;  //removed label "S"
-//			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString;
-			String markerBikeStation = "&markers=icon:https://bit.ly/2EaWkHk|color:blue|label:B|" + closestBikeLocationAsString;
-//			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;
-			
+			String markerStart = "&markers=size:mid|color:green|" + startLocationAsString; // removed label "S"
+			String markerBikeStation = "&markers=icon:https://bit.ly/2EaWkHk|color:blue|label:B|"
+					+ closestBikeLocationAsString;
+
 			String m1 = "";
 			String m2 = "";
 			String m3 = "";
 			String m4 = "";
 			String m5 = "";
-			if (pointsOfInterest.size()>0) {
+			if (pointsOfInterest.size() > 0) {
 				m1 = "&markers=size:mid|color:red|label:A|" + pointsOfInterest.get(0).getLatLongString();
-			} else if (pointsOfInterest.size()>1) {
-				m2 = "&markers=size:mid|color:red|label:B|" + pointsOfInterest.get(1).getLatLongString();  
-			} else if (pointsOfInterest.size()>2) {
-				m3 = "&markers=size:mid|color:red|label:C|" + pointsOfInterest.get(2).getLatLongString();  
-			} else if (pointsOfInterest.size()>3) {
-				m4 = "&markers=size:mid|color:red|label:D|" + pointsOfInterest.get(3).getLatLongString();
-			} else if (pointsOfInterest.size() > 4) {
-				m5 = "&markers=size:mid|color:red|label:E|" + pointsOfInterest.get(4).getLatLongString();  
 			}
-			
+			if (pointsOfInterest.size() > 1) {
+				m2 = "&markers=size:mid|color:red|label:B|" + pointsOfInterest.get(1).getLatLongString();
+			}
+			if (pointsOfInterest.size() > 2) {
+				m3 = "&markers=size:mid|color:red|label:C|" + pointsOfInterest.get(2).getLatLongString();
+			}
+			if (pointsOfInterest.size() > 3) {
+				m4 = "&markers=size:mid|color:red|label:D|" + pointsOfInterest.get(3).getLatLongString();
+			}
+			if (pointsOfInterest.size() > 4) {
+				m5 = "&markers=size:mid|color:red|label:E|" + pointsOfInterest.get(4).getLatLongString();
+			}
+
 			String markers = markerStart + markerBikeStation + m1 + m2 + m3 + m4 + m5;
-//			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
 			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
 
 			String queryParams = center + location + zoom + zoomNum + size + markers + key;
 			String mapsURL = "https://maps.googleapis.com/maps/api/staticmap?" + queryParams;
-//			mapsURL=URLEncoder.encode(mapsURL, "UTF-8");
 			System.out.println(mapsURL);
 			url = new URL(mapsURL);
 			try {
 				img = ImageIO.read(url);
-				
+
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
@@ -288,8 +287,30 @@ public class BikeNYCGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// Retrieve user input
+				// Retrieve user input and clear text fields
 				String startLocation = startAddressTextField.getText();
+
+				// Create arrayList for pointsOfInterest JLabels and set text to empty string
+				landmarkLabels = new ArrayList<>();
+				landmarkLabels.add(landmark1);
+				landmarkLabels.add(landmark2);
+				landmarkLabels.add(landmark3);
+				landmarkLabels.add(landmark4);
+				landmarkLabels.add(landmark5);
+
+				addressLabels = new ArrayList<>();
+				addressLabels.add(address1);
+				addressLabels.add(address2);
+				addressLabels.add(address3);
+				addressLabels.add(address4);
+				addressLabels.add(address5);
+
+				for (int i = 0; i < landmarkLabels.size(); i++) {
+					landmarkLabels.get(i).setText("");
+				}
+				for (int i = 0; i < addressLabels.size(); i++) {
+					addressLabels.get(i).setText("");
+				}
 
 				// If text field is empty, ask user to enter address again and clears data
 				// fields
@@ -320,7 +341,7 @@ public class BikeNYCGUI extends JFrame {
 					} catch (IllegalArgumentException | IOException e2) {
 						e2.printStackTrace();
 					}
-					
+
 					userLat = gp.getOriginLocation().getLatitude();
 					userLong = gp.getOriginLocation().getLongitude();
 					startLocationAsString = gp.getOriginLocation().getLatLongString();
@@ -358,8 +379,8 @@ public class BikeNYCGUI extends JFrame {
 
 						// Reads in stations csv file
 						analyzer.loadStations();
-						
-						//Remove inactive stations
+
+						// Remove inactive stations
 						try {
 							analyzer.removeInactive();
 						} catch (IOException e2) {
@@ -411,46 +432,28 @@ public class BikeNYCGUI extends JFrame {
 						FourSquareLocationParser parser = new FourSquareLocationParser(
 								APICaller.callAPI(foursquareurl));
 						pointsOfInterest = parser.getLocations();
-				
-						//Display FourSquare data on textArea
-/*						String poi = "";
-						for (Location l : pointsOfInterest) {
-							poi += l.getName() + "\n";
-						}
-						placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest);
-						placesInterestTextArea.setLineWrap(true);
-						placesInterestTextArea.setText(poi);
-*/						
-						
-						//Display FourSquare data on a grid of 5x1 JLabels
 
+						// Display FourSquare data on textArea
+						/*
+						 * String poi = ""; for (Location l : pointsOfInterest) { poi += l.getName() +
+						 * "\n"; } placesOfInterestAsString =
+						 * placesOfInterestAsStringBuilder(pointsOfInterest);
+						 * placesInterestTextArea.setLineWrap(true);
+						 * placesInterestTextArea.setText(poi);
+						 */
+
+						// Display FourSquare data on a grid of 5x1 JLabels
 						marker1.setText("    A  ");
 						marker2.setText("    B  ");
 						marker3.setText("    C  ");
 						marker4.setText("    D  ");
 						marker5.setText("    E  ");
 
-						//make an arraylist of JPanels. Fill them with l.getName()						
-						landmarkLabels = new ArrayList<>();
-						landmarkLabels.add(landmark1);
-						landmarkLabels.add(landmark2);
-						landmarkLabels.add(landmark3);
-						landmarkLabels.add(landmark4);
-						landmarkLabels.add(landmark5);
-						
-						addressLabels = new ArrayList<>();
-						addressLabels.add(address1);
-						addressLabels.add(address2);
-						addressLabels.add(address3);
-						addressLabels.add(address4);
-						addressLabels.add(address5);
-						
-						for (int i=0; i<pointsOfInterest.size();i++) {    //**changed from addressLabels
+						// Assign names and address from pointsOfInterest to JLabels
+						for (int i = 0; i < pointsOfInterest.size(); i++) {
 							landmarkLabels.get(i).setText(pointsOfInterest.get(i).getName());
-							addressLabels.get(i).setText("  "+pointsOfInterest.get(i).getAddress() + "  ");
+							addressLabels.get(i).setText("  " + pointsOfInterest.get(i).getAddress() + "  ");
 						}
-						
-						
 
 						// Update map with markers for start location, bike station, and places of
 						// interest
@@ -553,14 +556,14 @@ public class BikeNYCGUI extends JFrame {
 		scrollPane = new JScrollPane(placesInterestTextArea);
 		placesInterestPanel = new JPanel();
 		placesInterestPanel.add(scrollPane);
-		
+
 		// South on bottomPanel (Alternative Display of Landmark Data)
 		placesWithMarkerAddressPanel = new JPanel();
 		placesWithMarkerAddressPanel.setLayout(new BorderLayout());
-		
+
 		// Place of interest marker Column
 		markerPanel = new JPanel();
-		markerPanel.setLayout(new GridLayout(6,1));
+		markerPanel.setLayout(new GridLayout(6, 1));
 		marker1 = new JLabel();
 		marker2 = new JLabel();
 		marker3 = new JLabel();
@@ -573,10 +576,10 @@ public class BikeNYCGUI extends JFrame {
 		markerPanel.add(marker4);
 		markerPanel.add(marker5);
 		markerPanel.add(marker6);
-		
+
 		// Place of interest name Column
 		landmarkPanel = new JPanel();
-		landmarkPanel.setLayout(new GridLayout(6,1));
+		landmarkPanel.setLayout(new GridLayout(6, 1));
 		landmark1 = new JLabel();
 		landmark2 = new JLabel();
 		landmark3 = new JLabel();
@@ -587,10 +590,10 @@ public class BikeNYCGUI extends JFrame {
 		landmarkPanel.add(landmark3);
 		landmarkPanel.add(landmark4);
 		landmarkPanel.add(landmark5);
-		
+
 		// Place of interest address column
 		addressPanel = new JPanel();
-		addressPanel.setLayout(new GridLayout(6,1));
+		addressPanel.setLayout(new GridLayout(6, 1));
 		address1 = new JLabel();
 		address2 = new JLabel();
 		address3 = new JLabel();
@@ -606,8 +609,7 @@ public class BikeNYCGUI extends JFrame {
 		placesWithMarkerAddressPanel.add(markerPanel, BorderLayout.WEST);
 		placesWithMarkerAddressPanel.add(landmarkPanel, BorderLayout.CENTER);
 		placesWithMarkerAddressPanel.add(addressPanel, BorderLayout.EAST);
-		
-		
+
 		// assemble bottomPanel
 		bottomPanel = new JPanel();
 		bottomPanel.setLayout(new BorderLayout());
@@ -616,7 +618,6 @@ public class BikeNYCGUI extends JFrame {
 //		bottomPanel.add(placesInterestPanel, BorderLayout.SOUTH);
 //		bottomPanel.add(landmarkPanel, BorderLayout.SOUTH);
 		bottomPanel.add(placesWithMarkerAddressPanel, BorderLayout.SOUTH);
-		
 
 		// add Top, Middle, Bottom Panels to Main Panel
 		mainPanel = new JPanel();
@@ -625,9 +626,6 @@ public class BikeNYCGUI extends JFrame {
 		mainPanel.add(middlePanel, BorderLayout.CENTER);
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 		JScrollPane scrollPane2 = new JScrollPane(mainPanel); // use ScrollPane to improve window formatting of GUI
-
-		// add Main Panel to Frame
-//		add(mainPanel);
 
 		// add scrollPane2 to Frame
 		add(scrollPane2);
