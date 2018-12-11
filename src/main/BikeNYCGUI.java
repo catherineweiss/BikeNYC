@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -141,7 +142,11 @@ public class BikeNYCGUI extends JFrame {
 			String mapsURL = "https://maps.googleapis.com/maps/api/staticmap?" + queryParams;
 			System.out.println(mapsURL);
 			url = new URL(mapsURL);
-			img = ImageIO.read(url);
+			try {
+				img = ImageIO.read(url);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}			
 			icon = new ImageIcon(img);
 			mapLabelName.setIcon(icon);
 		} catch (Exception ex) {
@@ -202,7 +207,12 @@ public class BikeNYCGUI extends JFrame {
 //			mapsURL=URLEncoder.encode(mapsURL, "UTF-8");
 			System.out.println(mapsURL);
 			url = new URL(mapsURL);
-			img = ImageIO.read(url);
+			try {
+				img = ImageIO.read(url);
+				
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
 			icon = new ImageIcon(img);
 			mapLabelName.setIcon(icon);
 		} catch (Exception ex) {
@@ -237,6 +247,7 @@ public class BikeNYCGUI extends JFrame {
 					numBikesAvailLabel.setText("");
 					numSpacesAvailLabel.setText("");
 					placesInterestTextArea.setText("");
+					pack();
 
 				} else {
 
