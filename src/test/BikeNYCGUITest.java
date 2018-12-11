@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import foursquare.APICaller;
+import google.GeocodingParser;
+import google.GoogleURLCreator;
 import main.BikeNYCGUI;
 import shared.Location;
 
@@ -50,6 +54,30 @@ public class BikeNYCGUITest {
 
 		assertEquals(expectedString, placesOfInterestAsString);
 
+	}
+	
+	//Test user input and ensures correct status message is returned
+	@Test
+	void testStatusMessage() {
+		String startLocation = "Central Park"; //User input value
+		
+		GoogleURLCreator gc = new GoogleURLCreator();
+		String googleURL = gc.createURL(startLocation);
+		APICaller ac = new APICaller();
+		String gResponse = ac.callAPI(googleURL);
+		GeocodingParser gp = new GeocodingParser();
+		gp.parseGeocodingAPIResponse(gResponse);
+		double userLat = gp.getOriginLocation().getLatitude();
+		double userLong = gp.getOriginLocation().getLongitude();
+		String startLocationAsString = gp.getOriginLocation().getLatLongString();
+
+		// fills Starting Address
+		String formattedAddress = gp.getOriginLocation().getAddress();
+		
+		System.out.println(formattedAddress);
+		
+		//statusMessage.equals ("We found you!")
+		
 	}
 
 }
