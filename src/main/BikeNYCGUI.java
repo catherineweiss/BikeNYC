@@ -234,8 +234,14 @@ public class BikeNYCGUI extends JFrame {
 			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString;
 //			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString;
 			String markerBikeStation = "&markers=icon:https://bit.ly/2EaWkHk|color:blue|label:B|" + closestBikeLocationAsString;
-			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;
-			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
+//			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;
+			String m1 = "&markers=size:mid|color:red|label:A|" + pointsOfInterest.get(0).getLatLongString();  
+			String m2 = "&markers=size:mid|color:red|label:B|" + pointsOfInterest.get(1).getLatLongString();  
+			String m3 = "&markers=size:mid|color:red|label:C|" + pointsOfInterest.get(2).getLatLongString();  
+			String m4 = "&markers=size:mid|color:red|label:D|" + pointsOfInterest.get(3).getLatLongString();  
+			String m5 = "&markers=size:mid|color:red|label:E|" + pointsOfInterest.get(4).getLatLongString();  			
+			String markers = markerStart + markerBikeStation + m1 + m2 + m3 + m4 + m5;
+//			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
 			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
 
 			String queryParams = center + location + zoom + zoomNum + size + markers + key;
