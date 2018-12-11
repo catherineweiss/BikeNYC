@@ -1,5 +1,8 @@
 package google;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -19,7 +22,8 @@ public class GeocodingParser {
 	private Location searchLocation;
 	private String status;
 
-	public void parseGeocodingAPIResponse(String apiResponse) {
+	public void parseGeocodingAPIResponse(String apiResponse)
+			throws IllegalArgumentException, MalformedURLException, IOException {
 
 		Gson gson = new Gson();
 
@@ -30,14 +34,17 @@ public class GeocodingParser {
 			jObject = (JsonObject) jElement;
 		}
 
-		// get the JSON object called "status"
+		// get the JSON object called "status".
 		status = jObject.get("status").toString();
 		status = status.replaceAll("\"", "");
 
+		// Exception handling:
 		if (status.equals("ZERO_RESULTS")) {
-			System.out.println("Address doesn't exist. Please enter a new address.");
+			throw new IllegalArgumentException("Google API could not find that address");
+		} else if (status.equals("OVER_DAILY_LIMIT")) {
+			throw new MalformedURLException("There is a problem with API key");
 		} else if (!status.equals("OK")) {
-			System.out.println("There was a problem accessing that location. Please try again.");
+			throw new IOException("There was a problem searching for that address. Please try again.");
 		} else {
 
 			// get the JSON array called "results" and access first result in array
