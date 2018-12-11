@@ -42,12 +42,6 @@ public class GeocodingParser {
 
 			// get the JSON array called "results" and access first result in array
 			JsonArray jArrayResults = jObject.getAsJsonArray("results");
-
-			if (jArrayResults.size() >= 2) {
-				System.out.println("More than one location is associated with that address.");
-				System.out.println("Please verify that your starting location is correct.");
-			}
-
 			JsonObject result1 = (JsonObject) jArrayResults.get(0);
 
 			// get the JSON object called "formatted_address"
