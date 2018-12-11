@@ -1,6 +1,8 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,9 +58,9 @@ public class BikeNYCGUITest {
 
 	}
 	
-	//Test user input and ensures correct status message is returned
+	//Test user input and ensures correct status message is returned. Test Reason: input without zipcode
 	@Test
-	void testStatusMessage() {
+	void testStatusMessageNoZip() {
 		String statusMessage;
 		
 		String startLocation = "Central Park"; //User input value
@@ -68,7 +70,91 @@ public class BikeNYCGUITest {
 		APICaller ac = new APICaller();
 		String gResponse = ac.callAPI(googleURL);
 		GeocodingParser gp = new GeocodingParser();
-		gp.parseGeocodingAPIResponse(gResponse);
+		try {
+			gp.parseGeocodingAPIResponse(gResponse);
+		} catch (IllegalArgumentException | IOException e2) {
+			e2.printStackTrace();
+		}
+		double userLat = gp.getOriginLocation().getLatitude();
+		double userLong = gp.getOriginLocation().getLongitude();
+		String startLocationAsString = gp.getOriginLocation().getLatLongString();
+
+		// fills Starting Address
+		String formattedAddress = gp.getOriginLocation().getAddress();
+		
+		System.out.println(formattedAddress);
+		
+		if (!(formattedAddress.contains("New York, NY"))) {
+//			System.out.println(formattedAddress);
+			statusMessage = "Enter an address in Manhattan:";
+		}
+		
+		else {
+			statusMessage = "We found you!";
+		}	
+		
+		assertEquals(statusMessage, "We found you!");
+		
+	}
+	
+	
+	//Test user input and ensures correct status message is returned. Test Reason: input on the boundary of Manhattan and neighbors
+	@Test
+	void testStatusMessageBoundary() {
+		String statusMessage;
+		
+		String startLocation = "Brookyln Bridge"; //User input value
+		
+		GoogleURLCreator gc = new GoogleURLCreator();
+		String googleURL = gc.createURL(startLocation);
+		APICaller ac = new APICaller();
+		String gResponse = ac.callAPI(googleURL);
+		GeocodingParser gp = new GeocodingParser();
+		try {
+			gp.parseGeocodingAPIResponse(gResponse);
+		} catch (IllegalArgumentException | IOException e2) {
+			e2.printStackTrace();
+		}
+		double userLat = gp.getOriginLocation().getLatitude();
+		double userLong = gp.getOriginLocation().getLongitude();
+		String startLocationAsString = gp.getOriginLocation().getLatLongString();
+
+		// fills Starting Address
+		String formattedAddress = gp.getOriginLocation().getAddress();
+		
+		System.out.println(formattedAddress);
+		
+		if (!(formattedAddress.contains("New York, NY"))) {
+//			System.out.println(formattedAddress);
+			statusMessage = "Enter an address in Manhattan:";
+		}
+		
+		else {
+			statusMessage = "We found you!";
+		}	
+		
+		assertEquals(statusMessage, "We found you!");
+		
+	}
+	
+	
+	//Test user input and ensures correct status message is returned. Test Reason: input as a pair of coordinates
+	@Test
+	void testStatusMessageCoordinates() {
+		String statusMessage;
+		
+		String startLocation = "40.729578, -73.978287"; //User input value
+		
+		GoogleURLCreator gc = new GoogleURLCreator();
+		String googleURL = gc.createURL(startLocation);
+		APICaller ac = new APICaller();
+		String gResponse = ac.callAPI(googleURL);
+		GeocodingParser gp = new GeocodingParser();
+		try {
+			gp.parseGeocodingAPIResponse(gResponse);
+		} catch (IllegalArgumentException | IOException e2) {
+			e2.printStackTrace();
+		}
 		double userLat = gp.getOriginLocation().getLatitude();
 		double userLong = gp.getOriginLocation().getLongitude();
 		String startLocationAsString = gp.getOriginLocation().getLatLongString();

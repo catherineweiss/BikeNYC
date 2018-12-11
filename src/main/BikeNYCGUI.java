@@ -198,7 +198,7 @@ public class BikeNYCGUI extends JFrame {
 			String size = "&size=500x600";
 			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString;
 //			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString;
-			String markerBikeStation = "&markers=icon:https://bit.ly/2QqTy8q|color:blue|label:B|" + closestBikeLocationAsString;
+			String markerBikeStation = "&markers=icon:https://bit.ly/2EaWkHk|color:blue|label:B|" + closestBikeLocationAsString;
 			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;
 			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
 			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
