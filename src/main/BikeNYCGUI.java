@@ -2,6 +2,7 @@ package main;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -115,6 +116,39 @@ public class BikeNYCGUI extends JFrame {
 	private JScrollPane scrollPane;
 	private JPanel placesInterestPanel;
 
+	// Alternative Display for places of interest (border layout); position South on bottomPanel 
+	private JPanel placesWithMarkerAddressPanel; 
+	
+	// for landmarkPanel (grid layout); position Center on placesWithMarkerAddressPanel 
+	private JLabel landmark1;
+	private JLabel landmark2;
+	private JLabel landmark3;	
+	private JLabel landmark4;
+	private JLabel landmark5;
+	private JPanel landmarkPanel;
+	private ArrayList<JLabel> landmarkLabels;
+	
+	// for markerPanel (grid layout); position West on placesWithMarkerAddressPanel
+	private JLabel marker1;
+	private JLabel marker2;
+	private JLabel marker3;	
+	private JLabel marker4;
+	private JLabel marker5;
+	private JPanel markerPanel;
+	
+	// for addressPanel (grid layout); position East on placesWithMarkerAddressPanel
+	private JLabel address1;
+	private JLabel address2;
+	private JLabel address3;	
+	private JLabel address4;
+	private JLabel address5;
+	private JPanel addressPanel;
+	ArrayList<JLabel> addressLabels;
+	
+	
+	
+	
+	
 	// constructor with helper methods
 	public BikeNYCGUI() {
 		createGoButton();
@@ -353,6 +387,31 @@ public class BikeNYCGUI extends JFrame {
 						placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest);
 						placesInterestTextArea.setLineWrap(true);
 						placesInterestTextArea.setText(poi);
+						
+						
+						//Display FourSquare data on 5 JLabels with MapID and address
+						//make an arraylist of JPanels (landmark1 --> 5). Fill them with l.getName()
+						
+						landmarkLabels = new ArrayList<>();
+						landmarkLabels.add(landmark1);
+						landmarkLabels.add(landmark2);
+						landmarkLabels.add(landmark3);
+						landmarkLabels.add(landmark4);
+						landmarkLabels.add(landmark5);
+						
+						for (int i=0; i<landmarkLabels.size();i++) {
+							landmarkLabels.get(i).setText(pointsOfInterest.get(i).getName());
+						}
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 
 						// Update map with markers for start location, bike station, and places of
 						// interest
@@ -455,13 +514,68 @@ public class BikeNYCGUI extends JFrame {
 		scrollPane = new JScrollPane(placesInterestTextArea);
 		placesInterestPanel = new JPanel();
 		placesInterestPanel.add(scrollPane);
-
+		
+		// South on bottomPanel (Alternative Display of Landmark Data)
+		placesWithMarkerAddressPanel = new JPanel();
+		placesWithMarkerAddressPanel.setLayout(new BorderLayout());
+		
+		markerPanel = new JPanel();
+		markerPanel.setLayout(new GridLayout(5,1));
+		marker1 = new JLabel();
+		marker2 = new JLabel();
+		marker3 = new JLabel();
+		marker4 = new JLabel();
+		marker5 = new JLabel();
+		marker1.setText("    A");
+		marker2.setText("    B");
+		marker3.setText("    C");
+		marker4.setText("    D");
+		marker5.setText("    E");
+		markerPanel.add(marker1);
+		markerPanel.add(marker2);
+		markerPanel.add(marker3);
+		markerPanel.add(marker4);
+		markerPanel.add(marker5);
+		
+		
+		
+		landmark1 = new JLabel();
+		landmark2 = new JLabel();
+		landmark3 = new JLabel();
+		landmark4 = new JLabel();
+		landmark5 = new JLabel();
+//		landmark1.setHorizontalAlignment(SwingConstants.CENTER);
+//		landmark2.setHorizontalAlignment(SwingConstants.CENTER);
+//		landmark3.setHorizontalAlignment(SwingConstants.CENTER);
+//		landmark4.setHorizontalAlignment(SwingConstants.CENTER);
+//		landmark5.setHorizontalAlignment(SwingConstants.CENTER);
+		landmarkPanel = new JPanel();
+		landmarkPanel.setLayout(new GridLayout(5,1));
+		landmarkPanel.add(landmark1);
+		landmarkPanel.add(landmark2);
+		landmarkPanel.add(landmark3);
+		landmarkPanel.add(landmark4);
+		landmarkPanel.add(landmark5);
+		
+		addressPanel = new JPanel();
+		address1 = new JLabel();
+		address2 = new JLabel();
+		address3 = new JLabel();
+		address4 = new JLabel();
+		address5 = new JLabel();
+		
+		
+		
+		
+		
 		// assemble bottomPanel
 		bottomPanel = new JPanel();
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(numSpacesPanel, BorderLayout.NORTH);
 		bottomPanel.add(placesInterestLabel, BorderLayout.CENTER);
-		bottomPanel.add(placesInterestPanel, BorderLayout.SOUTH);
+//		bottomPanel.add(placesInterestPanel, BorderLayout.SOUTH);
+		bottomPanel.add(landmarkPanel, BorderLayout.SOUTH);
+		
 
 		// add Top, Middle, Bottom Panels to Main Panel
 		mainPanel = new JPanel();
