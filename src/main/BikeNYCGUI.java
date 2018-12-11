@@ -247,7 +247,6 @@ public class BikeNYCGUI extends JFrame {
 					numBikesAvailLabel.setText("");
 					numSpacesAvailLabel.setText("");
 					placesInterestTextArea.setText("");
-					pack();
 
 				} else {
 
@@ -279,6 +278,7 @@ public class BikeNYCGUI extends JFrame {
 					// If it is, ask user to enter address again
 
 					if (!(formattedAddress.contains("New York, NY"))) {
+
 						statusMessage = "Enter an address in Manhattan:";
 						inputRequestLabel.setText(statusMessage);
 						inputRequestLabel.setForeground(Color.RED);

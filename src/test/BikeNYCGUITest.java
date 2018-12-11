@@ -59,6 +59,8 @@ public class BikeNYCGUITest {
 	//Test user input and ensures correct status message is returned
 	@Test
 	void testStatusMessage() {
+		String statusMessage;
+		
 		String startLocation = "Central Park"; //User input value
 		
 		GoogleURLCreator gc = new GoogleURLCreator();
@@ -76,7 +78,16 @@ public class BikeNYCGUITest {
 		
 		System.out.println(formattedAddress);
 		
-		//statusMessage.equals ("We found you!")
+		if (!(formattedAddress.contains("New York, NY"))) {
+//			System.out.println(formattedAddress);
+			statusMessage = "Enter an address in Manhattan:";
+		}
+		
+		else {
+			statusMessage = "We found you!";
+		}	
+		
+		assertEquals(statusMessage, "We found you!");
 		
 	}
 
