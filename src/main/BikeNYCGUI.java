@@ -31,12 +31,11 @@ import foursquare.FourSquareLocationParser;
 import foursquare.FourSquareURLCreator;
 import google.GeocodingParser;
 import google.GoogleURLCreator;
-import google.ManhattanZipCodes;
 import shared.Location;
 import util.APIKeys;
 
 /**
- * GUI Methods for TourNY, a geo-location based recommendation application for
+ * GUI Methods for BikeNYC, a geolocation based recommendation application for
  * Manhattan
  * 
  * @author Catherine Weiss and Fred Chang
@@ -61,6 +60,7 @@ public class BikeNYCGUI extends JFrame {
 	private String startLocationAsString;
 	private String closestBikeLocationAsString;
 	private String placesOfInterestAsString;
+	private String statusMessage; // displays message if user input causes an error
 
 	// panels:
 	private JPanel topPanel; // border layout
@@ -149,7 +149,6 @@ public class BikeNYCGUI extends JFrame {
 		}
 	}
 
-	
 	/**
 	 * Takes an array of Location objects and returns a String of
 	 * latitudes-longitude pairs (separated by a comma), with a pipe separating the
@@ -164,12 +163,11 @@ public class BikeNYCGUI extends JFrame {
 		for (Location l : pointsOfInterest) {
 			placesOfInterestAsString = placesOfInterestAsString + l.getLatLongString() + "|";
 		}
-		//removes final "|"
-		String substring = placesOfInterestAsString.substring(0, placesOfInterestAsString.length() - 1); 																											
+		// removes final "|"
+		String substring = placesOfInterestAsString.substring(0, placesOfInterestAsString.length() - 1);
 		return substring;
 	}
 
-	
 	/**
 	 * Creates static map with specified parameters
 	 * 
@@ -193,12 +191,10 @@ public class BikeNYCGUI extends JFrame {
 			String zoom = "&zoom";
 			int zoomNum = 12;
 			String size = "&size=400x400";
-
 			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString;
 			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString;
 			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;
 			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
-
 			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
 
 			String queryParams = center + location + zoom + zoomNum + size + markers + key;
@@ -230,23 +226,23 @@ public class BikeNYCGUI extends JFrame {
 				// Retrieve user input
 				String startLocation = startAddressTextField.getText();
 
-				// If text field is empty, ask user to enter address again and clears data fields
+				// If text field is empty, ask user to enter address again and clears data
+				// fields
 				if (startLocation.equals("")) {
+					inputRequestLabel.setText("Enter starting location");
 					inputRequestLabel.setForeground(Color.RED);
-					
-					formatAddressfromGoogleLabel.setText("");  
+					formatAddressfromGoogleLabel.setText("");
 					stationNameFromAPILabel.setText("");
 					actualDistFromUserFromAPILabel.setText("");
 					numBikesAvailLabel.setText("");
 					numSpacesAvailLabel.setText("");
 					placesInterestTextArea.setText("");
-										
 
 				} else {
 
 					inputRequestLabel.setText("Enter starting location");
 					inputRequestLabel.setForeground(Color.BLACK);
-					startAddressLabel.setText("Starting Address:  ");	//added		
+					startAddressLabel.setText("Starting Address:  ");
 
 					// Access Geocoding API
 					GoogleURLCreator gc = new GoogleURLCreator();
@@ -263,34 +259,26 @@ public class BikeNYCGUI extends JFrame {
 					String formattedAddress = gp.getOriginLocation().getAddress();
 					formatAddressfromGoogleLabel.setText(formattedAddress);
 
-					// If Starting Address is outside of Manhattan, ask user to enter address again
-					// Parse Starting Address to find zipcode. Does zipcode correspond to one from
-					// Manhattan?
+					// Check if Starting Address is outside of Manhattan
+					// If it is, ask user to enter address again
 
-					String[] parts = formattedAddress.split(",");
-					String zip = parts[parts.length - 2].trim();
-					zip = zip.replaceAll("[a-zA-Z]*", "").trim();
+					if (!(formattedAddress.contains("New York, NY"))) {
+//						System.out.println(formattedAddress);
+						statusMessage = "Enter an address in Manhattan:";
+						inputRequestLabel.setText(statusMessage);
+						inputRequestLabel.setForeground(Color.RED);
+						startAddressLabel.setText("Address Entered:  ");
+						stationNameFromAPILabel.setText("");
+						actualDistFromUserFromAPILabel.setText("");
+						numBikesAvailLabel.setText("");
+						numSpacesAvailLabel.setText("");
+						placesInterestTextArea.setText("");
+						pack();
+					}
 
-					ManhattanZipCodes mzc = new ManhattanZipCodes();
-					ArrayList<String> zipcodes = mzc.getZipcodes();
-
-						if (!(formattedAddress.contains("New York, NY")) ){
-							System.out.println(formattedAddress);
-							inputRequestLabel.setText("Enter an address in Manhattan:");
-							inputRequestLabel.setForeground(Color.RED);
-							startAddressLabel.setText("Address Entered:  ");			
-//							formatAddressfromGoogleLabel.setText();  
-							stationNameFromAPILabel.setText("");
-							actualDistFromUserFromAPILabel.setText("");
-							numBikesAvailLabel.setText("");
-							numSpacesAvailLabel.setText("");
-							placesInterestTextArea.setText("");
-							pack();
-														
-						}
-
-
-				else {
+					else {
+						statusMessage = "We found you!";
+						inputRequestLabel.setText(statusMessage);
 
 						// *** CITIBIKE FUNCTIONALITY BEGINS HERE ***
 
@@ -338,10 +326,7 @@ public class BikeNYCGUI extends JFrame {
 
 						// *** FOURSQUARE SPACES API FUNCTIONALITY BEGINS HERE ***
 
-						String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "landmark"); // change
-																													// breakfast
-																													// to
-																													// landmark
+						String foursquareurl = FourSquareURLCreator.createURL(stationLat, stationLong, "landmark");
 						FourSquareLocationParser parser = new FourSquareLocationParser(
 								APICaller.callAPI(foursquareurl));
 						pointsOfInterest = parser.getLocations();
@@ -350,7 +335,6 @@ public class BikeNYCGUI extends JFrame {
 							poi += l.getName() + "\n";
 						}
 						placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest);
-
 						placesInterestTextArea.setLineWrap(true);
 						placesInterestTextArea.setText(poi);
 
@@ -447,7 +431,7 @@ public class BikeNYCGUI extends JFrame {
 		numSpacesPanel.add(numSpacesAvailLabel);
 
 		// Center on bottomPanel
-		placesInterestLabel = new JLabel("Nearby Landmarks to Tour: "); 
+		placesInterestLabel = new JLabel("Nearby Landmarks to Tour: ");
 		placesInterestLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// South on bottomPanel
@@ -469,7 +453,7 @@ public class BikeNYCGUI extends JFrame {
 		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(middlePanel, BorderLayout.CENTER);
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
-		JScrollPane scrollPane2 = new JScrollPane(mainPanel); // try putting main panel on a scroll pane
+		JScrollPane scrollPane2 = new JScrollPane(mainPanel); // use ScrollPane to improve window formatting of GUI
 
 		// add Main Panel to Frame
 //		add(mainPanel);
