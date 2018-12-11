@@ -247,6 +247,7 @@ public class BikeNYCGUI extends JFrame {
 					numBikesAvailLabel.setText("");
 					numSpacesAvailLabel.setText("");
 					placesInterestTextArea.setText("");
+					pack();
 
 				} else {
 
