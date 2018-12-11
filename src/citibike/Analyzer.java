@@ -284,5 +284,59 @@ public class Analyzer {
 		}
 		return 0;
 	}
+	
+	/**
+	 * 
+	 * Method compares all .csv station objects with currently active ones (on Citibike RestAPI) and removes inactive stations
+	 *
+	 * @throws IOException
+	 * @throws ParseException
+	 */
+	public void removeInactive() throws IOException, ParseException {
+		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
+		Scanner scan = new Scanner(url.openStream());
+		String str = new String();
+
+		while (scan.hasNext())
+			str += scan.nextLine();
+		scan.close();
+		JSONObject obj = new JSONObject(str);
+
+		// User can request which station to retrieve info from
+		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
+
+		//ArrayList of Stations
+		ArrayList<Integer> activeStations = new ArrayList<Integer>();
+		
+		for (int i = 0; i < totalnumStations; i++) {
+			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
+			activeStations.add(stationSearch.getInt("station_id"));
+		}
+	
+		//Temporary array to iterate through
+		ArrayList<Station> temp = stations;	
+		
+		//for every element in temp array
+		for (int i = 0; i < temp.size() ; i++) {
+			int tempId = temp.get(i).getStationId();
+			
+			Boolean isMatch = false;
+			//for every element in JSON list
+			for (int j = 0; j < activeStations.size(); j++){
+				//if temp station ID matches JSON list
+				if (tempId == activeStations.get(j)) {
+					isMatch = true;
+				}
+			}
+			
+			//if not found in list, remove object
+			if (isMatch == false) {
+				//System.out.println("inactive, must remove: " + tempId + " at index " + i);
+				stations.remove(i);
+			}
+		}
+	
+		
+	}
 
 }
