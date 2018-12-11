@@ -1,6 +1,6 @@
 # BikeNYC README
 
-Authors: Fred (Pei-Jan) Chang, Catherine Weiss
+Authors: Fred (Pei-Jan) Chang and Catherine Weiss
 
 ******************************************************************************************
 
