@@ -391,6 +391,13 @@ public class BikeNYCGUI extends JFrame {
 						
 						//Display FourSquare data on 5 JLabels with MapID and address
 						//make an arraylist of JPanels (landmark1 --> 5). Fill them with l.getName()
+
+						marker1.setText("    A  ");
+						marker2.setText("    B  ");
+						marker3.setText("    C  ");
+						marker4.setText("    D  ");
+						marker5.setText("    E  ");
+
 						
 						landmarkLabels = new ArrayList<>();
 						landmarkLabels.add(landmark1);
@@ -403,14 +410,16 @@ public class BikeNYCGUI extends JFrame {
 							landmarkLabels.get(i).setText(pointsOfInterest.get(i).getName());
 						}
 						
+						addressLabels = new ArrayList<>();
+						addressLabels.add(address1);
+						addressLabels.add(address2);
+						addressLabels.add(address3);
+						addressLabels.add(address4);
+						addressLabels.add(address5);
 						
-						
-						
-						
-						
-						
-						
-						
+						for (int i=0; i<addressLabels.size();i++) {
+							addressLabels.get(i).setText("  "+pointsOfInterest.get(i).getAddress());
+						}
 						
 
 						// Update map with markers for start location, bike station, and places of
@@ -519,6 +528,7 @@ public class BikeNYCGUI extends JFrame {
 		placesWithMarkerAddressPanel = new JPanel();
 		placesWithMarkerAddressPanel.setLayout(new BorderLayout());
 		
+		// Place of interest marker Column
 		markerPanel = new JPanel();
 		markerPanel.setLayout(new GridLayout(5,1));
 		marker1 = new JLabel();
@@ -526,19 +536,15 @@ public class BikeNYCGUI extends JFrame {
 		marker3 = new JLabel();
 		marker4 = new JLabel();
 		marker5 = new JLabel();
-		marker1.setText("    A");
-		marker2.setText("    B");
-		marker3.setText("    C");
-		marker4.setText("    D");
-		marker5.setText("    E");
 		markerPanel.add(marker1);
 		markerPanel.add(marker2);
 		markerPanel.add(marker3);
 		markerPanel.add(marker4);
 		markerPanel.add(marker5);
 		
-		
-		
+		// Place of interest name Column
+		landmarkPanel = new JPanel();
+		landmarkPanel.setLayout(new GridLayout(5,1));
 		landmark1 = new JLabel();
 		landmark2 = new JLabel();
 		landmark3 = new JLabel();
@@ -549,23 +555,30 @@ public class BikeNYCGUI extends JFrame {
 //		landmark3.setHorizontalAlignment(SwingConstants.CENTER);
 //		landmark4.setHorizontalAlignment(SwingConstants.CENTER);
 //		landmark5.setHorizontalAlignment(SwingConstants.CENTER);
-		landmarkPanel = new JPanel();
-		landmarkPanel.setLayout(new GridLayout(5,1));
 		landmarkPanel.add(landmark1);
 		landmarkPanel.add(landmark2);
 		landmarkPanel.add(landmark3);
 		landmarkPanel.add(landmark4);
 		landmarkPanel.add(landmark5);
 		
+		// Place of interest address column
 		addressPanel = new JPanel();
+		addressPanel.setLayout(new GridLayout(5,1));
 		address1 = new JLabel();
 		address2 = new JLabel();
 		address3 = new JLabel();
 		address4 = new JLabel();
 		address5 = new JLabel();
-		
-		
-		
+		addressPanel.add(address1);
+		addressPanel.add(address2);
+		addressPanel.add(address3);
+		addressPanel.add(address4);
+		addressPanel.add(address5);
+
+		// assemble placesWithMarkerAddressPanel
+		placesWithMarkerAddressPanel.add(markerPanel, BorderLayout.WEST);
+		placesWithMarkerAddressPanel.add(landmarkPanel, BorderLayout.CENTER);
+		placesWithMarkerAddressPanel.add(addressPanel, BorderLayout.EAST);
 		
 		
 		// assemble bottomPanel
@@ -574,7 +587,8 @@ public class BikeNYCGUI extends JFrame {
 		bottomPanel.add(numSpacesPanel, BorderLayout.NORTH);
 		bottomPanel.add(placesInterestLabel, BorderLayout.CENTER);
 //		bottomPanel.add(placesInterestPanel, BorderLayout.SOUTH);
-		bottomPanel.add(landmarkPanel, BorderLayout.SOUTH);
+//		bottomPanel.add(landmarkPanel, BorderLayout.SOUTH);
+		bottomPanel.add(placesWithMarkerAddressPanel, BorderLayout.SOUTH);
 		
 
 		// add Top, Middle, Bottom Panels to Main Panel
