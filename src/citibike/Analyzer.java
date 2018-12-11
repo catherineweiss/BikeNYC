@@ -156,8 +156,8 @@ public class Analyzer {
 	 * @return
 	 */
 	public double analyzeCloseProximityDistance(double userLat, double userLong) {
-		int closestStation = -1;
-		double closestDistance = 99999; //arbitrary large number to start comparison with
+		int closestStation = 9999;
+		double closestDistance = 99999; //artib
 
 		// For all trips
 		for (Station s : stations) {
@@ -173,7 +173,7 @@ public class Analyzer {
 			}
 		}
 
-		if (closestDistance == 99999 || closestStation == -1) {
+		if (closestDistance == 99999 || closestStation == 99999) {
 			System.out.println("Error executing analyzeCloseProximityDistance() ");
 			return -1;
 		}
@@ -190,8 +190,8 @@ public class Analyzer {
 	 * @return
 	 */
 	public int analyzeCloseProximity(double userLat, double userLong) {
-		int closestStation = -1;
-		double closestDistance = 99999; //arbitrary large number to start comparison with
+		int closestStation = 9999;
+		double closestDistance = 99999;
 
 		// For all trips
 		for (Station s : stations) {
@@ -207,7 +207,7 @@ public class Analyzer {
 				closestStation = s.getStationId();
 			}
 
-			if (closestDistance == 99999 || closestStation == -1) {
+			if (closestDistance == 99999 || closestStation == 99999) {
 				System.out.println("Error executing analyzeCloseProximityDistance() ");
 				return -1;
 			}
