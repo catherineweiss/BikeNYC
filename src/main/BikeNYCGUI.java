@@ -304,6 +304,17 @@ public class BikeNYCGUI extends JFrame {
 
 						// Reads in stations csv file
 						analyzer.loadStations();
+						
+						//Remove inactive stations
+						try {
+							analyzer.removeInactive();
+						} catch (IOException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						} catch (ParseException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
 
 						// Gets closest stationID
 						int closestStationId = analyzer.analyzeCloseProximity(userLat, userLong);
