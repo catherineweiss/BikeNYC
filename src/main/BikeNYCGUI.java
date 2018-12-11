@@ -231,7 +231,9 @@ public class BikeNYCGUI extends JFrame {
 			String zoom = "&zoom";
 			int zoomNum = 12;
 			String size = "&size=500x600";
-			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString;
+//			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString;
+			String markerStart = "&markers=size:mid|color:green|" + startLocationAsString;  //removed label "S"
+			
 //			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString;
 			String markerBikeStation = "&markers=icon:https://bit.ly/2EaWkHk|color:blue|label:B|" + closestBikeLocationAsString;
 //			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;
@@ -413,7 +415,7 @@ public class BikeNYCGUI extends JFrame {
 						landmarkLabels.add(landmark4);
 						landmarkLabels.add(landmark5);
 						
-						for (int i=0; i<landmarkLabels.size();i++) {
+						for (int i=0; i<pointsOfInterest.size();i++) {   //**changed from landmarkLabels
 							landmarkLabels.get(i).setText(pointsOfInterest.get(i).getName());
 						}
 						
@@ -424,8 +426,8 @@ public class BikeNYCGUI extends JFrame {
 						addressLabels.add(address4);
 						addressLabels.add(address5);
 						
-						for (int i=0; i<addressLabels.size();i++) {
-							addressLabels.get(i).setText("  "+pointsOfInterest.get(i).getAddress());
+						for (int i=0; i<pointsOfInterest.size();i++) {    //**changed from addressLabels
+							addressLabels.get(i).setText("  "+pointsOfInterest.get(i).getAddress() + "  ");
 						}
 						
 
