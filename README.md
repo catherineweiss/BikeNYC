@@ -2,13 +2,19 @@
 Our repo is at: https://github.com/princessruthie/591-geo-data-viz
 
 ## For Part One Submission
-Team Name: Team Phoenix
+App Name: BikeNYC
 
-Team Members: Fred Chang, Ruthie Fields(PM), Catherine Weiss
+Team Members: Fred Chang, Catherine Weiss
 
 Project Idea: A geo-location based recommendation application
 
-Project Description: When the user enters an address, the program will find the Citi Bike station closest to the user and display the estimated walk time to the station, as well as number of bikes available. The program will also display recommendations for places of interest reachable from the station given a certain distance (e.g. the user can say I only wish to bike 1 mile).
+Project Description:
+Citibike is America’s largest and most successful bike-share program. Given the density of bike-share stations in Manhattan, you can almost guarantee that you can find one within a block or two’s walk. However, they may not always be in the most obvious of locations. 
+
+Therefore, we’re introducing BikeNYC, an application that takes in the user’s location, provides the user with the closest available station, station information, as well as recommendations for nearby attractions.
+
+Many employers and institutions now offer their employees annual passes, therefore, this application is not only useful for tourists, but also for locals who may want to take advantage of their pass, travel faster and more sustainably, or skip the crowded subways.
+
 
 ## Goals and keywords
 - Use the google api to turn addresses into coordinates.
@@ -77,18 +83,18 @@ Second Priority (DUE end of day Saturday):
 - (COMPLETE) Catherine: Message thrown by GoogleAPI Code: "More than one location is associated with that address. Please verify that your starting location is correct." What to do about this?
 
 Third Priority (DUE end of day MONDAY):
-1. user manual w/ screenshots
+1. (COMPLETE) user manual w/ screenshots - Fred
 2. summary.txt (name and description of project, work breakdown, link to github repo)
-3. JUnit testing (15 total tests over 3 different classes)
+3. (COMPLETE) JUnit testing (15 total tests over 3 different classes)
 4. Are errors handled well?
-5. Are exceptions handled well?
-6. DONE. check casting with JSON parsing (all three API callers)
-7. DONE. check all files for javadoc comments, indenting
+5. (COMPLETE) Are exceptions handled well?
+6. (COMPLETE) check casting with JSON parsing (all three API callers)
+7. (COMPLETE) check all files for javadoc comments, indenting
 8. submit in a zip file: code, user manual, summary.txt
 
 Misc
 - Is it bad design that Manhattan zip codes are not stored as a csv file?
-- Do final check of indenting on TourNYGUI and any other files that we edit
+- Do final check of indenting on BikeNYCGUI and any other files that we edit
 
 ## Running the app:
 - copy util/APIKeysSample.java to util/APIKeys.java and fill in the strings
