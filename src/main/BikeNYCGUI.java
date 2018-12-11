@@ -234,7 +234,6 @@ public class BikeNYCGUI extends JFrame {
 				if (startLocation.equals("")) {
 					inputRequestLabel.setForeground(Color.RED);
 					
-					//added these lines:
 					formatAddressfromGoogleLabel.setText("");  
 					stationNameFromAPILabel.setText("");
 					actualDistFromUserFromAPILabel.setText("");
@@ -275,26 +274,23 @@ public class BikeNYCGUI extends JFrame {
 					ManhattanZipCodes mzc = new ManhattanZipCodes();
 					ArrayList<String> zipcodes = mzc.getZipcodes();
 
-					if (!zipcodes.contains(zip)) {
-						inputRequestLabel.setText("Enter an address in Manhattan:");
-						inputRequestLabel.setForeground(Color.RED);
-						//added these lines:
-						startAddressLabel.setText("Address Entered:  ");			
-//						formatAddressfromGoogleLabel.setText();  
-						stationNameFromAPILabel.setText("");
-						actualDistFromUserFromAPILabel.setText("");
-						numBikesAvailLabel.setText("");
-						numSpacesAvailLabel.setText("");
-						placesInterestTextArea.setText("");
-						
-						
-						
-						
-						
-						
-						pack();
+						if (!(formattedAddress.contains("New York, NY")) ){
+							System.out.println(formattedAddress);
+							inputRequestLabel.setText("Enter an address in Manhattan:");
+							inputRequestLabel.setForeground(Color.RED);
+							startAddressLabel.setText("Address Entered:  ");			
+//							formatAddressfromGoogleLabel.setText();  
+							stationNameFromAPILabel.setText("");
+							actualDistFromUserFromAPILabel.setText("");
+							numBikesAvailLabel.setText("");
+							numSpacesAvailLabel.setText("");
+							placesInterestTextArea.setText("");
+							pack();
+														
+						}
 
-					} else {
+
+				else {
 
 						// *** CITIBIKE FUNCTIONALITY BEGINS HERE ***
 
