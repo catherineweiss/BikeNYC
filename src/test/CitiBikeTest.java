@@ -45,9 +45,35 @@ public class CitiBikeTest {
 		
 	}
 	
+	//Test Purpose: Check if distance calculation between user and station is correct
+	@Test
+	public void stationToUserDistanceTest() {
+		
+		//~Stytown
+		double userLat = 40.729701;
+		double userLong = -73.978671;
+		
+		double distance = analyzer.analyzeCloseProximityDistance(userLat, userLong);
+		double expectedDistance = 0.1; //between 0.1 and 0.2
+		
+		assertEquals(expectedDistance, distance);
+		
+	}
 	
-	
-	
+	//Test Purpose: Check if distance calculation between user and station is correct
+	@Test
+	public void stationToUserDistanceTest2() {
+		
+		//~HudsonYards
+		double userLat = 40.755864;
+		double userLong = -74.006066;
+		
+		double distance = analyzer.analyzeCloseProximityDistance(userLat, userLong);
+		double expectedDistance = 0.21; //between 0.2 and 0.3
+		
+		assertEquals(expectedDistance, distance);
+		
+	}
 	
 	
 	//Test Purpose: Check to see if returned "closest CitiBike Station" is correct
