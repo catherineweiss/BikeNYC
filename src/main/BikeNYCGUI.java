@@ -231,17 +231,28 @@ public class BikeNYCGUI extends JFrame {
 			String zoom = "&zoom";
 			int zoomNum = 12;
 			String size = "&size=500x600";
-//			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString;
 			String markerStart = "&markers=size:mid|color:green|" + startLocationAsString;  //removed label "S"
-			
 //			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString;
 			String markerBikeStation = "&markers=icon:https://bit.ly/2EaWkHk|color:blue|label:B|" + closestBikeLocationAsString;
 //			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;
-			String m1 = "&markers=size:mid|color:red|label:A|" + pointsOfInterest.get(0).getLatLongString();  
-			String m2 = "&markers=size:mid|color:red|label:B|" + pointsOfInterest.get(1).getLatLongString();  
-			String m3 = "&markers=size:mid|color:red|label:C|" + pointsOfInterest.get(2).getLatLongString();  
-			String m4 = "&markers=size:mid|color:red|label:D|" + pointsOfInterest.get(3).getLatLongString();  
-			String m5 = "&markers=size:mid|color:red|label:E|" + pointsOfInterest.get(4).getLatLongString();  			
+			
+			String m1 = "";
+			String m2 = "";
+			String m3 = "";
+			String m4 = "";
+			String m5 = "";
+			if (pointsOfInterest.size()>0) {
+				m1 = "&markers=size:mid|color:red|label:A|" + pointsOfInterest.get(0).getLatLongString();
+			} else if (pointsOfInterest.size()>1) {
+				m2 = "&markers=size:mid|color:red|label:B|" + pointsOfInterest.get(1).getLatLongString();  
+			} else if (pointsOfInterest.size()>2) {
+				m3 = "&markers=size:mid|color:red|label:C|" + pointsOfInterest.get(2).getLatLongString();  
+			} else if (pointsOfInterest.size()>3) {
+				m4 = "&markers=size:mid|color:red|label:D|" + pointsOfInterest.get(3).getLatLongString();
+			} else if (pointsOfInterest.size() > 4) {
+				m5 = "&markers=size:mid|color:red|label:E|" + pointsOfInterest.get(4).getLatLongString();  
+			}
+			
 			String markers = markerStart + markerBikeStation + m1 + m2 + m3 + m4 + m5;
 //			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
 			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
@@ -389,17 +400,18 @@ public class BikeNYCGUI extends JFrame {
 						FourSquareLocationParser parser = new FourSquareLocationParser(
 								APICaller.callAPI(foursquareurl));
 						pointsOfInterest = parser.getLocations();
-						String poi = "";
+				
+						//Display FourSquare data on textArea
+/*						String poi = "";
 						for (Location l : pointsOfInterest) {
 							poi += l.getName() + "\n";
 						}
 						placesOfInterestAsString = placesOfInterestAsStringBuilder(pointsOfInterest);
 						placesInterestTextArea.setLineWrap(true);
 						placesInterestTextArea.setText(poi);
+*/						
 						
-						
-						//Display FourSquare data on 5 JLabels with MapID and address
-						//make an arraylist of JPanels (landmark1 --> 5). Fill them with l.getName()
+						//Display FourSquare data on a grid of 5x1 JLabels
 
 						marker1.setText("    A  ");
 						marker2.setText("    B  ");
@@ -407,17 +419,13 @@ public class BikeNYCGUI extends JFrame {
 						marker4.setText("    D  ");
 						marker5.setText("    E  ");
 
-						
+						//make an arraylist of JPanels. Fill them with l.getName()						
 						landmarkLabels = new ArrayList<>();
 						landmarkLabels.add(landmark1);
 						landmarkLabels.add(landmark2);
 						landmarkLabels.add(landmark3);
 						landmarkLabels.add(landmark4);
 						landmarkLabels.add(landmark5);
-						
-						for (int i=0; i<pointsOfInterest.size();i++) {   //**changed from landmarkLabels
-							landmarkLabels.get(i).setText(pointsOfInterest.get(i).getName());
-						}
 						
 						addressLabels = new ArrayList<>();
 						addressLabels.add(address1);
@@ -427,8 +435,10 @@ public class BikeNYCGUI extends JFrame {
 						addressLabels.add(address5);
 						
 						for (int i=0; i<pointsOfInterest.size();i++) {    //**changed from addressLabels
+							landmarkLabels.get(i).setText(pointsOfInterest.get(i).getName());
 							addressLabels.get(i).setText("  "+pointsOfInterest.get(i).getAddress() + "  ");
 						}
+						
 						
 
 						// Update map with markers for start location, bike station, and places of
@@ -561,11 +571,6 @@ public class BikeNYCGUI extends JFrame {
 		landmark3 = new JLabel();
 		landmark4 = new JLabel();
 		landmark5 = new JLabel();
-//		landmark1.setHorizontalAlignment(SwingConstants.CENTER);
-//		landmark2.setHorizontalAlignment(SwingConstants.CENTER);
-//		landmark3.setHorizontalAlignment(SwingConstants.CENTER);
-//		landmark4.setHorizontalAlignment(SwingConstants.CENTER);
-//		landmark5.setHorizontalAlignment(SwingConstants.CENTER);
 		landmarkPanel.add(landmark1);
 		landmarkPanel.add(landmark2);
 		landmarkPanel.add(landmark3);
