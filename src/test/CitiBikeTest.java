@@ -21,7 +21,8 @@ public class CitiBikeTest {
 		analyzer.loadStations();
 	}
 	
-	//Test Purpose: Check if station Id matches returned station name
+	
+	//Test Purpose: Check if station ID matches returned station name
 	@Test
 	public void stationIdMatchName() {
 		
@@ -31,6 +32,23 @@ public class CitiBikeTest {
 		assertEquals(expectedName, outputName);
 		
 	}
+	
+	
+	//Test Purpose: Check if station name matches returned station ID
+	@Test
+	public void stationNameMatchId() {
+		
+		String stationName = "Broadway & W 56 St";
+		int expectedId = 468;	
+		int outputId = analyzer.stationNametoId(stationName);		
+		assertEquals(expectedId, outputId);
+		
+	}
+	
+	
+	
+	
+	
 	
 	//Test Purpose: Check to see if returned "closest CitiBike Station" is correct
 	@Test
