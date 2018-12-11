@@ -135,7 +135,7 @@ public class BikeNYCGUI extends JFrame {
 			String center = "center=";
 			String zoom = "&zoom=";
 			int zoomNum = mapZoomNum;
-			String size = "&size=400x400";
+			String size = "&size=500x600";
 			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
 
 			String queryParams = center + location + zoom + zoomNum + size + key;
@@ -195,9 +195,10 @@ public class BikeNYCGUI extends JFrame {
 			String center = "center=";
 			String zoom = "&zoom";
 			int zoomNum = 12;
-			String size = "&size=400x400";
+			String size = "&size=500x600";
 			String markerStart = "&markers=size:mid|color:green|label:S|" + startLocationAsString;
-			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString;
+//			String markerBikeStation = "&markers=size:mid|color:blue|label:B|" + closestBikeLocationAsString;
+			String markerBikeStation = "&markers=icon:https://bit.ly/2EaWkHk|color:blue|label:B|" + closestBikeLocationAsString;
 			String markerPlacesOfInterest = "&markers=size:mid|color:red|" + placesOfInterestAsString;
 			String markers = markerStart + markerBikeStation + markerPlacesOfInterest;
 			String key = "&key=" + APIKeys.GOOGLE_API_KEY;
@@ -378,7 +379,7 @@ public class BikeNYCGUI extends JFrame {
 
 		// inputPanel:
 		inputRequestLabel = new JLabel("Enter starting location");
-		startAddressTextField = new JTextField(30);
+		startAddressTextField = new JTextField(20);
 		inputPanel = new JPanel();
 		inputPanel.add(inputRequestLabel);
 		inputPanel.add(startAddressTextField);
@@ -415,14 +416,14 @@ public class BikeNYCGUI extends JFrame {
 		// DistanceFromUserPanel
 		distFromUserLabel = new JLabel("You are  ");
 		actualDistFromUserFromAPILabel = new JLabel();
-		milesFromUserLabel = new JLabel(" miles from the closest station");
+		milesFromUserLabel = new JLabel(" mi from the closest station");
 		distFromUserPanel = new JPanel();
 		distFromUserPanel.add(distFromUserLabel);
 		distFromUserPanel.add(actualDistFromUserFromAPILabel);
 		distFromUserPanel.add(milesFromUserLabel);
 
 		// NumBikesPanel
-		bikesAvailLabel = new JLabel("Number of Bikes Available:  ");
+		bikesAvailLabel = new JLabel("Bikes Available:  ");
 		numBikesAvailLabel = new JLabel(); //
 		numBikesPanel = new JPanel();
 		numBikesPanel.add(bikesAvailLabel);
@@ -439,14 +440,14 @@ public class BikeNYCGUI extends JFrame {
 		// PlacesOfInterestTextArea
 
 		// NumSpacesPanel
-		spacesAvailLabel = new JLabel("Number of Spaces Available:  ");
+		spacesAvailLabel = new JLabel("Spaces Available:  ");
 		numSpacesAvailLabel = new JLabel();
 		numSpacesPanel = new JPanel();
 		numSpacesPanel.add(spacesAvailLabel);
 		numSpacesPanel.add(numSpacesAvailLabel);
 
 		// Center on bottomPanel
-		placesInterestLabel = new JLabel("Nearby Landmarks to Tour: ");
+		placesInterestLabel = new JLabel("Places of Interest Nearby: ");
 		placesInterestLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// South on bottomPanel
@@ -476,7 +477,7 @@ public class BikeNYCGUI extends JFrame {
 		// add scrollPane2 to Frame
 		add(scrollPane2);
 
-		setTitle("Customize Your Active Tour of Manhattan");
+		setTitle("BikeNYC");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setVisible(true);
 		pack();
