@@ -231,9 +231,8 @@ public class Analyzer {
 	 * @param stationId
 	 * @throws IOException
 	 * @throws ParseException
-	 * @throws FileNotFoundException
 	 */
-	public int getCitiAPINumBikes(int stationId) throws IOException, ParseException, FileNotFoundException {
+	public int getCitiAPINumBikes(int stationId) throws IOException, ParseException {
 		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
 		Scanner scan = new Scanner(url.openStream());
 		String str = new String();
@@ -252,7 +251,7 @@ public class Analyzer {
 				return stationSearch.getInt("num_bikes_available");
 			}
 		}
-		return -1;
+		return 0;
 	}
 
 	/**
@@ -263,9 +262,8 @@ public class Analyzer {
 	 * @param stationId
 	 * @throws IOException
 	 * @throws ParseException
-	 * @throws FileNotFoundException
 	 */
-	public int getCitiAPINumSpaces(int stationId) throws IOException, ParseException, FileNotFoundException {
+	public int getCitiAPINumSpaces(int stationId) throws IOException, ParseException {
 		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
 		Scanner scan = new Scanner(url.openStream());
 		String str = new String();
@@ -284,7 +282,7 @@ public class Analyzer {
 				return stationSearch.getInt("num_docks_available");
 			}
 		}
-		return -1;
+		return 0;
 	}
 
 }
