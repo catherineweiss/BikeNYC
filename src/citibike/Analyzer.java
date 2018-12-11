@@ -82,47 +82,6 @@ public class Analyzer {
 
 	/**
 	 * 
-	 * Method takes in coordinates and returns closest Citibike Station
-	 * 
-	 * @param userLat
-	 * @param userLong
-	 * @return
-	 */
-	public int analyzeCloseProximity(double userLat, double userLong) {
-		int closestStation = 9999;
-		double closestDistance = 99999;
-
-		// For all trips
-		for (Station s : stations) {
-			int station = s.getStationId();
-
-			double stationLat = s.getStationLat();
-			double stationLong = s.getStationLong();
-
-			double difference = getDistanceHaversine(stationLat, stationLong, userLat, userLong);
-
-			if (difference < closestDistance) {
-				closestDistance = difference;
-				closestStation = s.getStationId();
-			}
-
-			if (closestDistance == 99999 || closestStation == 99999) {
-				System.out.println("Error executing analyzeCloseProximityDistance() ");
-				return -1;
-			}
-
-		}
-
-		if (closestDistance == 99999 || closestStation == 99999) {
-			System.out.println("Error executing analyzeCloseProximity() ");
-			return -1;
-		}
-
-		return closestStation;
-	}
-
-	/**
-	 * 
 	 * Method takes in station ID of closest CitiBike station and returns its
 	 * latitude coordinates
 	 * 
@@ -190,15 +149,15 @@ public class Analyzer {
 
 	/**
 	 * 
-	 * Method takes in coordinates and returns distance to closest Citibike Station
+	 * Method takes in coordinates and returns distance to closest Citibike Station (a double value)
 	 * 
 	 * @param userLat
 	 * @param userLong
 	 * @return
 	 */
 	public double analyzeCloseProximityDistance(double userLat, double userLong) {
-		int closestStation = 9999;
-		double closestDistance = 99999;
+		int closestStation = -1;
+		double closestDistance = 99999; //arbitrary large number to start comparison with
 
 		// For all trips
 		for (Station s : stations) {
@@ -214,52 +173,55 @@ public class Analyzer {
 			}
 		}
 
-		if (closestDistance == 99999 || closestStation == 99999) {
+		if (closestDistance == 99999 || closestStation == -1) {
 			System.out.println("Error executing analyzeCloseProximityDistance() ");
 			return -1;
 		}
 
 		return closestDistance;
 	}
-
+	
 	/**
 	 * 
-	 * NOTE: METHOD USED FOR TESTING PRINTING OF ALL RESULTS // CAN DELETE LATER
-	 * Method takes in stationId and returns real-time information about the station
-	 * using CitiBike API
+	 * Method takes in coordinates and returns closest Citibike Station (as closestStationId)
 	 * 
-	 * @param stationId
-	 * @throws IOException
-	 * @throws ParseException
-	 * @throws FileNotFoundException
+	 * @param userLat
+	 * @param userLong
+	 * @return
 	 */
-	public void getCitiAPIAll(int stationId) throws IOException, ParseException, FileNotFoundException {
-		URL url = new URL("https://gbfs.citibikenyc.com/gbfs/en/station_status.json");
-		Scanner scan = new Scanner(url.openStream());
-		String str = new String();
+	public int analyzeCloseProximity(double userLat, double userLong) {
+		int closestStation = -1;
+		double closestDistance = 99999; //arbitrary large number to start comparison with
 
-		while (scan.hasNext())
-			str += scan.nextLine();
-		scan.close();
-		JSONObject obj = new JSONObject(str);
+		// For all trips
+		for (Station s : stations) {
+			int station = s.getStationId();
 
-		// JSONObject station =
-		// obj.getJSONObject("data").getJSONArray("stations").getJSONObject(2);
+			double stationLat = s.getStationLat();
+			double stationLong = s.getStationLong();
 
-		// User can request which station to retrieve info from
-		int totalnumStations = obj.getJSONObject("data").getJSONArray("stations").length();
-		System.out.println("");
-		System.out.println("Searching for station info using CitiBike API...");
+			double difference = getDistanceHaversine(stationLat, stationLong, userLat, userLong);
 
-		for (int i = 0; i < totalnumStations; i++) {
-			JSONObject stationSearch = obj.getJSONObject("data").getJSONArray("stations").getJSONObject(i);
-			if (stationSearch.getInt("station_id") == stationId) {
-				System.out.println("Station ID: " + stationSearch.getInt("station_id"));
-				System.out.println("Bikes Available: " + stationSearch.getInt("num_bikes_available"));
-				System.out.println("Docks Available: " + stationSearch.getInt("num_docks_available"));
+			if (difference < closestDistance) {
+				closestDistance = difference;
+				closestStation = s.getStationId();
 			}
+
+			if (closestDistance == 99999 || closestStation == -1) {
+				System.out.println("Error executing analyzeCloseProximityDistance() ");
+				return -1;
+			}
+
 		}
+
+		if (closestDistance == 99999 || closestStation == 99999) {
+			System.out.println("Error executing analyzeCloseProximity() ");
+			return -1;
+		}
+
+		return closestStation;
 	}
+
 
 	/**
 	 * 
