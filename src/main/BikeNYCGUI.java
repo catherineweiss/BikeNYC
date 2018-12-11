@@ -134,6 +134,7 @@ public class BikeNYCGUI extends JFrame {
 	private JLabel marker3;	
 	private JLabel marker4;
 	private JLabel marker5;
+	private JLabel marker6; 
 	private JPanel markerPanel;
 	
 	// for addressPanel (grid layout); position East on placesWithMarkerAddressPanel
@@ -530,21 +531,23 @@ public class BikeNYCGUI extends JFrame {
 		
 		// Place of interest marker Column
 		markerPanel = new JPanel();
-		markerPanel.setLayout(new GridLayout(5,1));
+		markerPanel.setLayout(new GridLayout(6,1));
 		marker1 = new JLabel();
 		marker2 = new JLabel();
 		marker3 = new JLabel();
 		marker4 = new JLabel();
 		marker5 = new JLabel();
+		marker6 = new JLabel();
 		markerPanel.add(marker1);
 		markerPanel.add(marker2);
 		markerPanel.add(marker3);
 		markerPanel.add(marker4);
 		markerPanel.add(marker5);
+		markerPanel.add(marker6);
 		
 		// Place of interest name Column
 		landmarkPanel = new JPanel();
-		landmarkPanel.setLayout(new GridLayout(5,1));
+		landmarkPanel.setLayout(new GridLayout(6,1));
 		landmark1 = new JLabel();
 		landmark2 = new JLabel();
 		landmark3 = new JLabel();
@@ -563,7 +566,7 @@ public class BikeNYCGUI extends JFrame {
 		
 		// Place of interest address column
 		addressPanel = new JPanel();
-		addressPanel.setLayout(new GridLayout(5,1));
+		addressPanel.setLayout(new GridLayout(6,1));
 		address1 = new JLabel();
 		address2 = new JLabel();
 		address3 = new JLabel();
